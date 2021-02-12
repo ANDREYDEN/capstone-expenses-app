@@ -7,7 +7,7 @@ const fs = require("fs")
 
 const utils = require('./src/utils.js')
 
-const DB_URL = "mongodb://127.0.0.1:27017/utunes"
+const DB_URL = "mongodb://127.0.0.1:27017/expencify"
 const ROUTES_FOLDER = "./routes/"
 
 async function main() {
