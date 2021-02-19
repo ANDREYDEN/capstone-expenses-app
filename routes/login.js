@@ -5,7 +5,7 @@ const {
   userExists,
   SALT_ROUNDS,
   generateAccessTokenFor
-} = require("../utils.js")
+} = require("../src/utils.js")
 
 exports.logIn = {
   type: "post",

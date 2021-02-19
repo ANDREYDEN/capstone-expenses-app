@@ -3,7 +3,7 @@ const {
   retrieveDataFrom,
   makeHashOf,
   SALT_ROUNDS
-} = require("../utils.js")
+} = require("../src/utils.js")
 
 exports.signUp = {
   type: "post",

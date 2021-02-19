@@ -101,7 +101,7 @@ function exitHandler(cleanUpFn) {
 // sets up db connction; adds db connection close to exitHandler
 function dbConnect(url) {
   return new Promise((resolve, reject) => {
-    const cl = new MongoClient(url)
+    const cl = new MongoClient(url, { useUnifiedTopology: true })
     cl.connect((err, client) => {
       if (err) {
         reject(err)
@@ -111,7 +111,7 @@ function dbConnect(url) {
         console.log(" - Closing Database Conneciton")
         client.close()
       })
-      const db = client.db("utunes")
+      const db = client.db("expencify")
       console.log(" - Connected to Database")
       resolve(db)
     })
