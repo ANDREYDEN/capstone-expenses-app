@@ -1,5 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './app'
+import { login, signup } from '../api/index.js'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+
+export default class App extends React.Component {
+  componentDidMount() {
+    signup("tim", "1111").then(res => console.log(res)).catch(err => console.log(err))
+  }
+
+  render() {
+    return (
+      <header>
+        "hello"
+      </header>
+    )
+  }
+}

@@ -12,6 +12,7 @@ exports.signUp = {
   callback: async function signUp(req, res) {
     try {
       const { username, password } = await retrieveDataFrom(req)
+      console.log(username, password)
       const encrypredPassword = await makeHashOf(password, SALT_ROUNDS)
       const exists = await global.db.collection("users").findOne({ name: username })
 
