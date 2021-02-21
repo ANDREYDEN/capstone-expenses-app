@@ -17,7 +17,9 @@ async function main() {
   const db = await utils.dbConnect(DB_URL)
   global.db = db
   // creates express app
+  const cors = require('cors')
   const app = express()
+  app.use(cors())
   app.listen(process.env.PORT, () => {
     console.log(`listening on ${process.env.PORT}`)
   })

@@ -78,7 +78,10 @@ function authenticateToken(req, res, next) {
 }
 
 function generateAccessTokenFor(username) {
-  return jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: 60 * 60 })
+  // NOTE: this is for testing
+  // This must be changed and JWT_SECRET must be set as a parameter
+  const secret = "my_secret" || process.env.JWT_SECRET
+  return jwt.sign({ username }, secret, { expiresIn: 60 * 60 })
 }
 
 // adds listener to any exit events to execute some cleanup function if we need any
