@@ -17,9 +17,11 @@ async function main() {
   const db = await utils.dbConnect(DB_URL)
   global.db = db
   // creates express app
+  const cors = require('cors')
   const app = express()
-  app.listen(3000, () => {
-    console.log('listening on 3000')
+  app.use(cors())
+  app.listen(process.env.PORT, () => {
+    console.log(`listening on ${process.env.PORT}`)
   })
   // scans ROUTES_FOLDER and adds route for every one specificed
   const routes = fs.readdirSync(ROUTES_FOLDER).map(fileName => require(`${ROUTES_FOLDER}${fileName}`))
