@@ -4,7 +4,7 @@
   "description": "Capsone Project",
   "main": "main.js",
   "scripts": {
-    "start": "PORT=3000 node main.js",
+    "start": "SET PORT=3000 && node main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
