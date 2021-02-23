@@ -20,7 +20,7 @@ async function main() {
   // creates express app
   const cors = require('cors')
   const app = express()
-  app.use(cors())
+  app.use(cors({ origin: true, credentials: true }))
   app.use(cookieParser())
 
   app.listen(process.env.PORT, () => {
