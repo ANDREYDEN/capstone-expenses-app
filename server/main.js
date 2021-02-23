@@ -4,6 +4,7 @@ require('dotenv').config() // sets up env params
 
 const express = require('express')
 const fs = require("fs")
+const cookieParser = require('cookie-parser');
 
 const utils = require('./src/utils.js')
 
@@ -20,6 +21,8 @@ async function main() {
   const cors = require('cors')
   const app = express()
   app.use(cors())
+  app.use(cookieParser())
+
   app.listen(process.env.PORT, () => {
     console.log(`listening on ${process.env.PORT}`)
   })
