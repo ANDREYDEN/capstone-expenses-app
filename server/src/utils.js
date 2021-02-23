@@ -55,16 +55,18 @@ function retrieveDataFrom(req) {
 
 // checks for validity of JSON web tocken
 function authenticateToken(req, res, next) {
-  // Gather the jwt access token from the request header
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
+  // Gather the jwt access token from the cookies
+  const token = req.cookies["jwt"]
   if (!token) {
     res.status(401)
     res.send("Failed to authentificate. Please log in")
     res.end()
     return
   }
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  // NOTE: this is for testing
+  // This must be changed and JWT_SECRET must be set as a parameter
+  const secret = "my_secret" || process.env.JWT_SECRET
+  jwt.verify(token, secret, (err, decoded) => {
     if (err) {
       console.log(err)
       res.status(403)
