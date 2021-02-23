@@ -17,7 +17,12 @@ export default class SignUpModule extends React.Component {
   loginHandler = () => {
     const name = document.getElementById("login-name").value
     const password = document.getElementById("login-password").value
-    login(name, password).then(res => console.log(res)).catch(err => console.log(err))
+    login(name, password).then(res => {
+      if (res?.data?.jwt)  {
+        document.cookie = `jwt=${res.data.jwt}`
+      }
+      console.log(res)
+    }).catch(err => console.log(err))
   }
   render() {
     return (
