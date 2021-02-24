@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom'
 import SignUpModule from '../pages/signup.jsx'
 import MainPage from '../pages/main.jsx'
 
-
 export default class App extends React.Component {
   componentDidMount() {
   }

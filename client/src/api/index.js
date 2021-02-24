@@ -14,11 +14,16 @@ export const signup = (username, password) => {
 export const createNewExpenceSheet = () => {
   return api.post("/sheet/new")
 }
+export const retrieveExpenseSheet = () => {
+  return api.get("/retrieveSheet")
+}
+
 
 const apis = {
 	login,
 	signup,
-  createNewExpenceSheet
+  createNewExpenceSheet,
+  retrieveExpenseSheet
 }
 
 export default apis
