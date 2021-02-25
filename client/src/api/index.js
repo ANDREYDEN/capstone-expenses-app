@@ -11,7 +11,7 @@ export const login = (username, password) => {
 export const signup = (username, password) => {
 	return api.post("/signup", { username, password })
 }
-export const createNewExpenceSheet = () => {
+export const createNewExpenseSheet = () => {
   return api.post("/sheet/new")
 }
 export const retrieveExpenseSheet = () => {
@@ -24,7 +24,7 @@ export const authentificate = () => {
 const apis = {
 	login,
 	signup,
-  createNewExpenceSheet,
+  createNewExpenseSheet,
   retrieveExpenseSheet
 }
 
