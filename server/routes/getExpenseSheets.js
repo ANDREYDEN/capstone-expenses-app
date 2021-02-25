@@ -2,11 +2,11 @@ const {
   retrieveDataFrom
 } = require("../src/utils.js")
 
-exports.getExpenseSheet = {
+exports.getExpenseSheets = {
   type: "get",
-  path: "/retrieveSheet",
+  path: "/sheets",
   authNeeded: true,
-  callback: async function getExpenseSheet(req, res) {
+  callback: async function getExpenseSheets(req, res) {
     try {
       
     const username = req.username
