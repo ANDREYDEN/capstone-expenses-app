@@ -4,26 +4,22 @@ import { login, signup } from '../api/index.js'
 
 
 export default class SignUpModule extends React.Component {
-  componentDidMount() {
-    
-  }
-
-  signUpHandler = () => {
+  signUpHandler() {
     const name = document.getElementById("signup-name").value
     const password = document.getElementById("signup-password").value
     signup(name, password).then(res => console.log(res)).catch(err => console.log(err))
   }
 
-  loginHandler = () => {
+  loginHandler() {
     const name = document.getElementById("login-name").value
     const password = document.getElementById("login-password").value
     login(name, password).then(res => {
-      if (res?.data?.jwt)  {
-        document.cookie = `jwt=${res.data.jwt}`
-      }
-      console.log(res)
-    }).catch(err => console.log(err))
+      this.props.loginCallback()
+    }).catch(err => {
+      console.log(err)
+    })
   }
+
   render() {
     return (
       <div className="container">
@@ -35,7 +31,7 @@ export default class SignUpModule extends React.Component {
         <div className="login">
           <span>Name: </span> <input type="text" id="login-name" />
           <span>Password: </span> <input type="password" id="login-password" />
-          <button id="login-button" onClick={this.loginHandler}>Log In</button>
+          <button id="login-button" onClick={this.loginHandler.bind(this)}>Log In</button>
         </div>
       </div>
     )
