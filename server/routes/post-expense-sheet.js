@@ -3,11 +3,11 @@ const {
   retrieveDataFrom
 } = require("../src/utils.js")
 
-exports.postExpenceSheet = {
+exports.postExpenseSheet = {
   type: "post",
   path: "/sheet/new",
   authNeeded: true,
-  callback: async function postExpenceSheet(req, res) {
+  callback: async function postExpenseSheet(req, res) {
     try {
       const username = req.username
       const newExpenseSheetDoc = {
