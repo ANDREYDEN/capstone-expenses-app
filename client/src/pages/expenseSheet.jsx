@@ -1,7 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import axios from "axios"
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom"
+import { getSheetById } from "../api/index.js"
 
 export default class ExpenseSheetList extends React.Component {
   constructor(props) {
@@ -25,7 +26,12 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   componentDidMount() {
-    
+    getSheetById(this.sheetId).then(res => {
+      console.log(res)
+    }).catch(err => {
+      // TODO: user notifications
+      console.log(err)
+    })
   }
 
   render() {

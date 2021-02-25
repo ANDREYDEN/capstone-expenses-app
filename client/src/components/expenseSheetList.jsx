@@ -27,7 +27,7 @@ export default class ExpenseSheetList extends React.Component {
     const items = this.state.sheets.map((sheet, index) => { 
       return (
         <li key={index}>
-          <a href="/sheets/{sheet._id}"></a>{index + 1}.{sheet._id}
+          <a href={"/sheets/" + sheet._id}>{index + 1}.{sheet._id}</a>
         </li>
       )
     });

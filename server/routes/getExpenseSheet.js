@@ -10,8 +10,9 @@ exports.getExpenseSheet = {
   callback: async function getExpenseSheet(req, res) {
     try {
       const username = req.username
+      console.log(req.params.id)
       // TODO: some security and restrictions so people cannot fetch something they do not have access to
-      const doc = global.db.collection("sheets").findOne({ _id: idFromString(req.params.id) })
+      const doc = await global.db.collection("sheets").findOne({ _id: idFromString(req.params.id) })
       if (doc) {
         res.status(200)
         res.send({ message: "OK", expenseSheet: doc })
