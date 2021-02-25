@@ -17,7 +17,9 @@ export const createNewExpenceSheet = () => {
 export const retrieveExpenseSheet = () => {
   return api.get("/retrieveSheet")
 }
-
+export const authentificate = () => {
+  return api.get("/authentificate")
+}
 
 const apis = {
 	login,
