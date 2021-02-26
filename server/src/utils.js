@@ -68,7 +68,6 @@ function authenticateToken(req, res, next) {
   const secret = "my_secret" || process.env.JWT_SECRET
   jwt.verify(token, secret, (err, decoded) => {
     if (err) {
-      console.log(err)
       res.status(403)
       res.send("Failed to authentificate. Please log in")
       res.end()

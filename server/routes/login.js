@@ -34,7 +34,7 @@ exports.logIn = {
       const token = generateAccessTokenFor(username)
       if (token) {
         res.status(200)
-        res.cookie('jwt', token, { expires: new Date(Date.now() + 60 * 60 * 1000), secure: true })
+        res.cookie('jwt', token, { expires: new Date(Date.now() + 60 * 60 * 1000) })
         res.send({ OK: "Authorized Successfully", jwt: token })
         res.end()
       }
