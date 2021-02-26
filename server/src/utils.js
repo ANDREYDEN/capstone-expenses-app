@@ -63,10 +63,7 @@ function authenticateToken(req, res, next) {
     res.end()
     return
   }
-  // NOTE: this is for testing
-  // This must be changed and JWT_SECRET must be set as a parameter
-  const secret = "my_secret" || process.env.JWT_SECRET
-  jwt.verify(token, secret, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       res.status(403)
       res.send("Failed to authentificate. Please log in")
@@ -79,10 +76,7 @@ function authenticateToken(req, res, next) {
 }
 
 function generateAccessTokenFor(username) {
-  // NOTE: this is for testing
-  // This must be changed and JWT_SECRET must be set as a parameter
-  const secret = "my_secret" || process.env.JWT_SECRET
-  return jwt.sign({ username }, secret, { expiresIn: 60 * 60 })
+  return jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: 60 * 60 })
 }
 
 // adds listener to any exit events to execute some cleanup function if we need any
