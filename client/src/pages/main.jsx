@@ -13,7 +13,7 @@ export default class Main extends React.Component {
     return (
       <main>
         <Router>
-          <Route exact path="/">
+          <Route exact path="">
             <ExpenseSheetList />
           </Route>
           <Route exact path="/sheets/:id" component={ExpenseSheet} />

@@ -50,7 +50,7 @@ export default class App extends React.Component {
       return (
         <Router>
           <Route path="/signin">
-            {loggedIn ? <Redirect to="/" /> : <SignUpModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
+            {loggedIn ? <Redirect to="" /> : <SignUpModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
           </Route>
           <Route path="/">
             {loggedIn ? <MainPage /> : <Redirect to="/signin" />}
