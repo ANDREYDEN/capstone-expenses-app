@@ -2,8 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import { getSheetById } from "../api/index.js"
+import { getSheetById, updateSheet } from "../api/index.js"
 import Spinner from "../components/spinner.jsx"
+import { differ, debounce } from  "../utils.js"
 
 export default class ExpenseSheetList extends React.Component {
   constructor(props) {
@@ -25,6 +26,19 @@ export default class ExpenseSheetList extends React.Component {
     this.sheetName = React.createRef()
     this.storeName = React.createRef()
     this.taxIncluded = React.createRef()
+    // This will do the database call then the user finished updateing the input fields
+    this.updateDocs = debounce(() => {
+      const currentDoc = this.state.sheet;
+      const update = differ(currentDoc, {
+        name: this.sheetName.current.value,
+        store: this.storeName.current.value,
+        entries: [],
+        taxIncluded: this.taxIncluded.current.checked,
+      })
+      if (Object.keys(update).length) {
+        updateSheet(this.sheetId, update).then(console.log).catch(console.log)
+      }
+    }, 1000).bind(this)
   }
 
   componentDidMount() {
@@ -51,18 +65,17 @@ export default class ExpenseSheetList extends React.Component {
         return (
           <div className="expense-sheet-container">
             <label htmlFor="">Expense Sheet Name:</label>
-            <input type="text" name="" ref={this.sheetName} defaultValue={sheet.name}/>
+            <input type="text" name="" ref={this.sheetName} defaultValue={sheet.name} onChange={this.updateDocs}/>
             <br/>
             <label htmlFor="">Store Name:</label>
-            <input type="text" name="" ref={this.storeName} defaultValue={sheet.store}/>
+            <input type="text" name="" ref={this.storeName} defaultValue={sheet.store} onChange={this.updateDocs}/>
             <br/>
             <label htmlFor="">Tax Included:</label>
-            <input type="checkbox" name="" ref={this.taxIncluded}/>
+            <input type="checkbox" name="" ref={this.taxIncluded} onChange={this.updateDocs}/>
             <br/>
             <span>Date: {sheet.createdAt}</span>
             <br/>
             <span>Created By: {sheet.createdBy}</span>
-
           </div>
         )
       }
