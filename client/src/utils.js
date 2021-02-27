@@ -19,7 +19,7 @@ export function differ(obj1, obj2) {
     return !obj1[key] ? [key, obj2[key]] : []
   })
   return diffFields.concat(newFields).reduce((obj, [key, value]) => {
-    if (key && value) {
+    if (key && value !== undefined) {
       obj[key] = value
     }
     return obj
