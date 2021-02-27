@@ -23,12 +23,17 @@ export const authentificate = () => {
 export const getSheetById = (id) => {
   return api.get(`/sheets/${id}`)
 }
+export const updateSheet = (id, update) => {
+  return api.post(`/sheets/update/${id}`, JSON.stringify(update))
+}
 
 const apis = {
 	login,
 	signup,
   createNewExpenseSheet,
-  retrieveExpenseSheet
+  retrieveExpenseSheet,
+  getSheetById,
+  updateSheet
 }
 
 export default apis
