@@ -71,7 +71,7 @@ export default class ExpenseSheetList extends React.Component {
             <input type="text" name="" ref={this.storeName} defaultValue={sheet.store} onChange={this.updateDocs}/>
             <br/>
             <label htmlFor="">Tax Included:</label>
-            <input type="checkbox" name="" ref={this.taxIncluded} onChange={this.updateDocs}/>
+            <input type="checkbox" name="" ref={this.taxIncluded} defaultChecked={this.state.sheet.taxIncluded} onChange={this.updateDocs}/>
             <br/>
             <span>Date: {sheet.createdAt}</span>
             <br/>
