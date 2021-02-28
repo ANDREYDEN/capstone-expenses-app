@@ -29,9 +29,13 @@ export const updateSheet = (id, update) => {
 export const getGroupMembers = (id) => {
   return api.get(`/groups/${id}`)
 }
-export const addNewEntry = (id) => {
-  return api.post(`/sheets/addEntry/${id}`)
+export const addNewEntry = (sheetId) => {
+  return api.post(`/sheets/addEntry/${sheetId}`)
 }
+export const updateEntry = (sheetId, index, entry) => {
+  return api.post(`/sheets/updateEntry/${sheetId}`, JSON.stringify({ index, entry }))
+}
+
 
 
 const apis = {
