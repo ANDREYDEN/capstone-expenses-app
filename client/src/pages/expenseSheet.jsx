@@ -75,8 +75,8 @@ export default class ExpenseSheetList extends React.Component {
 
   render() {
     let spreadSheet = null
-    if (this.state.receivedGroupMembers && this.state.receivedExpenses) {
-      spreadSheet = <SpreadSheet members={this.state.members} />
+    if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
+      spreadSheet = <SpreadSheet members={this.state.members} entries={this.state.sheet.entries}/>
     }
 
     if (this.state.serverConfirmed) {
