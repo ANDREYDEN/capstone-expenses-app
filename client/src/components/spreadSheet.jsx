@@ -1,6 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
+import { addNewEntry } from "../api/index.js"
+
 export default class SpreadSheet extends React.Component {
   constructor(props) {
     super(props)
@@ -18,12 +20,9 @@ export default class SpreadSheet extends React.Component {
   }
 
   addEntry(e) {
-    const newEntry = {
-      name: "",
-      prise: "",
-      userChecked: []
-    }
-    this.setState({ entries: this.state.entries.concat([newEntry]) })
+    addNewEntry(this.props.sheetId).then(res => {
+      this.setState({ entries: this.state.entries.concat([res.data.entry]) })
+    }).catch(console.log)
     console.log(e)
   }
 

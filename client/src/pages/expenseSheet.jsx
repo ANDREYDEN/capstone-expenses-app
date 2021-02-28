@@ -2,9 +2,11 @@ import React from "react"
 import ReactDOM from "react-dom"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
+
 import Spinner from "../components/spinner.jsx"
 import SpreadSheet from "../components/spreadSheet.jsx"
+
+import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
 
 export default class ExpenseSheetList extends React.Component {
@@ -76,7 +78,11 @@ export default class ExpenseSheetList extends React.Component {
   render() {
     let spreadSheet = null
     if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
-      spreadSheet = <SpreadSheet members={this.state.members} entries={this.state.sheet.entries}/>
+      spreadSheet = <SpreadSheet
+        members={this.state.members}
+        sheetId={this.sheetId}
+        entries={this.state.sheet.entries}
+      />
     }
 
     if (this.state.serverConfirmed) {

@@ -17,7 +17,6 @@ exports.updateExpenseSheet = {
       if (data.name !== undefined) { update.name = data.name }
       if (data.store !== undefined) { update.store = data.store }
       if (data.taxIncluded !== undefined) { update.taxIncluded = data.taxIncluded }
-      if (data.entries !== undefined) { update.entries = data.entries }  
 
       if (!req?.params?.id) {
         res.status(400)
