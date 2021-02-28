@@ -26,6 +26,9 @@ export const getSheetById = (id) => {
 export const updateSheet = (id, update) => {
   return api.post(`/sheets/update/${id}`, JSON.stringify(update))
 }
+export const getGroupMembers = (id) => {
+  return api.get(`/groups/${id}`)
+}
 
 const apis = {
 	login,
@@ -33,7 +36,8 @@ const apis = {
   createNewExpenseSheet,
   retrieveExpenseSheet,
   getSheetById,
-  updateSheet
+  updateSheet,
+  getGroupMembers
 }
 
 export default apis
