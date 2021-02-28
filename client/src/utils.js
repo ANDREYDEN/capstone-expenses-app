@@ -7,6 +7,7 @@
  * @return {Object} Returns the newly created object that has the fields that present in object one and 2 but different and that are .
  */
 export function differ(obj1, obj2) {
+  // TODO: impelement deep checking
   const obj1Keys = Object.keys(obj1)
   const obj2Keys = Object.keys(obj2)
   const diffFields = obj1Keys.map(key => {
@@ -16,7 +17,7 @@ export function differ(obj1, obj2) {
     return []
   })
   const newFields = obj2Keys.map(key => {
-    return !obj1[key] ? [key, obj2[key]] : []
+    return obj1[key] === undefined ? [key, obj2[key]] : []
   })
   return diffFields.concat(newFields).reduce((obj, [key, value]) => {
     if (key && value !== undefined) {
