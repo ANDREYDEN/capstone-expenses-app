@@ -2,8 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import axios from "axios"
 import { useParams } from "react-router-dom"
-import { getSheetById, updateSheet } from "../api/index.js"
+import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
 import Spinner from "../components/spinner.jsx"
+import SpreadSheet from "../components/spreadSheet.jsx"
 import { differ, debounce } from  "../utils.js"
 
 export default class ExpenseSheetList extends React.Component {
@@ -19,7 +20,9 @@ export default class ExpenseSheetList extends React.Component {
         entries: [],
         taxIncluded: false,
         usersPaidIds: []
-      }
+      },
+      receivedGroupMembers: false,
+      receivedExpenses: true
     }
     this.sheetId = props.match.params.id
 
@@ -36,7 +39,10 @@ export default class ExpenseSheetList extends React.Component {
         taxIncluded: this.taxIncluded.current.checked,
       })
       if (Object.keys(update).length) {
-        updateSheet(this.sheetId, update).then(console.log).catch(console.log)
+        updateSheet(this.sheetId, update).then(res => {
+          this.setState({ receivedGroupMembers: true })
+          this.members = res.data.members
+        }).catch(console.log)
       }
     }, 1000).bind(this)
   }
@@ -56,9 +62,23 @@ export default class ExpenseSheetList extends React.Component {
       })
       console.log(err)
     })
+
+
+    const groupId = "6036d85f7e0fff3b44e09391"
+    getGroupMembers(groupId).then(res => {
+      this.setState({
+        receivedGroupMembers: true,
+        members: res.data.members
+      })
+    }).catch(console.log)
   }
 
   render() {
+    let spreadSheet = null
+    if (this.state.receivedGroupMembers && this.state.receivedExpenses) {
+      spreadSheet = <SpreadSheet members={this.state.members} />
+    }
+
     if (this.state.serverConfirmed) {
       if (this.state.sheet) {
         const sheet = this.state.sheet
@@ -76,6 +96,7 @@ export default class ExpenseSheetList extends React.Component {
             <span>Date: {sheet.createdAt}</span>
             <br/>
             <span>Created By: {sheet.createdBy}</span>
+            {spreadSheet}
           </div>
         )
       }

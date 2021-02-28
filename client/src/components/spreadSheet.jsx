@@ -4,8 +4,7 @@ import ReactDOM from "react-dom"
 export default class SpreadSheet extends React.Component {
   constructor(props) {
     super(props)
-
-    this.members = props.memebrs
+    this.members = props.members
   }
 
   componentDidMount() {
@@ -14,6 +13,13 @@ export default class SpreadSheet extends React.Component {
 
   render() {
     // const memberName = this.
+    const memberHeaders = this.members.map(member => {
+      return (
+        <th>
+          {member.name}
+        </th>
+      )
+    })
     return (
       <table>
         <thead>
@@ -24,6 +30,7 @@ export default class SpreadSheet extends React.Component {
             <th>
               Prise
             </th>
+            {memberHeaders}
           </tr>
         </thead>
       </table>
