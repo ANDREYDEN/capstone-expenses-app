@@ -14,8 +14,8 @@ export const signup = (username, password) => {
 export const createNewExpenseSheet = () => {
   return api.post("/sheets/new")
 }
-export const retrieveExpenseSheet = () => {
-  return api.get("/sheets")
+export const retrieveExpenseSheets = (groupId) => {
+  return api.get(`/sheets?groupId=${groupId}`)
 }
 export const authentificate = () => {
   return api.get("/authentificate")
@@ -42,10 +42,12 @@ const apis = {
 	login,
 	signup,
   createNewExpenseSheet,
-  retrieveExpenseSheet,
+  retrieveExpenseSheets,
   getSheetById,
   updateSheet,
-  getGroupMembers
+  getGroupMembers,
+  addNewEntry,
+  updateEntry
 }
 
 export default apis

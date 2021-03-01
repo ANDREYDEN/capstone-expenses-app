@@ -9,7 +9,9 @@ exports.getExpenseSheets = {
   callback: async function getExpenseSheets(req, res) {
     try {
       const username = req.username
-      const cursor = global.db.collection("sheets").find({createdBy: username})
+      const groupId = req.query.groupId
+      // TODO: add sicurity
+      const cursor = global.db.collection("sheets").find({ groupId })
       const expenseSheets = await cursor.toArray();
 
       res.status(200)
