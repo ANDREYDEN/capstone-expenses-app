@@ -5,7 +5,7 @@ const {
 
 exports.postExpenseSheet = {
   type: "post",
-  path: "/sheet/new",
+  path: "/sheets/new",
   authNeeded: true,
   callback: async function postExpenseSheet(req, res) {
     try {

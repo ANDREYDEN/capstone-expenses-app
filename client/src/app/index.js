@@ -17,7 +17,7 @@ export default class App extends React.Component {
   }
 
   onSuccessfulLogin() {
-    // NOTE: this is callback that is called then we successfully log in in the signUpModule
+    // NOTE: this is callback that is called when we successfully log in in the signUpModule
     this.setState({
       loggedIn: true
     })
@@ -50,10 +50,15 @@ export default class App extends React.Component {
       return (
         <Router>
           <Route path="/signin">
-            {loggedIn ? <Redirect to="/" /> : <SignUpModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
+            {loggedIn ? <Redirect to="/home" /> : <SignUpModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
           </Route>
-          <Route path="/">
-            {loggedIn ? <MainPage /> : <Redirect to="/signin" />}
+          {["/home", "/sheets"].map((path, index) =>
+            <Route path={path} key={index}>
+              {loggedIn ? <MainPage /> : <Redirect to="/signin" />}
+            </Route>
+          )}
+          <Route exact path="/">
+            <Redirect to="/home" />
           </Route>
         </Router>
       )

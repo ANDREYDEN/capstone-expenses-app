@@ -12,20 +12,40 @@ export const signup = (username, password) => {
 	return api.post("/signup", { username, password })
 }
 export const createNewExpenseSheet = () => {
-  return api.post("/sheet/new")
+  return api.post("/sheets/new")
 }
 export const retrieveExpenseSheet = () => {
-  return api.get("/retrieveSheet")
+  return api.get("/sheets")
 }
 export const authentificate = () => {
   return api.get("/authentificate")
 }
+export const getSheetById = (id) => {
+  return api.get(`/sheets/${id}`)
+}
+export const updateSheet = (id, update) => {
+  return api.post(`/sheets/update/${id}`, JSON.stringify(update))
+}
+export const getGroupMembers = (id) => {
+  return api.get(`/groups/${id}`)
+}
+export const addNewEntry = (sheetId) => {
+  return api.post(`/sheets/addEntry/${sheetId}`)
+}
+export const updateEntry = (sheetId, index, entry) => {
+  return api.post(`/sheets/updateEntry/${sheetId}`, JSON.stringify({ index, entry }))
+}
+
+
 
 const apis = {
 	login,
 	signup,
   createNewExpenseSheet,
-  retrieveExpenseSheet
+  retrieveExpenseSheet,
+  getSheetById,
+  updateSheet,
+  getGroupMembers
 }
 
 export default apis
