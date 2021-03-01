@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { createNewExpenseSheet, retrieveExpenseSheet } from "../api/index.js"
+import { createNewExpenseSheet, retrieveExpenseSheets } from "../api/index.js"
 import axios from "axios"
 
 export default class ExpenseSheetList extends React.Component {
@@ -19,7 +19,7 @@ export default class ExpenseSheetList extends React.Component {
   }
   retrieveExpenseSheets() {
     // TODO: this should be executed on start
-    retrieveExpenseSheet().then((res) => {
+    retrieveExpenseSheets(this.groupId).then((res) => {
       this.setState({ sheets: res.data.expenseSheets })
     }).catch(err => console.error(err))
   }
@@ -44,17 +44,17 @@ export default class ExpenseSheetList extends React.Component {
         }, 0)
       }
       memo[sheet._id] = userOwns - userOwes
+      memo.total += userOwns - userOwes
       return memo
-    }, {})
+    }, { total: 0 })
 
     const items = this.state.sheets.map((sheet, index) => {
       return (
         <li key={index}>
           <a href={"/sheets/" + sheet._id}>
-            {index + 1}.
-            {`${sheet.name} by ${sheet.createdBy}`}
-            {`${summary[sheet._id] > 0 ? "you own:" : "you owe:"} ${Math.abs(summary[sheet._id])}`}
+            {index + 1}.{`${sheet.name} by ${sheet.createdBy}`}
           </a>
+          {` ${summary[sheet._id] > 0 ? "you own:" : "you owe:"} ${Math.abs(summary[sheet._id])}`}
         </li>
       )
     });
@@ -62,6 +62,7 @@ export default class ExpenseSheetList extends React.Component {
       <div className="expense-sheet-container">
         <ul>
           {items}
+          <li>Total: {summary.total > 0 ? "you own" : "you owe"} $ {Math.abs(summary.total)}</li>
           <li>
             <button onClick={this.addNewExpenseSheet}>Add New One</button>
             <br/>
