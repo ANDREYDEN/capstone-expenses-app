@@ -14,6 +14,7 @@ export default class SignUpModule extends React.Component {
     const name = document.getElementById("login-name").value
     const password = document.getElementById("login-password").value
     login(name, password).then(res => {
+      localStorage.setItem("user", JSON.stringify(res.data.user))
       this.props.loginCallback()
     }).catch(err => {
       console.log(err)
