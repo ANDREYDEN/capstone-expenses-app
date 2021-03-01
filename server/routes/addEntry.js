@@ -26,8 +26,8 @@ exports.updateExpenseSheet = {
       }
       const newEntry =  {
         name: "", 
-        prise: 0, 
-        userChekedIds: {}
+        price: 0,
+        userCheckedIds: {}
       }
       await global.db.collection("sheets").updateOne({ _id: doc._id }, { $push: { entries: newEntry } })
       res.status(200)
