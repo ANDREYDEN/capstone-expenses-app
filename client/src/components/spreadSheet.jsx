@@ -73,6 +73,7 @@ export default class SpreadSheet extends React.Component {
               data-type="paidCheck"
               data-userid={member._id}
               data-index={index}
+              defaultChecked={entry.userCheckedIds[member._id]}
             />
           </td>
         )
@@ -80,10 +81,20 @@ export default class SpreadSheet extends React.Component {
       return (
         <tr key={index}>
           <td>
-            <input type="text" onChange={onInputChange} data-type="name" data-index={index}/>
+            <input type="text"
+              onChange={onInputChange}
+              data-type="name"
+              data-index={index}
+              defaultValue={entry.name}
+            />
           </td>
           <td>
-            $<input type="text" onChange={onInputChange} data-type="price" data-index={index}/>
+            $<input type="text"
+            onChange={onInputChange}
+            data-type="price"
+            data-index={index}
+            defaultValue={entry.price}
+          />
           </td>
           {checks}
         </tr>
