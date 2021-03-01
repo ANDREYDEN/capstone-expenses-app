@@ -23,9 +23,12 @@ export default class SpreadSheet extends React.Component {
         }
       }).forEach(({ index, entry }) => {
         // TODO: implement a methond of updating multiple queries at once
-        updateEntry(this.props.sheetId, index, entry)
+        updateEntry(this.props.sheetId, index, entry).then(res => {
+          this.setState({ entries: this.state.entries })
+          this.initEntryList = JSON.parse(JSON.stringify(this.state.entries))
+        }).catch(console.log)
       })
-    }, 1000)
+    }, 500)
   }
 
   componentDidMount() {
@@ -101,6 +104,39 @@ export default class SpreadSheet extends React.Component {
       )
     })
 
+    const summary = this.state.entries.reduce((memo, entry) => {
+      // Filters those who have { userId: true }
+      const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
+      const pricePerUser = entry.price / usersPaid.length
+      memo.overall += entry.price
+      usersPaid.forEach(userId => {
+        if (!memo[userId]) {
+          memo[userId] = 0
+        }
+        memo[userId] += pricePerUser
+      })
+      return memo
+    }, { overall: 0 })
+
+    const membersSummary = this.members.map((member, index) => {
+      return (
+        <th key={index}>
+          ${summary[member._id] || "0.00"}
+        </th>
+      )
+    })
+
+    const bottomRow = (
+      <tr>
+        <td>
+        </td>
+        <td>
+          Total: {summary.overall}
+        </td>
+        {membersSummary}
+      </tr>
+    )
+
     return (
       <div>
         <table>
@@ -117,6 +153,7 @@ export default class SpreadSheet extends React.Component {
           </thead>
           <tbody>
             {entries}
+            {bottomRow}
           </tbody>
         </table>
         <button onClick={this.addEntry.bind(this)}>+</button>
