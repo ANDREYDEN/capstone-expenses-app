@@ -10,12 +10,12 @@ export default class ExpenseSheetList extends React.Component {
     this.state = {
       sheets: []
     }
-    this.groupId = "6036d85f7e0fff3b44e09391";
+    this.groupId = "6036d85f7e0fff3b44e09391"
   }
   addNewExpenseSheet() {
     // TODO: some nitifcation if success
     // TODO: redirect if successful
-    createNewExpenseSheet().then(result => console.log(result)).catch(err => console.error(err))
+    createNewExpenseSheet(this.groupId).then(result => console.log(result)).catch(err => console.error(err))
   }
   retrieveExpenseSheets() {
     // TODO: this should be executed on start
@@ -64,7 +64,7 @@ export default class ExpenseSheetList extends React.Component {
           {items}
           <li>Total: {summary.total > 0 ? "you own" : "you owe"} $ {Math.abs(summary.total)}</li>
           <li>
-            <button onClick={this.addNewExpenseSheet}>Add New One</button>
+            <button onClick={this.addNewExpenseSheet.bind(this)}>Add New One</button>
             <br/>
             <button onClick={this.retrieveExpenseSheets.bind(this)}>Show Spreadsheets</button>
 
