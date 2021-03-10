@@ -11,8 +11,8 @@ export const login = (username, password) => {
 export const signup = (username, password) => {
 	return api.post("/signup", { username, password })
 }
-export const createNewExpenseSheet = () => {
-  return api.post("/sheets/new")
+export const createNewExpenseSheet = (groupId) => {
+  return api.post("/sheets/new", JSON.stringify({ groupId })) 
 }
 export const retrieveExpenseSheets = (groupId) => {
   return api.get(`/sheets?groupId=${groupId}`)

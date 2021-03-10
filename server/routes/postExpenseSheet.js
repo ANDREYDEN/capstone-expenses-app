@@ -9,6 +9,7 @@ exports.postExpenseSheet = {
   authNeeded: true,
   callback: async function postExpenseSheet(req, res) {
     try {
+      const data = await retrieveDataFrom(req)
       const username = req.username
       const newExpenseSheetDoc = {
         name: "",
@@ -17,7 +18,8 @@ exports.postExpenseSheet = {
         createdBy: username,
         entries: [],
         taxIncluded: false,
-        usersPaidIds: []
+        usersPaidIds: [],
+        groupId: data.groupId
       }
 
       const inserted = await global.db.collection("sheets").insertOne(newExpenseSheetDoc)
