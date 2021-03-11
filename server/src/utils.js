@@ -8,14 +8,10 @@ const SALT_ROUNDS = 10
 
 async function verifyGoogleToken(token) {
   const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: "156305616884-kpnf7tl95noliu8243c4310fbp9h1v79.apps.googleusercontent.com",  // Specify the CLIENT_ID of the app that accesses the backend
-      // Or, if multiple clients access the backend:
-      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    idToken: token,
+    audience: "156305616884-kpnf7tl95noliu8243c4310fbp9h1v79.apps.googleusercontent.com",  // Specify the CLIENT_ID of the app that accesses the backend
   });
-  const payload = ticket.getPayload()
-  return payload  // If request specified a G Suite domain:
-  // const domain = payload['hd'];
+  return ticket.getPayload()
 }
 
 // makes bcrypt encrypted hash from a password
