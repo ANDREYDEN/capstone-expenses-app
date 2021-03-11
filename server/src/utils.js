@@ -67,9 +67,38 @@ function retrieveDataFrom(req) {
   })
 }
 
-// checks for validity of JSON web tocken
+// checks for validity of the token
 function authenticateToken(req, res, next) {
-  // Gather the jwt access token from the cookies
+  if (req.cookies["jwt"]) {
+    doJWTAuthentification(req, res, next)
+  }
+  else {
+    doGoogleAuthentification(req, res, next)
+  }
+}
+
+// validates token that was obtained from google
+function doGoogleAuthentification(req, res, next) {
+  const token = req.cookies["tokenId"]
+  if (!token) {
+    res.status(401)
+    res.send("Failed to authentificate. Please log in")
+    res.end()
+    return
+  }
+  verifyGoogleToken(token).then(async decoded => {
+    req.username = decoded.name
+    req.email = decoded.email
+    next()
+  }).catch(err => {
+    res.status(403)
+    res.send("Failed to authentificate. Please log in")
+    res.end()
+    return
+  })
+}
+// validates jwt token
+function doJWTAuthentification(req, res, next) {
   const token = req.cookies["jwt"]
   if (!token) {
     res.status(401)
@@ -77,11 +106,7 @@ function authenticateToken(req, res, next) {
     res.end()
     return
   }
-  const isGoogle = req.cookies["platform"] === "google"
-  const secret = isGoogle ? process.env.GOOGLE_SECRET : process.env.JWT_SECRET
-  console.log(token)
-  jwt.verify(token, secret, (err, decoded) => {
-    console.log(secret, err, decoded)
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       res.status(403)
       res.send("Failed to authentificate. Please log in")
@@ -89,6 +114,7 @@ function authenticateToken(req, res, next) {
       return
     }
     req.username = decoded.username
+    req.email = decoded.email
     res.decodedTokenData = decoded
     next()
   })
