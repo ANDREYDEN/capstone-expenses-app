@@ -39,7 +39,19 @@ export function debounce(func, wait) {
   }
 }
 
+export function deleteCookie(cookies, cookieName) {
+  const cookieArray = cookies.split("; ").filter(cookie => {
+    const [name, value] = cookie.split("=")
+    if (name === cookieName) {
+      return false
+    }
+    return true
+  })
+  return cookieArray.join("; ")
+}
+
 export default {
   differ,
-  debounce
+  debounce,
+  deleteCookie
 }
