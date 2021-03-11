@@ -1,7 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { login, signup } from '../api/index.js'
-
+import React from "react"
+import ReactDOM from "react-dom"
+import { login, signup } from "../api/index.js"
+import GoogleSignIn from "../components/googleSignIn.jsx"
+import GoogleSignOut from "../components/googleSignOut.jsx"
 
 export default class SignUpModule extends React.Component {
   signUpHandler() {
@@ -33,6 +34,10 @@ export default class SignUpModule extends React.Component {
           <span>Name: </span> <input type="text" id="login-name" />
           <span>Password: </span> <input type="password" id="login-password" />
           <button id="login-button" onClick={this.loginHandler.bind(this)}>Log In</button>
+        </div>
+        <div className="google">
+          <GoogleSignIn />
+          <GoogleSignOut />
         </div>
       </div>
     )
