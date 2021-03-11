@@ -4,9 +4,8 @@ import { GoogleLogout } from "react-google-login";
 
 
 export default class GoogleSignOut extends React.Component {
-
-  responseGoogle(response) {
-    console.log(response);
+  onLogout() {
+    this.props.logout("tokenId")
   }
 
   render() {
@@ -17,7 +16,7 @@ export default class GoogleSignOut extends React.Component {
         <GoogleLogout
           clientId={clientId}
           buttonText="Logout"
-          onSuccess={this.responseGoogle}
+          onLogoutSuccess={this.onLogout.bind(this)}
         />
       </div>
     )

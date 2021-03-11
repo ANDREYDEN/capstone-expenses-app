@@ -1,10 +1,11 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
 import { authentificate } from "../api/index.js"
 import SignUpModule from "../pages/signup.jsx"
 import MainPage from "../pages/main.jsx"
 import SpinnerPreload from "../components/spinner.jsx"
+import { deleteCookie } from "../utils.js"
 
 
 export default class App extends React.Component {
@@ -20,6 +21,12 @@ export default class App extends React.Component {
     // NOTE: this is callback that is called when we successfully log in in the signUpModule
     this.setState({
       loggedIn: true
+    })
+  }
+  onSuccessfulLogout(tokenName) {
+    document.cookie = `${tokenName}=`
+    this.setState({
+      loggedIn: false
     })
   }
 
@@ -54,7 +61,7 @@ export default class App extends React.Component {
           </Route>
           {["/home", "/sheets"].map((path, index) =>
             <Route path={path} key={index}>
-              {loggedIn ? <MainPage /> : <Redirect to="/signin" />}
+              {loggedIn ? <MainPage logout={this.onSuccessfulLogout.bind(this)}/> : <Redirect to="/signin" />}
             </Route>
           )}
           <Route exact path="/">
