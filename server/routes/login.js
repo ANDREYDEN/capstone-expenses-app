@@ -2,7 +2,6 @@
 const {
   retrieveDataFrom,
   passwordsMatch,
-  userExists,
   SALT_ROUNDS,
   generateAccessTokenFor
 } = require("../src/utils.js")

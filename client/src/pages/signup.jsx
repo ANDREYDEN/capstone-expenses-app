@@ -1,6 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { login, signup } from "../api/index.js"
+import { login, signup, oauth } from "../api/index.js"
 import GoogleSignIn from "../components/googleSignIn.jsx"
 import GoogleSignOut from "../components/googleSignOut.jsx"
 
@@ -22,6 +22,11 @@ export default class SignUpModule extends React.Component {
     })
   }
 
+  googleSignInHandler(response) {
+    console.log(response)
+    oauth(response.tokenId, "google").then(console.log).catch(console.log)
+  }
+
   render() {
     return (
       <div className="container">
@@ -36,8 +41,7 @@ export default class SignUpModule extends React.Component {
           <button id="login-button" onClick={this.loginHandler.bind(this)}>Log In</button>
         </div>
         <div className="google">
-          <GoogleSignIn />
-          <GoogleSignOut />
+          <GoogleSignIn onSuccess={this.googleSignInHandler.bind(this)}/>
         </div>
       </div>
     )

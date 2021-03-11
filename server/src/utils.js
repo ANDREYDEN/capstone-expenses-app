@@ -1,8 +1,22 @@
-const bcrypt = require('bcrypt')
-const { MongoClient, ObjectId } = require('mongodb')
+const bcrypt = require("bcrypt")
+const { MongoClient, ObjectId } = require("mongodb")
 const jwt = require("jsonwebtoken")
+const {OAuth2Client} = require("google-auth-library");
+const client = new OAuth2Client("156305616884-kpnf7tl95noliu8243c4310fbp9h1v79.apps.googleusercontent.com")
 
 const SALT_ROUNDS = 10
+
+async function verifyGoogleToken(token) {
+  const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: "156305616884-kpnf7tl95noliu8243c4310fbp9h1v79.apps.googleusercontent.com",  // Specify the CLIENT_ID of the app that accesses the backend
+      // Or, if multiple clients access the backend:
+      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+  });
+  const payload = ticket.getPayload()
+  return payload  // If request specified a G Suite domain:
+  // const domain = payload['hd'];
+}
 
 // makes bcrypt encrypted hash from a password
 function makeHashOf(password, saltRounds) {
@@ -63,7 +77,11 @@ function authenticateToken(req, res, next) {
     res.end()
     return
   }
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  const isGoogle = req.cookies["platform"] === "google"
+  const secret = isGoogle ? process.env.GOOGLE_SECRET : process.env.JWT_SECRET
+  console.log(token)
+  jwt.verify(token, secret, (err, decoded) => {
+    console.log(secret, err, decoded)
     if (err) {
       res.status(403)
       res.send("Failed to authentificate. Please log in")
@@ -71,6 +89,7 @@ function authenticateToken(req, res, next) {
       return
     }
     req.username = decoded.username
+    res.decodedTokenData = decoded
     next()
   })
 }
@@ -86,14 +105,14 @@ function exitHandler(cleanUpFn) {
     cleanUpFn()
     process.exit()
   }
-  process.on('exit', exit)
+  process.on("exit", exit)
   //catches ctrl+c event
-  process.on('SIGINT', exit)
+  process.on("SIGINT", exit)
   // catches "kill pid" (for example: nodemon restart)
-  process.on('SIGUSR1', exit)
-  process.on('SIGUSR2', exit)
+  process.on("SIGUSR1", exit)
+  process.on("SIGUSR2", exit)
   //catches uncaught exceptions
-  process.on('uncaughtException', exit)
+  process.on("uncaughtException", exit)
 }
 
 // sets up db connction; adds db connection close to exitHandler
@@ -152,4 +171,4 @@ exports.addRoutes = addRoutes
 exports.passwordsMatch = passwordsMatch
 exports.idFromString = idFromString
 exports.stringFromId = stringFromId
-
+exports.verifyGoogleToken = verifyGoogleToken
