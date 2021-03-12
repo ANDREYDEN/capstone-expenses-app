@@ -1,7 +1,7 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { login, signup } from '../api/index.js'
-
+import React from "react"
+import ReactDOM from "react-dom"
+import { login, signup, oauth } from "../api/index.js"
+import GoogleSignIn from "../components/googleSignIn.jsx"
 
 export default class SignUpModule extends React.Component {
   signUpHandler() {
@@ -21,6 +21,13 @@ export default class SignUpModule extends React.Component {
     })
   }
 
+  googleSignInHandler(response) {
+    console.log(response)
+    oauth(response.tokenId, "google").then(res => {
+      this.props.loginCallback()
+    }).catch(console.error)
+  }
+
   render() {
     return (
       <div className="container">
@@ -33,6 +40,9 @@ export default class SignUpModule extends React.Component {
           <span>Name: </span> <input type="text" id="login-name" />
           <span>Password: </span> <input type="password" id="login-password" />
           <button id="login-button" onClick={this.loginHandler.bind(this)}>Log In</button>
+        </div>
+        <div className="google">
+          <GoogleSignIn onSuccess={this.googleSignInHandler.bind(this)}/>
         </div>
       </div>
     )

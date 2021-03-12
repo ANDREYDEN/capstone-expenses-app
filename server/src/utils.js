@@ -1,8 +1,18 @@
-const bcrypt = require('bcrypt')
-const { MongoClient, ObjectId } = require('mongodb')
+const bcrypt = require("bcrypt")
+const { MongoClient, ObjectId } = require("mongodb")
 const jwt = require("jsonwebtoken")
+const {OAuth2Client} = require("google-auth-library");
+const client = new OAuth2Client("156305616884-kpnf7tl95noliu8243c4310fbp9h1v79.apps.googleusercontent.com")
 
 const SALT_ROUNDS = 10
+
+async function verifyGoogleToken(token) {
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: "156305616884-kpnf7tl95noliu8243c4310fbp9h1v79.apps.googleusercontent.com",  // Specify the CLIENT_ID of the app that accesses the backend
+  });
+  return ticket.getPayload()
+}
 
 // makes bcrypt encrypted hash from a password
 function makeHashOf(password, saltRounds) {
@@ -53,9 +63,38 @@ function retrieveDataFrom(req) {
   })
 }
 
-// checks for validity of JSON web tocken
+// checks for validity of the token
 function authenticateToken(req, res, next) {
-  // Gather the jwt access token from the cookies
+  if (req.cookies["jwt"]) {
+    doJWTAuthentification(req, res, next)
+  }
+  else {
+    doGoogleAuthentification(req, res, next)
+  }
+}
+
+// validates token that was obtained from google
+function doGoogleAuthentification(req, res, next) {
+  const token = req.cookies["tokenId"]
+  if (!token) {
+    res.status(401)
+    res.send("Failed to authentificate. Please log in")
+    res.end()
+    return
+  }
+  verifyGoogleToken(token).then(async decoded => {
+    req.username = decoded.name
+    req.email = decoded.email
+    next()
+  }).catch(err => {
+    res.status(403)
+    res.send("Failed to authentificate. Please log in")
+    res.end()
+    return
+  })
+}
+// validates jwt token
+function doJWTAuthentification(req, res, next) {
   const token = req.cookies["jwt"]
   if (!token) {
     res.status(401)
@@ -71,6 +110,8 @@ function authenticateToken(req, res, next) {
       return
     }
     req.username = decoded.username
+    req.email = decoded.email
+    res.decodedTokenData = decoded
     next()
   })
 }
@@ -86,14 +127,14 @@ function exitHandler(cleanUpFn) {
     cleanUpFn()
     process.exit()
   }
-  process.on('exit', exit)
+  process.on("exit", exit)
   //catches ctrl+c event
-  process.on('SIGINT', exit)
+  process.on("SIGINT", exit)
   // catches "kill pid" (for example: nodemon restart)
-  process.on('SIGUSR1', exit)
-  process.on('SIGUSR2', exit)
+  process.on("SIGUSR1", exit)
+  process.on("SIGUSR2", exit)
   //catches uncaught exceptions
-  process.on('uncaughtException', exit)
+  process.on("uncaughtException", exit)
 }
 
 // sets up db connction; adds db connection close to exitHandler
@@ -152,4 +193,4 @@ exports.addRoutes = addRoutes
 exports.passwordsMatch = passwordsMatch
 exports.idFromString = idFromString
 exports.stringFromId = stringFromId
-
+exports.verifyGoogleToken = verifyGoogleToken

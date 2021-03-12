@@ -11,6 +11,9 @@ export const login = (username, password) => {
 export const signup = (username, password) => {
 	return api.post("/signup", { username, password })
 }
+export const oauth = (tokenId, platform) => {
+  return api.post("/oauth", JSON.stringify({ tokenId , platform }))
+}
 export const createNewExpenseSheet = (groupId) => {
   return api.post("/sheets/new", JSON.stringify({ groupId })) 
 }
