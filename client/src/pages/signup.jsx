@@ -1,5 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import "../styles/signup.scss"
 import { login, signup, oauth } from "../api/index.js"
 import GoogleSignIn from "../components/googleSignIn.jsx"
 
@@ -32,13 +33,21 @@ export default class SignUpModule extends React.Component {
     return (
       <div className="container">
         <div className="signup">
-          <span>Name: </span> <input type="text" id="signup-name" />
-          <span>Password: </span> <input type="password" id="signup-password" />
+          <div className="row">
+            <span>Name: </span> <input type="text" id="signup-name" />
+          </div>
+          <div className="row">
+            <span>Password: </span> <input type="password" id="signup-password" />
+          </div>
           <button id="signup-button" onClick={this.signUpHandler}>Sign Up</button>
         </div>
         <div className="login">
-          <span>Name: </span> <input type="text" id="login-name" />
-          <span>Password: </span> <input type="password" id="login-password" />
+          <div className="row">
+            <span>Name: </span> <input type="text" id="login-name" />
+          </div>
+          <div className="row">
+            <span>Password: </span> <input type="password" id="login-password" />
+          </div>
           <button id="login-button" onClick={this.loginHandler.bind(this)}>Log In</button>
         </div>
         <div className="google">
