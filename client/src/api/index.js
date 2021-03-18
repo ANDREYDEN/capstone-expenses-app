@@ -5,11 +5,11 @@ const api = axios.create({
     withCredentials: true
 })
 
-export const login = (username, password) => {
-	return api.post("/login", { username, password })
+export const login = (emailAddress, password) => {
+	return api.post("/login", { emailAddress, password })
 }
-export const signup = (username, password) => {
-	return api.post("/signup", { username, password })
+export const signup = (username, password, emailAddress) => {
+	return api.post("/signup", { username, password, emailAddress })
 }
 export const oauth = (tokenId, platform) => {
   return api.post("/oauth", JSON.stringify({ tokenId , platform }))
