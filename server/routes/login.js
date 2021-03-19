@@ -12,12 +12,12 @@ exports.logIn = {
   authNeeded: false,
   callback: async function logIn(req, res) {
     try {
-      const { emailAddress, password } = await retrieveDataFrom(req)
+      const { email, password } = await retrieveDataFrom(req)
 
-      const user = await global.db.collection("users").findOne({ name: emailAddress })
+      const user = await global.db.collection("users").findOne({ email })
       if (!user) {
         res.status(404)
-        res.send({ error: `User ${emailAddress} is not found` })
+        res.send({ error: `User ${email} is not found` })
         res.end()
         return
       }
@@ -30,7 +30,7 @@ exports.logIn = {
         return
       }
 
-      const token = generateAccessTokenFor(emailAddress)
+      const token = generateAccessTokenFor(email)
       if (token) {
         const userObj = { _id: user._id, name: user.name }
         res.status(200)

@@ -8,15 +8,15 @@ export default class SignUpModule extends React.Component {
   signUpHandler() {
     const name = document.getElementById("signup-name").value
     const password = document.getElementById("signup-password").value
-    const emailAddress = document.getElementById("signup-email").value
-    signup(name, emailAddress, password).then(res => console.log(res)).catch(err => console.log(err))
+    const email = document.getElementById("signup-email").value
+    signup(email, name, password).then(res => console.log(res)).catch(err => console.log(err))
   }
 
   loginHandler() {
-    const emailAddress = document.getElementById("login-email").value
+    const email = document.getElementById("login-email").value
     const password = document.getElementById("login-password").value
     
-    login(emailAddress, password).then(res => {
+    login(email, password).then(res => {
       localStorage.setItem("user", JSON.stringify(res.data.user))
       this.props.loginCallback()
     }).catch(err => {
@@ -47,9 +47,6 @@ export default class SignUpModule extends React.Component {
           <button id="signup-button" onClick={this.signUpHandler}>Sign Up</button>
         </div>
         <div className="login">
-          {/* <div className="row">
-            <span>Name: </span> <input type="text" id="login-name" />
-          </div> */}
           <div className="row">
             <span>Email </span> <input type="text" id="login-email" />
           </div>
