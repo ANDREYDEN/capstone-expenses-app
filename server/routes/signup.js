@@ -11,10 +11,9 @@ exports.signUp = {
   authNeeded: false,
   callback: async function signUp(req, res) {
     try {
-      const { username, password } = await retrieveDataFrom(req)
-      console.log(username, password)
+      const { username, email, password } = await retrieveDataFrom(req)
       const encrypredPassword = await makeHashOf(password, SALT_ROUNDS)
-      const exists = await global.db.collection("users").findOne({ name: username })
+      const exists = await global.db.collection("users").findOne({ email })
 
       if (exists) {
         res.status(409)
@@ -24,6 +23,7 @@ exports.signUp = {
       }
       const inserted = await global.db.collection("users").insertOne({
         name: username,
+        email: email,
         password: {
           saltRounds: SALT_ROUNDS,
           hash: encrypredPassword
