@@ -8,7 +8,6 @@ exports.getExpenseSheets = {
   authNeeded: true,
   callback: async function getExpenseSheets(req, res) {
     try {
-      const username = req.username
       const groupId = req.query.groupId
       // TODO: add sicurity
       const cursor = global.db.collection("sheets").find({ groupId })

@@ -10,12 +10,12 @@ exports.postExpenseSheet = {
   callback: async function postExpenseSheet(req, res) {
     try {
       const data = await retrieveDataFrom(req)
-      const username = req.username
+      const email = req.email
       const newExpenseSheetDoc = {
         name: "",
         store: "",
         createdAt: new Date(),
-        createdBy: username,
+        createdBy: email,
         entries: [],
         taxIncluded: false,
         usersPaidIds: [],

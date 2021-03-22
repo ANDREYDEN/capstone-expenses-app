@@ -9,7 +9,6 @@ exports.updateEntry = {
   authNeeded: true,
   callback: async function updateExpenseSheet(req, res) {
     try {
-      const username = req.username
       const { entry, index } = await retrieveDataFrom(req)
 
       // TODO: add validation for name, price
