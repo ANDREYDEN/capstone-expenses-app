@@ -11,6 +11,7 @@ exports.getGroupMembers = {
     try {
       const username = req.username
       // TODO: some security and restrictions so people cannot fetch something they do not have access to
+      // TODO: replace with lookup aggregation
       const doc = await global.db.collection("groups").findOne({ _id: idFromString(req.params.id) })
       if (doc) {
         const users = await global.db.collection("users").find({
