@@ -38,6 +38,9 @@ export const addNewEntry = (sheetId) => {
 export const updateEntry = (sheetId, index, entry) => {
   return api.post(`/sheets/updateEntry/${sheetId}`, JSON.stringify({ index, entry }))
 }
+export const createGroup = (groupName) => {
+  return api.post(`/groups/new/`, JSON.stringify({ name: groupName }))
+}
 
 
 
