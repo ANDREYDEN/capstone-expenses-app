@@ -12,11 +12,14 @@ export default class GroupManager extends React.Component {
       showGroupCreation: false,
       groups: []
     }
+  }
 
+  componentDidMount() {
     getGroups().then(res => {
       this.setState({ groups: res.data.groups })
     }).catch(console.log)
   }
+
   showGroupCreation() {
     this.setState({
       showGroupCreation: true
@@ -27,12 +30,8 @@ export default class GroupManager extends React.Component {
       showGroupCreation: false
     })
   }
-
-  switchGroupTo(groupId) {
-    console.log(groupId)
-  }
   render() {
-    const groupDropDown = this.state.groups.length ? <GroupDropDown onGroupChange={this.switchGroupTo.bind(this)} groups={this.state.groups}/> : null
+    const groupDropDown = this.state.groups.length ? <GroupDropDown onGroupChange={this.props.onGroupChange} groups={this.state.groups}/> : null
     const addGroup = this.state.showGroupCreation ? <AddGroup onSuccess={this.hideGroupCreation.bind(this)} /> : null
     return (
       <div className="group-section">
