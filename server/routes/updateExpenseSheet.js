@@ -9,7 +9,6 @@ exports.updateExpenseSheet = {
   authNeeded: true,
   callback: async function updateExpenseSheet(req, res) {
     try {
-      const username = req.username
       const data = await retrieveDataFrom(req)
       // TODO: some security so only users that have access can update the document
       // TODO: some update validation

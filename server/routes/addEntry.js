@@ -9,8 +9,6 @@ exports.updateExpenseSheet = {
   authNeeded: true,
   callback: async function updateExpenseSheet(req, res) {
     try {
-      const username = req.username
-
       if (!req?.params?.id) {
         res.status(400)
         res.send({ error: "Bad request" })

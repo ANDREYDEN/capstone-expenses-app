@@ -9,7 +9,6 @@ exports.getGroupMembers = {
   authNeeded: true,
   callback: async function getGroupMembers(req, res) {
     try {
-      const username = req.username
       // TODO: some security and restrictions so people cannot fetch something they do not have access to
       const doc = await global.db.collection("groups").findOne({ _id: idFromString(req.params.id) })
       if (doc) {
