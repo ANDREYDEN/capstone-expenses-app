@@ -27,7 +27,8 @@ exports.signUp = {
         password: {
           saltRounds: SALT_ROUNDS,
           hash: encrypredPassword
-        }
+        },
+        groupIds: []
       })
       if (inserted) {
         res.status(200)

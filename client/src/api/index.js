@@ -5,6 +5,7 @@ const api = axios.create({
     withCredentials: true
 })
 
+// AUTHENTIFICATION
 export const login = (email, password) => {
 	return api.post("/login", { email, password })
 }
@@ -14,14 +15,15 @@ export const signup = (email, username, password ) => {
 export const oauth = (tokenId, platform) => {
   return api.post("/oauth", JSON.stringify({ tokenId , platform }))
 }
+export const authentificate = () => {
+  return api.get("/authentificate")
+}
+// EXPENSE SHEETS
 export const createNewExpenseSheet = (groupId) => {
   return api.post("/sheets/new", JSON.stringify({ groupId })) 
 }
 export const retrieveExpenseSheets = (groupId) => {
   return api.get(`/sheets?groupId=${groupId}`)
-}
-export const authentificate = () => {
-  return api.get("/authentificate")
 }
 export const getSheetById = (id) => {
   return api.get(`/sheets/${id}`)
@@ -29,28 +31,37 @@ export const getSheetById = (id) => {
 export const updateSheet = (id, update) => {
   return api.post(`/sheets/update/${id}`, JSON.stringify(update))
 }
-export const getGroupMembers = (id) => {
-  return api.get(`/groups/${id}`)
-}
 export const addNewEntry = (sheetId) => {
   return api.post(`/sheets/addEntry/${sheetId}`)
 }
 export const updateEntry = (sheetId, index, entry) => {
   return api.post(`/sheets/updateEntry/${sheetId}`, JSON.stringify({ index, entry }))
 }
-
-
+// GROUPS
+export const getGroupMembers = (id) => {
+  return api.get(`/groups/${id}`)
+}
+export const createGroup = (groupName) => {
+  return api.post(`/groups/new/`, JSON.stringify({ name: groupName }))
+}
+export const getGroups = () => {
+  return api.get(`/groups/`)
+}
 
 const apis = {
-	login,
-	signup,
+  login,
+  signup,
+  oauth,
+  authentificate,
   createNewExpenseSheet,
   retrieveExpenseSheets,
   getSheetById,
   updateSheet,
-  getGroupMembers,
   addNewEntry,
-  updateEntry
+  updateEntry,
+  getGroupMembers,
+  createGroup,
+  getGroups
 }
 
 export default apis
