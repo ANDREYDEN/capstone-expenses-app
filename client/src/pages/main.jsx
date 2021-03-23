@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
 import ExpenseSheetList from "../components/expenseSheetList.jsx"
 import ExpenseSheet from "../pages/expenseSheet.jsx"
 import GoogleSignOut from "../components/googleSignOut.jsx"
-import GroupManager from "../components/groupManager.jsx"
 
 export default class Main extends React.Component {
   componentDidMount() {
@@ -16,12 +15,11 @@ export default class Main extends React.Component {
       return memo || (name === "tokenId" && value)
     }, false)
     const googleLogout = <GoogleSignOut  logout={this.props.logout}/>
-    const logoutButton = signedWithGoogle ? googleLogout : null
+    const logoutButton = signedWithGoogle ? googleLogout : <div></div>
     return (
       <main>
         <Router>
           <Route exact path="/home">
-            <GroupManager />
             <ExpenseSheetList />
             {logoutButton}
           </Route>
