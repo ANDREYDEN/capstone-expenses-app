@@ -21,6 +21,8 @@ export default class Main extends React.Component {
         <Router>
           <Route exact path="/home">
             <ExpenseSheetList />
+            <br/>
+            <a href="/balances" type="button">Pay Balance</a>
             {logoutButton}
           </Route>
           <Route exact path="/sheets/:id" component={ExpenseSheet} />
