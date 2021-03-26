@@ -38,6 +38,9 @@ export const addNewEntry = (sheetId) => {
 export const updateEntry = (sheetId, index, entry) => {
   return api.post(`/sheets/updateEntry/${sheetId}`, JSON.stringify({ index, entry }))
 }
+export const payBalance =(username) =>{
+  return api.post(`/payBalance`/{username})
+}
 
 
 
