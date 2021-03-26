@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
 import ExpenseSheetList from "../components/expenseSheetList.jsx"
 import ExpenseSheet from "../pages/expenseSheet.jsx"
 import GoogleSignOut from "../components/googleSignOut.jsx"
+import Balances from "../pages/balances.jsx"
 
 export default class Main extends React.Component {
   componentDidMount() {
@@ -26,6 +27,7 @@ export default class Main extends React.Component {
             {logoutButton}
           </Route>
           <Route exact path="/sheets/:id" component={ExpenseSheet} />
+          <Route exact path="/balances" component={Balances} />
         </Router>
       </main>
     )

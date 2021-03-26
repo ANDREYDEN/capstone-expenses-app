@@ -59,7 +59,7 @@ export default class App extends React.Component {
           <Route path="/signin">
             {loggedIn ? <Redirect to="/home" /> : <SignUpModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
           </Route>
-          {["/home", "/sheets"].map((path, index) =>
+          {["/home", "/sheets", "/balances"].map((path, index) =>
             <Route path={path} key={index}>
               {loggedIn ? <MainPage logout={this.onSuccessfulLogout.bind(this)}/> : <Redirect to="/signin" />}
             </Route>
