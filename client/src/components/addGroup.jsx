@@ -13,7 +13,7 @@ export default class AddGroup extends React.Component {
       this.props.onSuccess()
       const groups = this.globalState.get("groups")
       groups.push(res.data.group)
-      this.globalState.set("groups", groups)
+      this.globalState.set({ groups })
     }).catch(console.log)
   }
   render() {

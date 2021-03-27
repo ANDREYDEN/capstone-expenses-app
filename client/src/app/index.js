@@ -15,47 +15,6 @@ export default class App extends React.Component {
       verifiedLogin: false,
       loggedIn: false
     }
-    // This is a factory to access global state
-    // Global state acts as normal state when is used inside of rendered function
-    // Usage:
-    // in constructor: this.globalState = this.createStateDependecy(this)
-    // in where ever: this.globalState.set({ propName: prop })
-    // in rendered: this.globalState.get("propName")
-    //
-    // This is nice because multiple components may use the same data reactively
-    //
-    // NOTE: there might be a way to do it easier. This might be redone in the future
-    // this.appState = {}
-    // this.dependecies = {}
-    // React.Component.prototype.createStateDependecy = (component) => {
-    //   return {
-    //     get: (key) => {
-    //       if (!this.dependecies[key]) {
-    //         this.dependecies[key] = new Set()
-    //       }
-    //       if (!this.dependecies[key].has(component)) {
-    //         console.log(`Registered globalState dependecy of ${key}`, component)
-    //         this.dependecies[key].add(component);
-    //       }
-    //       const stateValue = component.state[key]
-    //       return stateValue || this.appState[key]
-    //     },
-    //     set: (state) => {
-    //       const newState = {}
-    //       for (let key in state) {
-    //         if (this.appState[key] !== state[key]) {
-    //           newState[key] = state[key]
-    //         }
-    //       }
-    //       for (let key in this.dependecies) {
-    //         this.dependecies[key].forEach(component => { component.setState(newState) })
-    //       }
-    //       for (let key in newState) {
-    //         this.appState[key] = newState[key]
-    //       }
-    //     }
-    //   }
-    // }
     React.Component.prototype.globalState = {
       get: (key) => {
         return this.state[key]
