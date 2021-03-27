@@ -12,15 +12,21 @@ export default class ExpenseSheetList extends React.Component {
     }
     this.groupId = "6036d85f7e0fff3b44e09391"
   }
+
+  componentDidMount() {
+  }
+
+  componentDidUpdate() {
+    retrieveExpenseSheets(this.globalState.get("selectedGroupId")).then((res) => {
+      this.setState({ sheets: res.data.expenseSheets })
+    }).catch(err => console.error(err))
+  }
+
   addNewExpenseSheet() {
     // TODO: some nitifcation if success
     // TODO: redirect if successful
-    createNewExpenseSheet(this.groupId).then(result => console.log(result)).catch(err => console.error(err))
-  }
-  retrieveExpenseSheets() {
-    // TODO: this should be executed on start
-    retrieveExpenseSheets(this.groupId).then((res) => {
-      this.setState({ sheets: res.data.expenseSheets })
+    createNewExpenseSheet(this.globalState.get("selectedGroupId")).then(result => {
+      console.log(result)
     }).catch(err => console.error(err))
   }
 
@@ -58,6 +64,7 @@ export default class ExpenseSheetList extends React.Component {
         </li>
       )
     });
+
     return (
       <div className="expense-sheet-container">
         <ul>
@@ -65,9 +72,6 @@ export default class ExpenseSheetList extends React.Component {
           <li>Total: {summary.total > 0 ? "you own" : "you owe"} $ {Math.abs(summary.total)}</li>
           <li>
             <button onClick={this.addNewExpenseSheet.bind(this)}>Add New One</button>
-            <br/>
-            <button onClick={this.retrieveExpenseSheets.bind(this)}>Show Spreadsheets</button>
-
           </li>
         </ul>
       </div>
