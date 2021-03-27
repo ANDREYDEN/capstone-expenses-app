@@ -9,17 +9,18 @@ export default class GroupManager extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showGroupCreation: false,
-      groups: []
+      showGroupCreation: false
     }
   }
 
   componentDidMount() {
     getGroups().then(res => {
+      const stateUpdate = {}
       if (!this.state.selectedGroupId && res.data.groups[0]?._id) {
-        this.globalState.set({ "selectedGroupId": res.data.groups[0]?._id })
+        stateUpdate.selectedGroupId = res.data.groups[0]?._id
       }
-      this.setState({ groups: res.data.groups })
+      stateUpdate.groups = res.data.groups
+      this.globalState.set(stateUpdate)
     }).catch(console.log)
   }
 
@@ -34,7 +35,7 @@ export default class GroupManager extends React.Component {
     })
   }
   render() {
-    const groups = this.state.groups
+    const groups = this.globalState.get("groups") || []
     const groupDropDown = groups.length ? <GroupDropDown onGroupChange={this.props.onGroupChange} groups={groups}/> : null
     const addGroup = this.state.showGroupCreation ? <AddGroup onSuccess={this.hideGroupCreation.bind(this)} /> : null
     const groupDict = (groups || []).reduce((memo, group) => {
