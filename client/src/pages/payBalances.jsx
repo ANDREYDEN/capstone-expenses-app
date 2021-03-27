@@ -3,7 +3,7 @@ import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
 
 
-export default class Balances extends React.Component {
+export default class PayBalances extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -59,18 +59,15 @@ export default class Balances extends React.Component {
     }
 
     render() {
-        if (this.state.members.length) {
-            if (this.state.sheets.length) {
-                const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
-                <li key={index}><a href="/payBalances" type="button">{balance.name} - {balance.sum}</a></li>);
-                return (<ul>{balances}</ul>)
-            }
-            return (<div>no sheets</div>);
-        }
-        return (
-            <span>
-                Balances:
-            </span>
-        )
-    }
+      return (
+        <div>
+          <h1>Pay Balance</h1>
+          <h2>How much are you paying?</h2>
+          <h3>User:  </h3>
+          <h3>Balance: </h3>
+          <a href="payBalanceFull" type="button">Full Amount</a>
+        </div>
+      )
+  }
 }
+

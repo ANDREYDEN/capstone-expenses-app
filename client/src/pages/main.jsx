@@ -5,6 +5,8 @@ import ExpenseSheetList from "../components/expenseSheetList.jsx"
 import ExpenseSheet from "../pages/expenseSheet.jsx"
 import GoogleSignOut from "../components/googleSignOut.jsx"
 import Balances from "../pages/balances.jsx"
+import PayBalances from "../pages/payBalances.jsx"
+import PayBalanceFull from "../pages/payBalanceFull.jsx"
 
 export default class Main extends React.Component {
   componentDidMount() {
@@ -28,6 +30,8 @@ export default class Main extends React.Component {
           </Route>
           <Route exact path="/sheets/:id" component={ExpenseSheet} />
           <Route exact path="/balances" component={Balances} />
+          <Route exact path="/payBalances" component={PayBalances} />
+          <Route exact path="/payBalanceFull" component={PayBalanceFull} />
         </Router>
       </main>
     )

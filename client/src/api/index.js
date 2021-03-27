@@ -42,8 +42,6 @@ export const payBalance =(username) =>{
   return api.post(`/payBalance`/{username})
 }
 
-
-
 const apis = {
 	login,
 	signup,
