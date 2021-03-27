@@ -1,6 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
+import { Link } from "react-router-dom";
+
 
 
 export default class Balances extends React.Component {
@@ -62,7 +64,14 @@ export default class Balances extends React.Component {
         if (this.state.members.length) {
             if (this.state.sheets.length) {
                 const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
-                <li key={index}><a href="/payBalances" type="button">{balance.name} - {balance.sum}</a></li>);
+                <li key={index}>
+                    <Link to={{
+                        pathname: '/payBalances',
+                        state: {
+                            balance
+                        }
+                    }}>{balance.name} - {balance.sum}</Link>
+                </li>);
                 return (<ul>{balances}</ul>)
             }
             return (<div>no sheets</div>);

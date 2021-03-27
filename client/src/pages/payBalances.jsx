@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
+import { Link } from "react-router-dom";
 
 
 export default class PayBalances extends React.Component {
@@ -23,49 +24,20 @@ export default class PayBalances extends React.Component {
         }).catch(console.log)
     }
 
-    calculateBalance(sheets, members) {
-        console.log(sheets)
-        const calculatedSheets = sheets.map(sheet => {
-            const calculatedSheet = sheet.entries.reduce((memo, entry) => {
-                // Filters those who have { userId: true }
-                const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
-                const pricePerUser = entry.price / usersPaid.length
-                // memo.overall += entry.price
-                usersPaid.forEach(userId => {
-                if (!memo[userId]) {
-                    memo[userId] = 0
-                }
-                memo[userId] += pricePerUser
-                })
-                return memo
-            }, {})
-            calculatedSheet.createdBy = sheet.createdBy
-            return calculatedSheet
-        })
-        const user = JSON.parse(window.localStorage.getItem("user"))
-        return members.map(member => {
-            const userOwes = calculatedSheets.reduce((memo, sheet) => {
-                if (sheet.createdBy === member.name) {
-                    return memo + sheet[user._id] || 0
-                }
-                return memo
-            }, 0)
-            return {
-                _id: member._id,
-                name: member.name,
-                sum: userOwes
-            }
-        }).filter(memberBalance => memberBalance._id !== user._id)
-    }
-
     render() {
+        const { balance } = this.props.location.state
       return (
         <div>
           <h1>Pay Balance</h1>
           <h2>How much are you paying?</h2>
-          <h3>User:  </h3>
-          <h3>Balance: </h3>
-          <a href="payBalanceFull" type="button">Full Amount</a>
+          <h3>User: {balance.name} </h3>
+          <h3>Balance: {balance.sum}</h3>
+          <Link to={{
+                        pathname: '/payBalanceFull',
+                        state: {
+                            balance
+                        }
+                    }}>Pay Full Balance</Link>
         </div>
       )
   }
