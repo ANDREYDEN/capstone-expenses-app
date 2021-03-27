@@ -26,7 +26,6 @@ export default class Balances extends React.Component {
     }
 
     calculateBalance(sheets, members) {
-        console.log(sheets)
         const calculatedSheets = sheets.map(sheet => {
             const calculatedSheet = sheet.entries.reduce((memo, entry) => {
                 // Filters those who have { userId: true }
@@ -40,7 +39,7 @@ export default class Balances extends React.Component {
                 memo[userId] += pricePerUser
                 })
                 return memo
-            }, {})
+            }, { sheet })
             calculatedSheet.createdBy = sheet.createdBy
             return calculatedSheet
         })
@@ -48,14 +47,19 @@ export default class Balances extends React.Component {
         return members.map(member => {
             const userOwes = calculatedSheets.reduce((memo, sheet) => {
                 if (sheet.createdBy === member.name) {
-                    return memo + sheet[user._id] || 0
+                    if (! sheet.sheet.usersPaidIds?.[user._id]) {
+                        memo.sum += sheet[user._id] || 0
+                        if (sheet[user._id] > 0) {
+                            memo.sheetsToPay.push(sheet.sheet._id)
+                        }
+                    }
                 }
                 return memo
-            }, 0)
+            }, { sheetsToPay: [], sum: 0 })
             return {
                 _id: member._id,
                 name: member.name,
-                sum: userOwes
+                userOwes: userOwes
             }
         }).filter(memberBalance => memberBalance._id !== user._id)
     }
@@ -63,15 +67,17 @@ export default class Balances extends React.Component {
     render() {
         if (this.state.members.length) {
             if (this.state.sheets.length) {
+                console.log(this.calculateBalance(this.state.sheets, this.state.members))
                 const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
-                <li key={index}>
-                    <Link to={{
-                        pathname: '/payBalances',
-                        state: {
-                            balance
-                        }
-                    }}>{balance.name} - {balance.sum}</Link>
-                </li>);
+                    <li key={index}>
+                        <Link to={{
+                            pathname: '/payBalances',
+                            state: {
+                                balance
+                            }
+                        }}>{balance.name} - {balance.userOwes.sum}</Link>
+                    </li>
+                );
                 return (<ul>{balances}</ul>)
             }
             return (<div>no sheets</div>);

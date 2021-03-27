@@ -1,26 +1,23 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
+import { payExpenseSheets } from "../api/index.js"
 
 
 export default class PayBalanceFull extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            sheets: [],
-            members: []
         }
     }
     componentDidMount() {
-        const groupId = "6036d85f7e0fff3b44e09391"
-        retrieveExpenseSheets(groupId).then((res) => {
-            this.setState({ sheets: res.data.expenseSheets })
-          }).catch(err => console.error(err))
-        getGroupMembers(groupId).then(res => {
-            this.setState({
-                members: res.data.members
-            })
-        }).catch(console.log)
+    }
+
+    payBalanceClick() {
+        const { balance } = this.props.location.state
+        const { sheetsToPay } = balance.userOwes
+        if (sheetsToPay?.length) {
+            payExpenseSheets(sheetsToPay).then(console.log).catch(console.error)
+        }
     }
 
     render() {
@@ -28,8 +25,8 @@ export default class PayBalanceFull extends React.Component {
       return (
         <div>
             <h3>User: {balance.name} </h3>
-            <h3>Balance: {balance.sum}</h3>
-            <button>Pay Balance</button>
+            <h3>Balance: {balance.userOwes.sum}</h3>
+            <button onClick={this.payBalanceClick.bind(this)}>Pay Balance</button>
         </div>
       )
   }
