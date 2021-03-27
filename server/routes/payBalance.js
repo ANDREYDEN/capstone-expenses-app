@@ -1,14 +1,24 @@
+const {
+  idFromString,
+  retrieveDataFrom
+} = require("../src/utils.js")
 
 exports.payBalance = {
   type: "post",
-  path: "/payBalance",
+  path: "/pay/sheets",
   authNeeded: true,
   callback: async function oauth(req, res) {
     try {
-      const { tokenId, platform } = await retrieveDataFrom(req)
+      const data = await retrieveDataFrom(req)
+      const email = req.email
+      //TODO: user validation
+      const user = await global.db.collection("users").findOne({
+        email
+      })
+      await global.db.collection("sheets").updateMany({ _id: { $in: data.map(idFromString) } }, { $set: { usersPaidIds: { [user._id]: true } } })
+      console.log(user, data, email)
       res.status(200)
-      res.cookie("tokenId", tokenId, { expires: new Date(Date.now() + 24 * 60 * 60 * 1000) })
-      res.send({ OK: "Authorized Successfully", user: userObj })
+      res.send({ OK: "OK" })
       res.end()
     }
     catch (err) {
