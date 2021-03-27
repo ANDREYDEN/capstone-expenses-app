@@ -44,14 +44,13 @@ export default class ExpenseSheetList extends React.Component {
         updateSheet(this.sheetId, update).then(res => {
           this.setState({ receivedGroupMembers: true })
           this.members = res.data.members
-        }).catch(console.log)
+        }).catch(console.error)
       }
     }, 1000).bind(this)
   }
 
   componentDidMount() {
     getSheetById(this.sheetId).then(res => {
-      console.log(res)
       this.setState({
         serverConfirmed: true,
         sheet: res.data.expenseSheet
@@ -64,15 +63,16 @@ export default class ExpenseSheetList extends React.Component {
       })
       console.log(err)
     })
+  }
 
-
-    const groupId = "6036d85f7e0fff3b44e09391"
-    getGroupMembers(groupId).then(res => {
+  componentDidUpdate() {
+    const sheet = this.state.sheet
+    getGroupMembers(sheet.groupId).then(res => {
       this.setState({
         receivedGroupMembers: true,
         members: res.data.members
       })
-    }).catch(console.log)
+    }).catch(console.error)
   }
 
   render() {

@@ -8,9 +8,11 @@ export default class Home extends React.Component {
   }
 
   render() {
-    return [
-      <GroupManager />,
-      <ExpenseSheetList />
-    ]
+    return (
+      <main>
+        <GroupManager />
+        <ExpenseSheetList />
+      </main>
+    )
   }
 }

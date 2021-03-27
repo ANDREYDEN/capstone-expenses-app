@@ -17,15 +17,13 @@ export default class Main extends React.Component {
     const googleLogout = <GoogleSignOut  logout={this.props.logout}/>
     const logoutButton = signedWithGoogle ? googleLogout : null
     return (
-      <main>
-        <Router>
-          <Route exact path="/home">
-            <Home />
-            {logoutButton}
-          </Route>
-          <Route exact path="/sheets/:id" component={ExpenseSheet} />
-        </Router>
-      </main>
+      <Router>
+        <Route exact path="/home">
+          <Home />
+          {logoutButton}
+        </Route>
+        <Route exact path="/sheets/:id" component={ExpenseSheet} />
+      </Router>
     )
   }
 }
