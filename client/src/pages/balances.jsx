@@ -67,7 +67,6 @@ export default class Balances extends React.Component {
     render() {
         if (this.state.members.length) {
             if (this.state.sheets.length) {
-                console.log(this.calculateBalance(this.state.sheets, this.state.members))
                 const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
                     <li key={index}>
                         <Link to={{
