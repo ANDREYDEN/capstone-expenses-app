@@ -5,7 +5,6 @@ import AddGroup from "./addGroup.jsx"
 export default class GroupDropDown extends React.Component {
   constructor(props) {
     super(props)
-    this.globalState = this.getAppState()
     this.state = {
       showGroupCreation: false,
       currentGroupId: null

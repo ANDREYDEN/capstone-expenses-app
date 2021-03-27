@@ -12,7 +12,6 @@ export default class GroupManager extends React.Component {
       showGroupCreation: false,
       groups: []
     }
-    this.globalState = this.getAppState()
   }
 
   componentDidMount() {

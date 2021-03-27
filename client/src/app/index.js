@@ -56,14 +56,12 @@ export default class App extends React.Component {
     //     }
     //   }
     // }
-    React.Component.prototype.getAppState = () => {
-      return {
-        get: (key) => {
-          return this.state[key]
-        },
-        set: (state) => {
-          this.setState(state)
-        }
+    React.Component.prototype.globalState = {
+      get: (key) => {
+        return this.state[key]
+      },
+      set: (state) => {
+        this.setState(state)
       }
     }
   }
