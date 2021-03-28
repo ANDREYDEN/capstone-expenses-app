@@ -7,7 +7,6 @@ import MainPage from "../pages/main.jsx"
 import SpinnerPreload from "../components/spinner.jsx"
 import { deleteCookie } from "../utils.js"
 
-
 export default class App extends React.Component {
   constructor(props) {
     super(props)

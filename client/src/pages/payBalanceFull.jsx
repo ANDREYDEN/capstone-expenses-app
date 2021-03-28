@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { payExpenseSheets } from "../api/index.js"
+import "../styles/payBalancesFull.scss" 
 
 
 export default class PayBalanceFull extends React.Component {
@@ -23,10 +24,12 @@ export default class PayBalanceFull extends React.Component {
     render() {
         const { balance } = this.props.location.state
       return (
-        <div>
-            <h3>User: {balance.name} </h3>
-            <h3>Balance: {balance.userOwes.sum}</h3>
-            <button onClick={this.payBalanceClick.bind(this)}>Pay Balance</button>
+        <div className= "pay-balances-full-container">
+            <h3>Pay <span className="green">${balance.userOwes.sum}</span></h3>
+                
+            <h3>To <span className="green">{balance.name}</span></h3>
+            
+            <button className="pay-balance-btn" onClick={this.payBalanceClick.bind(this)}>Pay Balance</button>
         </div>
       )
   }

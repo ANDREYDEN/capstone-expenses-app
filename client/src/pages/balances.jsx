@@ -1,9 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
-import { Link } from "react-router-dom";
-
-
+import { Link } from "react-router-dom"
+import "../styles/balance.scss" 
 
 export default class Balances extends React.Component {
     constructor(props) {
@@ -13,6 +12,7 @@ export default class Balances extends React.Component {
             members: []
         }
     }
+
     componentDidMount() {
         const groupId = "6036d85f7e0fff3b44e09391"
         retrieveExpenseSheets(groupId).then((res) => {
@@ -68,16 +68,36 @@ export default class Balances extends React.Component {
         if (this.state.members.length) {
             if (this.state.sheets.length) {
                 const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
-                    <li key={index}>
+                
+                    <li className="user" key={index}>
                         <Link to={{
                             pathname: '/payBalances',
                             state: {
                                 balance
                             }
-                        }}>{balance.name} - {balance.userOwes.sum}</Link>
+                        }}>
+                            <img src="https://s3.amazonaws.com/pixpa.com/com/articles/1525891879-76924-tanja-heffner-584866-unsplashjpg.png" alt="Logo" />
+                            <span className="user-name">
+                                {balance.name}
+                            </span> 
+                            <span className="pull-right">
+                                ${balance.userOwes.sum}                     
+                            </span>
+                        </Link>
                     </li>
                 );
-                return (<ul>{balances}</ul>)
+                return (
+                    
+                <div className="balance-container">
+                    <div>
+                        <h2>Pay Balance</h2>
+                        <h2>Who are your paying to?</h2>
+                    <ul className="users">
+                        {balances}
+                    </ul>
+                    </div>
+                </div>
+                       )
             }
             return (<div>no sheets</div>);
         }

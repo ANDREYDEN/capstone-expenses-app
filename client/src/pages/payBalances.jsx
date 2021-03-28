@@ -1,7 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"
+import "../styles/payBalances.scss" 
 
 
 export default class PayBalances extends React.Component {
@@ -16,18 +17,31 @@ export default class PayBalances extends React.Component {
     render() {
         const { balance } = this.props.location.state
       return (
-        <div>
+        <div className = "pay-balances-container">
           <h1>Pay Balance</h1>
-          <h2>How much are you paying?</h2>
-          <h3>User: {balance.name} </h3>
-          <h3>Balance: {balance.userOwes.sum}</h3>
-          <Link to={{
-                        pathname: '/payBalanceFull',
-                        state: {
-                            balance
-                        }
-                    }}>Pay Full Balance</Link>
+          <h3>How much are you paying?</h3>
+          <img src="https://s3.amazonaws.com/pixpa.com/com/articles/1525891879-76924-tanja-heffner-584866-unsplashjpg.png" alt="Logo" />
+          <h3>{balance.name} </h3>
+
+      
+        <li className="user">
+        <Link to={{
+          pathname: '/payBalanceFull',
+          state: {
+            balance
+          }}}>
+              <span className = "user-name">
+              Pay Full Balance 
+              </span>
+              <span className = "pull-right">
+                ${balance.userOwes.sum}
+              </span>
+        </Link>
+        </li>
         </div>
+
+     
+
       )
   }
 }
