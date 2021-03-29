@@ -1,8 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
+import { Link } from "react-router-dom"
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { createNewExpenseSheet, retrieveExpenseSheets } from "../api/index.js"
-import axios from "axios"
+import "../styles/expenseSheetList.scss"
 
 export default class ExpenseSheetList extends React.Component {
   constructor(props) {
@@ -31,7 +32,6 @@ export default class ExpenseSheetList extends React.Component {
     // TODO: redirect if successful
     createNewExpenseSheet(this.groupId).then(result => {
       const sheets = this.state.sheets
-      console.log(result.data.newSheet)
       sheets.push(result.data.newSheet)
       this.setState({ sheets })
     }).catch(err => console.error(err))
@@ -62,19 +62,35 @@ export default class ExpenseSheetList extends React.Component {
     }, { total: 0 })
 
     const items = this.state.sheets.map((sheet, index) => {
+      const date = new Date(sheet.createdAt)
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+      const niceDate = `${months[date.getMonth()]} ${date.getDate()}`
       return (
-        <li key={index}>
-          <a href={"/sheets/" + sheet._id}>
-            {index + 1}.{`${sheet.name} by ${sheet.createdBy}`}
-          </a>
-          {` ${summary[sheet._id] > 0 ? "you own:" : "you owe:"} ${Math.abs(summary[sheet._id])}`}
+        <li className="expense-sheet-item" key={index}>
+          <Link to={`/sheets/${sheet._id}`}>
+            <img src="https://i2.wp.com/www.technig.com/wp-content/uploads/2016/04/LinuxLogoLux.jpg" alt="" className="sheet-logo" />
+            <div className="sheet-info">
+              <span className="sheet-name">{sheet.name}</span>
+              <span className="details">
+                <span>{niceDate}</span>
+                <span className="dot">・</span>
+                <span>{sheet.createdBy}</span>
+              </span>
+            </div>
+            <div className="sheet-state-badge">
+              <span className="state">state</span>
+            </div>
+          </Link>
         </li>
       )
+      // {` ${summary[sheet._id] > 0 ? "you own:" : "you owe:"} ${Math.abs(summary[sheet._id])}`}
     });
 
     return (
       <div className="expense-sheet-container">
-        <ul>
+        <a href="/balances" className="pay-balance-btn" type="button">Pay Balance</a>
+        <h2>Sheets</h2>
+        <ul className="expense-sheet-list">
           {items}
           <li>Total: {summary.total > 0 ? "you own" : "you owe"} $ {Math.abs(summary.total)}</li>
         </ul>
