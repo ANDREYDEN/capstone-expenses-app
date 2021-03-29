@@ -31,7 +31,7 @@ exports.updateEntry = {
       }
       // TODO: security so only users can check for themselves
       const group = await global.db.collection("groups").findOne({ _id: idFromString(doc.groupId) })
-      group.userIds.forEach(userId => {
+      group.userEmails.forEach(userId => {
         if (entry?.userCheckedIds?.[userId] !== undefined) {
           update[`entries.${index}.userCheckedIds.${userId}`] = entry.userCheckedIds[userId]
         }

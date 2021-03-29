@@ -25,7 +25,7 @@ exports.postExpenseSheet = {
       const inserted = await global.db.collection("sheets").insertOne(newExpenseSheetDoc)
       const newlyCreatedId = inserted.ops[0]._id
       res.status(200)
-      res.send({ message: "Expense sheet created successfully", newSheetId: newlyCreatedId })
+      res.send({ message: "Expense sheet created successfully", newSheet: inserted.ops[0] })
       res.end()
     }
     catch (err) {

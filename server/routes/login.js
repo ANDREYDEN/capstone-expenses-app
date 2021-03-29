@@ -30,9 +30,9 @@ exports.logIn = {
         return
       }
 
-      const token = generateAccessTokenFor(email)
+      const token = generateAccessTokenFor({ email, name: user.name })
       if (token) {
-        const userObj = { _id: user._id, name: user.name }
+        const userObj = { _id: user._id, name: user.name, email }
         res.status(200)
         res.cookie('jwt', token, { expires: new Date(Date.now() + 60 * 60 * 1000) })
         res.send({ OK: "Authorized Successfully", jwt: token, user: userObj })

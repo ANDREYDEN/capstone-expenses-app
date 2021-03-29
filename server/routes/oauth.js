@@ -24,7 +24,8 @@ exports.oauth = {
           const inserted = await global.db.collection("users").insertOne({
             email,
             name,
-            platform: "google"
+            platform: "google",
+            groupIds: []
           })
           userObj = inserted.ops[0]
         }

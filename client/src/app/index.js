@@ -14,6 +14,14 @@ export default class App extends React.Component {
       verifiedLogin: false,
       loggedIn: false
     }
+    React.Component.prototype.globalState = {
+      get: (key) => {
+        return this.state[key]
+      },
+      set: (state) => {
+        this.setState(state)
+      }
+    }
   }
 
   onSuccessfulLogin() {
