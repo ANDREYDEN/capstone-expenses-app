@@ -1,0 +1,34 @@
+.pay-balances-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 30rem;
+  margin: auto;
+  img {
+    height: 9rem;
+  }
+  .user {
+    width: 100%;
+    height: 100%;
+    color: white;
+    padding: .9rem .2rem;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-color);
+    margin: .2rem;
+
+    a {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      color: var(--font-color);
+      img {
+        height: 3rem;
+      }
+      .user-name {
+        margin-left: 1rem;
+      }
+    }
+  }
+}
+

@@ -38,8 +38,9 @@ export const addNewEntry = (sheetId) => {
 export const updateEntry = (sheetId, index, entry) => {
   return api.post(`/sheets/updateEntry/${sheetId}`, JSON.stringify({ index, entry }))
 }
-
-
+export const payExpenseSheets =(sheetsToPay) =>{
+  return api.post(`/pay/sheets`, JSON.stringify(sheetsToPay))
+}
 
 const apis = {
 	login,
@@ -50,7 +51,8 @@ const apis = {
   updateSheet,
   getGroupMembers,
   addNewEntry,
-  updateEntry
+  updateEntry,
+  payExpenseSheets
 }
 
 export default apis
