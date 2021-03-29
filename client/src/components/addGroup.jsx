@@ -13,6 +13,9 @@ export default class AddGroup extends React.Component {
       this.props.onSuccess()
       const groups = this.globalState.get("groups")
       groups.push(res.data.group)
+      if (groups.length === 1) {
+        this.globalState.get("selectedGroupId")
+      }
       this.globalState.set({ groups })
     }).catch(console.log)
   }

@@ -26,6 +26,7 @@ export default class ExpenseSheetList extends React.Component {
       receivedGroupMembers: false,
       receivedExpenses: true
     }
+    this.groupId = null
     this.sheetId = props.match.params.id
 
     this.sheetName = React.createRef()
@@ -67,12 +68,15 @@ export default class ExpenseSheetList extends React.Component {
 
   componentDidUpdate() {
     const sheet = this.state.sheet
-    getGroupMembers(sheet.groupId).then(res => {
-      this.setState({
-        receivedGroupMembers: true,
-        members: res.data.members
-      })
-    }).catch(console.error)
+    if (sheet.groupId !== this.groupId) {
+      this.groupId = sheet.groupId
+      getGroupMembers(sheet.groupId).then(res => {
+        this.setState({
+          receivedGroupMembers: true,
+          members: res.data.members
+        })
+      }).catch(console.error)
+    }
   }
 
   render() {

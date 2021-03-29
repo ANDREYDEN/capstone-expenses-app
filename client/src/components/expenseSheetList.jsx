@@ -10,23 +10,30 @@ export default class ExpenseSheetList extends React.Component {
     this.state = {
       sheets: []
     }
-    this.groupId = "6036d85f7e0fff3b44e09391"
+    this.groupId = null
   }
 
   componentDidMount() {
   }
 
   componentDidUpdate() {
-    retrieveExpenseSheets(this.globalState.get("selectedGroupId")).then((res) => {
-      this.setState({ sheets: res.data.expenseSheets })
-    }).catch(err => console.error(err))
+    const newGroup = this.globalState.get("selectedGroupId") || this.props.groupId
+    if (this.groupId !== newGroup) {
+      this.groupId = newGroup
+      retrieveExpenseSheets(this.groupId).then((res) => {
+        this.setState({ sheets: res.data.expenseSheets })
+      }).catch(err => console.error(err))
+    }
   }
 
   addNewExpenseSheet() {
     // TODO: some nitifcation if success
     // TODO: redirect if successful
-    createNewExpenseSheet(this.globalState.get("selectedGroupId")).then(result => {
-      console.log(result)
+    createNewExpenseSheet(this.groupId).then(result => {
+      const sheets = this.state.sheets
+      console.log(result.data.newSheet)
+      sheets.push(result.data.newSheet)
+      this.setState({ sheets })
     }).catch(err => console.error(err))
   }
 
@@ -70,10 +77,8 @@ export default class ExpenseSheetList extends React.Component {
         <ul>
           {items}
           <li>Total: {summary.total > 0 ? "you own" : "you owe"} $ {Math.abs(summary.total)}</li>
-          <li>
-            <button onClick={this.addNewExpenseSheet.bind(this)}>Add New One</button>
-          </li>
         </ul>
+        <button onClick={this.addNewExpenseSheet.bind(this)}>Add New One</button>
       </div>
     )
   }

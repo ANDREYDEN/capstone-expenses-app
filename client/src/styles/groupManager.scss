@@ -1,0 +1,25 @@
+.group-manager {
+  position: relative;
+  width: 100%;
+  padding: 2rem;
+  .header {
+    display: flex;
+    align-items: center;
+    img {
+      margin-left: auto;
+      height: 2.5rem;
+      border-radius: 50%;
+    }
+    .group-dropdown {
+      select {
+        font-size: 1.2rem;
+        border: none;
+        appearance: none;
+      }
+      .arrow-down {
+        font-size: 1rem;
+        padding: .2rem;
+      }
+    }
+  }
+}

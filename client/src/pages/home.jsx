@@ -10,8 +10,8 @@ export default class Home extends React.Component {
   render() {
     return (
       <main>
-        <GroupManager />
-        <ExpenseSheetList />
+        <GroupManager groupId={this.props.match.params.id}/>
+        <ExpenseSheetList groupId={this.props.match.params.id}/>
       </main>
     )
   }

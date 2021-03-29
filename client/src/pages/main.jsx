@@ -14,14 +14,11 @@ export default class Main extends React.Component {
       const [name, value] = cookie.split("=")
       return memo || (name === "tokenId" && value)
     }, false)
-    const googleLogout = <GoogleSignOut  logout={this.props.logout}/>
+    const googleLogout = <GoogleSignOut  key="google-logout" logout={this.props.logout}/>
     const logoutButton = signedWithGoogle ? googleLogout : null
     return (
       <Router>
-        <Route exact path="/home">
-          <Home />
-          {logoutButton}
-        </Route>
+        <Route path="/home/:id?" component={Home}/>
         <Route exact path="/sheets/:id" component={ExpenseSheet} />
       </Router>
     )
