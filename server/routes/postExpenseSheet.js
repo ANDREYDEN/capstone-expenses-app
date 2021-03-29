@@ -18,7 +18,7 @@ exports.postExpenseSheet = {
         createdBy: email,
         entries: [],
         taxIncluded: false,
-        usersPaidIds: [],
+        usersPaidIds: {},
         groupId: data.groupId
       }
 

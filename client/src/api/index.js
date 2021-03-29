@@ -47,6 +47,10 @@ export const createGroup = (groupName) => {
 export const getGroups = () => {
   return api.get(`/groups/`)
 }
+// BALANCES
+export const payExpenseSheets =(sheetsToPay) =>{
+  return api.post(`/pay/sheets`, JSON.stringify(sheetsToPay))
+}
 
 const apis = {
   login,
@@ -61,7 +65,8 @@ const apis = {
   updateEntry,
   getGroupMembers,
   createGroup,
-  getGroups
+  getGroups,
+  payExpenseSheets
 }
 
 export default apis

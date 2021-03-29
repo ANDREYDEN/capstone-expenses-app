@@ -7,7 +7,6 @@ import MainPage from "../pages/main.jsx"
 import SpinnerPreload from "../components/spinner.jsx"
 import { deleteCookie } from "../utils.js"
 
-
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -67,7 +66,7 @@ export default class App extends React.Component {
           <Route path="/signin">
             {loggedIn ? <Redirect to="/home" /> : <SignUpModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
           </Route>
-          {["/home", "/sheets"].map((path, index) =>
+          {["/home", "/sheets", "/balances", "/payBalances", "/payBalanceFull"].map((path, index) =>
             <Route path={path} key={index}>
               {loggedIn ? <MainPage logout={this.onSuccessfulLogout.bind(this)}/> : <Redirect to="/signin" />}
             </Route>

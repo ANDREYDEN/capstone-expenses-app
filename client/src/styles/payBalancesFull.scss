@@ -1,0 +1,17 @@
+.pay-balances-full-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  
+  .pay-balance-btn{
+    padding:.6rem 1.25rem;
+    display:inline-block;
+    background: black;
+    font-size:1rem;
+    color: white;
+  }
+  .green {
+    color: var(--green-text);
+  }
+}
+

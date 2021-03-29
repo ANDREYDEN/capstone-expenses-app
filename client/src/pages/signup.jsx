@@ -27,6 +27,7 @@ export default class SignUpModule extends React.Component {
   googleSignInHandler(response) {
     console.log(response)
     oauth(response.tokenId, "google").then(res => {
+      localStorage.setItem("user", JSON.stringify(res.data.user))
       this.props.loginCallback()
     }).catch(console.error)
   }

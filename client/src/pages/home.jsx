@@ -11,6 +11,7 @@ export default class Home extends React.Component {
     return (
       <main>
         <GroupManager groupId={this.props.match.params.id}/>
+        <a href="/balances" type="button">Pay Balance</a>
         <ExpenseSheetList groupId={this.props.match.params.id}/>
       </main>
     )
