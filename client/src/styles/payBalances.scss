@@ -4,37 +4,31 @@
   flex-direction: column;
   max-width: 30rem;
   margin: auto;
-  
   img {
     height: 9rem;
   }
+  .user {
+    width: 100%;
+    height: 100%;
+    color: white;
+    padding: .9rem .2rem;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-color);
+    margin: .2rem;
 
-    .user {
-      width: 100%;
-      height: 100%;
-      border: none;
-      color: white;
-      padding: .9rem .2rem;
+    a {
+      text-decoration: none;
       display: flex;
-      font-size: 16px;
-      flex-direction: column;
-      width: 100%;
-      padding: .5rem;
-      background: var(--card-color);
-      margin: .2rem;
-
-      a {
-        text-decoration: none;
-        display: flex;
-        align-items: center;
-        color: var(--font-color);
-        img {
-          height: 3rem;
-        }
-        .user-name {
-          margin-left: 1rem;
-        }
+      align-items: center;
+      color: var(--font-color);
+      img {
+        height: 3rem;
+      }
+      .user-name {
+        margin-left: 1rem;
       }
     }
   }
+}
 

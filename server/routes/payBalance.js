@@ -16,7 +16,6 @@ exports.payBalance = {
         email
       })
       await global.db.collection("sheets").updateMany({ _id: { $in: data.map(idFromString) } }, { $set: { usersPaidIds: { [user._id]: true } } })
-      console.log(user, data, email)
       res.status(200)
       res.send({ OK: "OK" })
       res.end()
