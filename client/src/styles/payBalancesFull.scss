@@ -3,6 +3,14 @@
   align-items: center;
   flex-direction: column;
   
+  .pay-balance-names{
+    h3 {
+      align-items: left;
+      margin: 0;
+      font-weight: bold;
+    }
+  }
+
   .pay-balance-btn{
     padding:.6rem 1.25rem;
     display:inline-block;
@@ -12,6 +20,17 @@
   }
   .green {
     color: var(--green-text);
+  }
+  
+  .pay-btn {
+    width: 100%;
+    height: 100%;
+  
+    padding: 20rem .2rem;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-color);
+    margin: .2rem;
   }
 }
 

@@ -1,12 +1,41 @@
 .pay-balances-container {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
   max-width: 30rem;
   margin: auto;
-  img {
-    height: 9rem;
+
+  h4 {
+    align-items: left;
+    font-size: 1rem;
+    margin: 0;
+    font-weight: normal;
   }
+  h2 {
+    align-items: left;
+    margin-bottom: 0;
+    display: flex;
+    align-items: left;
+  }
+  h3 {
+    align-items: center;
+  }
+
+  .image-and-name {
+    text-align: center;
+    padding: 4rem;
+    margin-bottom: .3rem;
+    .image-container {
+      border: 3px dotted var(--dimmed-font-color);
+      padding: .5rem;
+      width: fit-content;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      display: inline-block;
+      img {
+        border-radius: 50%;
+        height: 10rem;
+      }
+    }
+  }
+  
   .user {
     width: 100%;
     height: 100%;

@@ -2,6 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { payExpenseSheets } from "../api/index.js"
 import "../styles/payBalancesFull.scss" 
+import { FaArrowLeft } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 export default class PayBalanceFull extends React.Component {
     constructor(props) {
@@ -22,9 +24,23 @@ export default class PayBalanceFull extends React.Component {
       const { balance } = this.props.location.state
       return (
         <div className= "pay-balances-full-container">
+          <div className="pay-balance-names">
+          <Link to={{
+            pathname: '/payBalances', 
+            state: {
+              balance
+            }
+          }}>
+            <h2>
+            <FaArrowLeft/>
+            </h2>
+          </Link>
             <h3>Pay <span className="green">${balance.userOwes.sum}</span></h3>
             <h3>To <span className="green">{balance.name}</span></h3>
-            <button className="pay-balance-btn" onClick={this.payBalanceClick.bind(this)}>Pay Balance</button>
+          </div>
+          <div className="pay-btn">
+          <button className="pay-balance-btn" onClick={this.payBalanceClick.bind(this)}>Pay Balance</button>
+          </div>
         </div>
       )
   }

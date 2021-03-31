@@ -13,6 +13,7 @@ exports.oauth = {
     try {
       const { tokenId, platform } = await retrieveDataFrom(req)
       verifyGoogleToken(tokenId).then(async decoded => {
+        console.log(decoded)
         const { email, name } = decoded
         const user = await global.db.collection("users").findOne({ email })
         let userObj
