@@ -47,8 +47,14 @@ export const createGroup = (groupName) => {
 export const getGroups = () => {
   return api.get(`/groups/`)
 }
+export const addMember = ({ groupId, emails }) => {
+  return api.post(`/groups/${groupId}/add/`, JSON.stringify({ emails }))
+}
+export const joinGroup = (groupId) => {
+  return api.post(`/groups/${groupId}/join/`)
+}
 // BALANCES
-export const payExpenseSheets =(sheetsToPay) =>{
+export const payExpenseSheets = (sheetsToPay) =>{
   return api.post(`/pay/sheets`, JSON.stringify(sheetsToPay))
 }
 
@@ -66,7 +72,9 @@ const apis = {
   getGroupMembers,
   createGroup,
   getGroups,
-  payExpenseSheets
+  payExpenseSheets,
+  addMember,
+  joinGroup
 }
 
 export default apis
