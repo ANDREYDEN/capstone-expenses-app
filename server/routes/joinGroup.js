@@ -27,7 +27,6 @@ exports.joinGroup = {
         res.end()
         return
       }
-      console.log(email, group.userEmails)
       if (group.userEmails.includes(email)) {
         // Add user to a group
         if (! group.userIds.map(stringFromId).includes(stringFromId(user._id))) {

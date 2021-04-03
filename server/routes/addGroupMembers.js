@@ -34,7 +34,7 @@ exports.addGroup = {
         return
       }
 
-      const inserted = await global.db.collection("groups").updateOne({ _id: group._id }, { $push: { userEmails: { $each: emails } } })
+      await global.db.collection("groups").updateOne({ _id: group._id }, { $push: { userEmails: { $each: emails } } })
       res.status(200)
       res.send({ message: "Added a new member to a group successfully" })
       res.end()
