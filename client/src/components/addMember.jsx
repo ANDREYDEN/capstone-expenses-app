@@ -9,20 +9,9 @@ export default class AddMember extends React.Component {
   }
   addMemeber() {
     const email = this.memberEmail.current.value
-    console.log(email, this.props.groupId)
-    // addMember({ groupId: this.props.groupId, emails: [email] }).then(res => {
-    //   console.log(res)
-    // }).catch(console.error)
-    // const groupName = this.groupName.current.value
-    // createGroup(groupName).then(res => {
-    //   this.props.onSuccess()
-    //   const groups = this.globalState.get("groups")
-    //   groups.push(res.data.group)
-    //   if (groups.length === 1) {
-    //     this.globalState.get("selectedGroupId")
-    //   }
-    //   this.globalState.set({ groups })
-    // }).catch(console.log)
+    addMember({ groupId: this.props.groupId, emails: [email] }).then(res => {
+      console.log(res)
+    }).catch(console.error)
   }
   render() {
     return (
