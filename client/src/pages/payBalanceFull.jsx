@@ -31,15 +31,15 @@ export default class PayBalanceFull extends React.Component {
               balance
             }
           }}>
-            <h2>
-            <FaArrowLeft/>
-            </h2>
+          <h2>
+          <FaArrowLeft/>
+          </h2>
           </Link>
             <h3>Pay <span className="green">${balance.userOwes.sum}</span></h3>
             <h3>To <span className="green">{balance.name}</span></h3>
           </div>
           <div className="pay-btn">
-          <button className="pay-balance-btn" onClick={this.payBalanceClick.bind(this)}>Pay Balance</button>
+            <button className="pay-balance-btn" onClick={this.payBalanceClick.bind(this)}>Pay Balance</button>
           </div>
         </div>
       )

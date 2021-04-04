@@ -5,7 +5,6 @@ import { Link } from "react-router-dom"
 import "../styles/payBalances.scss" 
 import { FaArrowLeft } from "react-icons/fa"
 
-
 export default class PayBalances extends React.Component {
     constructor(props) {
         super(props)
@@ -17,7 +16,7 @@ export default class PayBalances extends React.Component {
     }
 
     render() {
-      const { balance } = this.props.location.state
+    const { balance } = this.props.location.state
       return (
         <div className = "pay-balances-container">
           <Link to={{ pathname: '/balances'}}>
@@ -33,22 +32,22 @@ export default class PayBalances extends React.Component {
           </div>
           <h4>{balance.name} </h4>
         </div>
-        <li className="user">
-        <Link to={{
-          pathname: '/payBalanceFull',
-          state: {
-            balance
-          }}}>
-          <span className = "user-name">
-            Pay Full Balance 
-          </span>
-          <span className = "pull-right">
-            ${balance.userOwes.sum}
-          </span>
-        </Link>
-        </li>
-        </div>
-      )
-  }
+      <li className="user">
+      <Link to={{
+        pathname: '/payBalanceFull',
+        state: {
+          balance
+        }}}>
+        <span className = "user-name">
+          Pay Full Balance 
+        </span>
+        <span className = "pull-right">
+          ${balance.userOwes.sum}
+        </span>
+      </Link>
+      </li>
+      </div>
+    )
+}
 }
 
