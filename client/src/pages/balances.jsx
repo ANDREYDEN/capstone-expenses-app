@@ -2,7 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
 import { Link } from "react-router-dom"
-import "../styles/balance.scss" 
+import "../styles/balance.scss"
+import { FaArrowLeft } from "react-icons/fa"
 
 export default class Balances extends React.Component {
   constructor(props) {
@@ -87,13 +88,15 @@ export default class Balances extends React.Component {
         );
         return (
           <div className="balance-container">
-            <div>
-              <h2>Pay Balance</h2>
-              <h2>Who are your paying to?</h2>
-              <ul className="users">
-                {balances}
-              </ul>
-            </div>
+            <Link to={{ pathname: '/home'}}>
+              <h2><FaArrowLeft/>
+              </h2>
+            </Link>
+            <h2>Pay Balance</h2>
+            <h4>Who are your paying to?</h4>
+            <ul className="users">
+              {balances}
+            </ul>
           </div>
         )
       }
