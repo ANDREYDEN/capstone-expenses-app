@@ -1,13 +1,14 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import "../styles/balance.scss"
 import { FaArrowLeft } from "react-icons/fa"
 
 export default class Balances extends React.Component {
   constructor(props) {
     super(props)
+    this.groupId = props.match.params.id
     this.state = {
       sheets: [],
       members: []
@@ -15,30 +16,28 @@ export default class Balances extends React.Component {
   }
 
   componentDidMount() {
-    const groupId = "6036d85f7e0fff3b44e09391"
-    retrieveExpenseSheets(groupId).then((res) => {
+    retrieveExpenseSheets(this.groupId).then((res) => {
       this.setState({ sheets: res.data.expenseSheets })
     }).catch(err => console.error(err))
-    getGroupMembers(groupId).then(res => {
+    getGroupMembers(this.groupId).then(res => {
       this.setState({
         members: res.data.members
       })
-    }).catch(console.log)
+    }).catch(console.error)
   }
 
   calculateBalance(sheets, members) {
     const calculatedSheets = sheets.map(sheet => {
       const calculatedSheet = sheet.entries.reduce((memo, entry) => {
-      // Filters those who have { userId: true }
-      const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
-      const pricePerUser = entry.price / usersPaid.length
-      // memo.overall += entry.price
-      usersPaid.forEach(userId => {
-      if (!memo[userId]) {
-        memo[userId] = 0
-      }
-      memo[userId] += pricePerUser
-      })
+        // Filters those who have { userId: true }
+        const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
+        const pricePerUser = entry.price / usersPaid.length
+        usersPaid.forEach(userId => {
+          if (!memo[userId]) {
+            memo[userId] = 0
+          }
+          memo[userId] += pricePerUser
+        })
         return memo
       }, { sheet })
       calculatedSheet.createdBy = sheet.createdBy
@@ -47,7 +46,7 @@ export default class Balances extends React.Component {
     const user = JSON.parse(window.localStorage.getItem("user"))
     return members.map(member => {
       const userOwes = calculatedSheets.reduce((memo, sheet) => {
-        if (sheet.createdBy === member.name) {
+        if (sheet.createdBy === member.email) {
           if (! sheet.sheet.usersPaidIds?.[user._id]) {
             memo.sum += sheet[user._id] || 0
             if (sheet[user._id] > 0) {
@@ -66,12 +65,15 @@ export default class Balances extends React.Component {
   }
 
   render() {
+    if (!this.groupId) {
+      return <Redirect to="/home" />
+    }
     if (this.state.members.length) {
       if (this.state.sheets.length) {
         const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
           <li className="user" key={index}>
             <Link to={{
-              pathname: '/payBalances',
+              pathname: `/payBalances/${this.groupId}`,
               state: {
                 balance
               }
