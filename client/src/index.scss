@@ -9,16 +9,15 @@ body {
   Roboto, Oxygen-Sans, Ubuntu, Cantarell,
   "Helvetica Neue", sans-serif;
   padding: .8rem;
-;
+}
+// TODO: add light/dark whatever mode we want palette
+
+:root {
   font-size: 16px;
   margin: 0;
   * {
     box-sizing: border-box; 
   }
-}
-// TODO: add light/dark whatever mode we want palette
-
-:root {
   &.dark {
     // TODO: variables
   }

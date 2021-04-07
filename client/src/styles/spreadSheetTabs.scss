@@ -1,0 +1,15 @@
+#spreadSheetTabs {
+  .headers {
+    width: 100%;
+    display: flex;
+    .tab-header {
+      outline: 1px solid red;
+      flex-grow: 1;
+      flex-basis: 0;
+      text-align: center;
+      &.active {
+        background: green;
+      }  
+    }
+  }
+}
