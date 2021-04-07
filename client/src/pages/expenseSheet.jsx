@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 
 import Spinner from "../components/spinner.jsx"
 import SpreadSheet from "../components/spreadSheet.jsx"
+import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
 
 import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
@@ -80,7 +81,7 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   render() {
-    let spreadSheet = null
+    let spreadSheet= <Spinner />
     if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
       spreadSheet = <SpreadSheet
         members={this.state.members}
@@ -107,6 +108,7 @@ export default class ExpenseSheetList extends React.Component {
             <br/>
             <span>Created By: {sheet.createdBy}</span>
             {spreadSheet}
+            <SpreadSheetTabs />
           </div>
         )
       }
