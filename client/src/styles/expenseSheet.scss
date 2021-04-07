@@ -1,0 +1,42 @@
+.expense-sheet-container {
+  #spreadSheetTabs {
+    .headers {
+      width: 100%;
+      display: flex;
+      .tab-header {
+        outline: 1px solid red;
+        flex-grow: 1;
+        flex-basis: 0;
+        text-align: center;
+        &.active {
+          background: green;
+        }  
+      }
+    }
+    .tabs {
+      .tab-content {
+        display: none;
+        &.active {
+          display: block;
+        }
+      }
+    }
+  }
+
+
+
+
+
+  // Card styles
+  .entry {
+    padding: 1rem;
+  }
+  .check-item {
+    padding: 1rem;
+    background: green;
+  }
+  .dismiss-item {
+    padding: 1rem;
+    background: red;
+  }
+}
