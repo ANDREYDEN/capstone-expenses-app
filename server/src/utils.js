@@ -182,6 +182,12 @@ function stringFromId(id) {
   return id.toHexString()
 }
 
+function randomColor() {
+  const colors = [ "#900", "#090", "#009" ]
+  const index = Math.floor(Math.random() * colors.length)
+  return colors[index]
+}
+
 exports.SALT_ROUNDS = SALT_ROUNDS
 exports.makeHashOf = makeHashOf
 exports.retrieveDataFrom = retrieveDataFrom
@@ -194,3 +200,4 @@ exports.passwordsMatch = passwordsMatch
 exports.idFromString = idFromString
 exports.stringFromId = stringFromId
 exports.verifyGoogleToken = verifyGoogleToken
+exports.randomColor = randomColor

@@ -2,7 +2,8 @@
 const {
   retrieveDataFrom,
   makeHashOf,
-  SALT_ROUNDS
+  SALT_ROUNDS,
+  randomColor
 } = require("../src/utils.js")
 
 exports.signUp = {
@@ -28,7 +29,8 @@ exports.signUp = {
           saltRounds: SALT_ROUNDS,
           hash: encrypredPassword
         },
-        groupIds: []
+        groupIds: [],
+        color: randomColor()
       })
       if (inserted) {
         res.status(200)
