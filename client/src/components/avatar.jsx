@@ -13,7 +13,7 @@ export default class PayBalances extends React.Component {
        return null
     }
     if (user.imageUrl) {
-      return null
+      return <img src={user.imageUrl} alt={user.name} className="avatar" />
     }
     const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
     return (

@@ -12,18 +12,21 @@ exports.oauth = {
     try {
       const { tokenId, platform } = await retrieveDataFrom(req)
       verifyGoogleToken(tokenId).then(async decoded => {
-        const { email, name } = decoded
+        const { email, name, picture } = decoded
         const user = await global.db.collection("users").findOne({ email })
         let userObj
         if (user) {
-          await global.db.collection("users").update({ email }, { $set: { name } })
+          await global.db.collection("users").update({ email }, { $set: { name, imageUrl: picture } })
           userObj = user
+          userObj.name = name
+          userObj.imageUrl = picture
         }
         else {
           const inserted = await global.db.collection("users").insertOne({
             email,
             name,
             platform: "google",
+            imageUrl: picture,
             groupIds: []
           })
           userObj = inserted.ops[0]
