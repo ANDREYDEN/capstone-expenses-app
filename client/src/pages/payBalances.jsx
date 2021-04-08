@@ -1,25 +1,27 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import "../styles/payBalances.scss" 
 import { FaArrowLeft } from "react-icons/fa"
 
 export default class PayBalances extends React.Component {
   constructor(props) {
       super(props)
-      this.state = {
-      }
+      this.groupId = props.match.params.id
   }
   
   componentDidMount() {
   }
 
   render() {
-    const { balance } = this.props.location.state
+    const { balance } = this.props?.location?.state || {}
+    if (!balance) {
+      return <Redirect to={this.groupId ? `/balances/${this.groupId}` : "/home"} />
+    }
     return (
       <div className = "pay-balances-container">
-        <Link to={{ pathname: '/balances'}}>
+        <Link to={{ pathname: `/balances/${this.groupId}`}}>
           <h2>
             <FaArrowLeft/>
           </h2>
@@ -34,7 +36,7 @@ export default class PayBalances extends React.Component {
         </div>
         <div className="user">
           <Link to={{
-            pathname: '/payBalanceFull',
+            pathname: `/payBalanceFull/${this.groupId}`,
             state: {
               balance
           }}}>

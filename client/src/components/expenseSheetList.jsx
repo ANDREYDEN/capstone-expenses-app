@@ -1,7 +1,6 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Link } from "react-router-dom"
-import { BrowserRouter as Router, Route } from "react-router-dom";
 import { createNewExpenseSheet, retrieveExpenseSheets } from "../api/index.js"
 import "../styles/expenseSheetList.scss"
 
@@ -93,7 +92,12 @@ export default class ExpenseSheetList extends React.Component {
 
     return (
       <div className="expense-sheet-container">
-        <a href="/balances" className="pay-balance-btn" type="button">Pay Balance</a>
+        <Link
+          className="pay-balance-btn"
+          to={{
+            pathname: `/balances/${this.groupId}`,
+          }}
+        >Pay Balance</Link>
         <h2>Sheets</h2>
         <ul className="expense-sheet-list">
           {items}
