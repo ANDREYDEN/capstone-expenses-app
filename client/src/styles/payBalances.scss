@@ -22,17 +22,13 @@
     text-align: center;
     padding: 4rem;
     margin-bottom: .3rem;
-    .image-container {
+    .image {
       border: 3px dotted var(--dimmed-font-color);
       padding: .5rem;
       width: fit-content;
       margin-bottom: 1rem;
       border-radius: 50%;
       display: inline-block;
-      img {
-        border-radius: 50%;
-        height: 10rem;
-      }
     }
   }
   

@@ -4,8 +4,8 @@ import AddGroup from "./addGroup.jsx"
 import AddMember from "./addMember.jsx"
 import GroupDropDown from "./groupDropDown.jsx"
 import "../styles/groupManager.scss"
-
 import { getGroups } from "../api/index.js"
+import Avatar from  "./avatar.jsx"
 
 export default class GroupManager extends React.Component {
   constructor(props) {
@@ -49,6 +49,7 @@ export default class GroupManager extends React.Component {
     })
   }
   render() {
+    const user = JSON.parse(localStorage.getItem("user"))
     const groups = this.globalState.get("groups") || []
     const selectedGroupId = this.props.groupId || this.globalState.get("selectedGroupId")
     const groupDropDown = groups.length ? <GroupDropDown onGroupChange={this.props.onGroupChange} groups={groups} selectedGroupId={selectedGroupId}/> : null
@@ -58,6 +59,7 @@ export default class GroupManager extends React.Component {
       memo[group._id] = group
       return memo
     }, {})
+    const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
     return (
       <div className="group-manager">
         <div className="group-creation">
@@ -70,7 +72,7 @@ export default class GroupManager extends React.Component {
         </div>
         <div className="header">
           {groupDropDown}
-          <img src="https://s3.amazonaws.com/pixpa.com/com/articles/1525891879-76924-tanja-heffner-584866-unsplashjpg.png" alt="avantar" />
+          <Avatar user={user} />
         </div>
       </div>
     )

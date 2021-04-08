@@ -16,7 +16,7 @@ exports.getGroupMembers = {
         const users = await global.db.collection("users").find({
           _id: { $in: doc.userIds.map(idFromString) }
         }, {
-          fields: { name: 1 }
+          fields: { name: 1, email: 1, color: 1, imageUrl: 1 }
         }).toArray()
         res.status(200)
         res.send({ message: "OK", members: users })

@@ -1,13 +1,15 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import "../styles/balance.scss"
 import { FaArrowLeft } from "react-icons/fa"
+import Avatar from "../components/avatar.jsx"
 
 export default class Balances extends React.Component {
   constructor(props) {
     super(props)
+    this.groupId = props.match.params.id
     this.state = {
       sheets: [],
       members: []
@@ -15,30 +17,28 @@ export default class Balances extends React.Component {
   }
 
   componentDidMount() {
-    const groupId = "6036d85f7e0fff3b44e09391"
-    retrieveExpenseSheets(groupId).then((res) => {
+    retrieveExpenseSheets(this.groupId).then((res) => {
       this.setState({ sheets: res.data.expenseSheets })
     }).catch(err => console.error(err))
-    getGroupMembers(groupId).then(res => {
+    getGroupMembers(this.groupId).then(res => {
       this.setState({
         members: res.data.members
       })
-    }).catch(console.log)
+    }).catch(console.error)
   }
 
   calculateBalance(sheets, members) {
     const calculatedSheets = sheets.map(sheet => {
       const calculatedSheet = sheet.entries.reduce((memo, entry) => {
-      // Filters those who have { userId: true }
-      const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
-      const pricePerUser = entry.price / usersPaid.length
-      // memo.overall += entry.price
-      usersPaid.forEach(userId => {
-      if (!memo[userId]) {
-        memo[userId] = 0
-      }
-      memo[userId] += pricePerUser
-      })
+        // Filters those who have { userId: true }
+        const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
+        const pricePerUser = entry.price / usersPaid.length
+        usersPaid.forEach(userId => {
+          if (!memo[userId]) {
+            memo[userId] = 0
+          }
+          memo[userId] += pricePerUser
+        })
         return memo
       }, { sheet })
       calculatedSheet.createdBy = sheet.createdBy
@@ -58,31 +58,31 @@ export default class Balances extends React.Component {
         return memo
       }, { sheetsToPay: [], sum: 0 })
       return {
-        _id: member._id,
-        name: member.name,
+        member: member,
         userOwes: userOwes
       }
     }).filter(memberBalance => memberBalance._id !== userId)
   }
 
   render() {
+    const user = JSON.parse(localStorage.getItem("user"))
     if (this.state.members.length) {
       if (this.state.sheets.length) {
         const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
           <li className="user" key={index}>
             <Link to={{
-              pathname: '/payBalances',
+              pathname: `/payBalances/${this.groupId}`,
               state: {
                 balance
               }
             }}>
-              <img src="https://s3.amazonaws.com/pixpa.com/com/articles/1525891879-76924-tanja-heffner-584866-unsplashjpg.png" alt="Logo" />
-              <span className="user-name">
-                {balance.name}
-              </span>
-              <span className="pull-right">
-                ${balance.userOwes.sum}
-              </span>
+            <Avatar user={balance.member} />
+            <span className="user-name">
+              {balance.member.name}
+            </span>
+            <span className="pull-right">
+              ${balance.userOwes.sum}
+            </span>
             </Link>
           </li>
         );
