@@ -29,9 +29,19 @@
       margin-bottom: 1rem;
       border-radius: 50%;
       display: inline-block;
-      img {
+      .avatar {
         border-radius: 50%;
-        height: 10rem;
+        color: white;
+        opacity: 1; 
+        content: attr(data-initials); 
+        display: inline-block; 
+        font-weight: bold; 
+        vertical-align: middle; 
+        margin-right: 0.5em; 
+        width: 3.125rem; 
+        height: 3.125rem; 
+        line-height: 3.125rem; 
+        text-align: center;
       }
     }
   }

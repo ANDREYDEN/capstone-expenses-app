@@ -15,6 +15,8 @@ export default class PayBalances extends React.Component {
   }
 
   render() {
+    const user = JSON.parse(localStorage.getItem("user"))
+    const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
     const { balance } = this.props?.location?.state || {}
     if (!balance) {
       return <Redirect to={this.groupId ? `/balances/${this.groupId}` : "/home"} />
@@ -28,11 +30,15 @@ export default class PayBalances extends React.Component {
         </Link>
         <h2>Pay Balance</h2>
         <h4>How much are you paying?</h4>
-        <div className="image-and-name">
-          <div className = "image-container">
-            <img src="https://s3.amazonaws.com/pixpa.com/com/articles/1525891879-76924-tanja-heffner-584866-unsplashjpg.png" alt="Logo" />
-          </div>
-          <h4>{balance.name} </h4>
+        <div className="image-and-name"> 
+          <div className="image-container" style={{background: user.color}}> 
+            <div className="avatar">
+              <span>
+                {initials}
+              </span>
+            </div>
+           </div> 
+          <h4>{balance.name}</h4>
         </div>
         <div className="user">
           <Link to={{

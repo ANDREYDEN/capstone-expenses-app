@@ -65,6 +65,8 @@ export default class Balances extends React.Component {
   }
 
   render() {
+    const user = JSON.parse(localStorage.getItem("user"))
+    const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
     if (!this.groupId) {
       return <Redirect to="/home" />
     }
@@ -78,13 +80,17 @@ export default class Balances extends React.Component {
                 balance
               }
             }}>
-              <img src="https://s3.amazonaws.com/pixpa.com/com/articles/1525891879-76924-tanja-heffner-584866-unsplashjpg.png" alt="Logo" />
-              <span className="user-name">
-                {balance.name}
+            <div className="avatar" style={{background: user.color}}>
+              <span>
+                {initials}
               </span>
-              <span className="pull-right">
-                ${balance.userOwes.sum}
-              </span>
+            </div>
+            <span className="user-name">
+              {balance.name}
+            </span>
+            <span className="pull-right">
+              ${balance.userOwes.sum}
+            </span>
             </Link>
           </li>
         );
