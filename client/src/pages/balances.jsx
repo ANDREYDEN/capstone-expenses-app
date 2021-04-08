@@ -44,13 +44,13 @@ export default class Balances extends React.Component {
       calculatedSheet.createdBy = sheet.createdBy
       return calculatedSheet
     })
-    const user = JSON.parse(window.localStorage.getItem("user"))
+    const userId = window.userId()
     return members.map(member => {
       const userOwes = calculatedSheets.reduce((memo, sheet) => {
         if (sheet.createdBy === member.name) {
-          if (! sheet.sheet.usersPaidIds?.[user._id]) {
-            memo.sum += sheet[user._id] || 0
-            if (sheet[user._id] > 0) {
+          if (! sheet.sheet.usersPaidIds?.[userId]) {
+            memo.sum += sheet[userId] || 0
+            if (sheet[userId] > 0) {
               memo.sheetsToPay.push(sheet.sheet._id)
             }
           }
@@ -62,7 +62,7 @@ export default class Balances extends React.Component {
         name: member.name,
         userOwes: userOwes
       }
-    }).filter(memberBalance => memberBalance._id !== user._id)
+    }).filter(memberBalance => memberBalance._id !== userId)
   }
 
   render() {
