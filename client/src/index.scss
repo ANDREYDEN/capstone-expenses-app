@@ -1,23 +1,6 @@
-
-html {
-  background: var(--base-color);
-  color: var(--font-color);
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-  Roboto, Oxygen-Sans, Ubuntu, Cantarell,
-  "Helvetica Neue", sans-serif;
-  padding: .8rem;
-}
-// TODO: add light/dark whatever mode we want palette
-
 :root {
   font-size: 16px;
-  margin: 0;
-  * {
-    box-sizing: border-box; 
-  }
+
   &.dark {
     // TODO: variables
   }
@@ -35,6 +18,24 @@ body {
   --green-text: green;
 
 }
+
+html {
+  background: var(--base-color);
+  color: var(--font-color);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+  "Helvetica Neue", sans-serif;
+  padding: .8rem;
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+// TODO: add light/dark whatever mode we want palette
 
 .pull-right {
   margin-left: auto;

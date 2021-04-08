@@ -38,7 +38,7 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   render() {
-    const user = JSON.parse(localStorage.getItem("user"))
+    const user = window.user()
     const summary = this.state.sheets.reduce((memo, sheet) => {
       //TODO: filter only sheets that all users marked as completed
       const userOwes = sheet.usersPaidIds[user._id] ? 0 : sheet.entries.reduce((sum, entry) => {

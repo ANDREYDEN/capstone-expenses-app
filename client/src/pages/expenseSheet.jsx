@@ -4,11 +4,12 @@ import axios from "axios"
 import { useParams } from "react-router-dom"
 
 import Spinner from "../components/spinner.jsx"
-import SpreadSheet from "../components/spreadSheet.jsx"
 import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
 
 import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
+
+import "../styles/expenseSheet.scss"
 
 export default class ExpenseSheetList extends React.Component {
   constructor(props) {
@@ -81,9 +82,9 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   render() {
-    let spreadSheet= <Spinner />
+    let spreadSheeTabs = <Spinner />
     if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
-      spreadSheet = <SpreadSheet
+      spreadSheeTabs = <SpreadSheetTabs
         members={this.state.members}
         sheetId={this.sheetId}
         entries={this.state.sheet.entries}
@@ -107,8 +108,7 @@ export default class ExpenseSheetList extends React.Component {
             <span>Date: {sheet.createdAt}</span>
             <br/>
             <span>Created By: {sheet.createdBy}</span>
-            {spreadSheet}
-            <SpreadSheetTabs />
+            {spreadSheeTabs}
           </div>
         )
       }
