@@ -20,7 +20,6 @@ export default class SpreadSheet extends React.Component {
       return e
     })
     this.state = { entries }
-    // this.state = { entries: props.entries || [] }
     // // HACK: this stores a duplicate of an object instead of link to it
     // // This might need rethinking
     this.initEntryList = JSON.parse(JSON.stringify(props.entries || []))
@@ -115,108 +114,5 @@ export default class SpreadSheet extends React.Component {
         {items}
       </SwipeableList>
     )
-
-
-  //   const memberHeaders = this.members.map((member, index) => {
-  //     return (
-  //       <th key={index}>
-  //         {member.name}
-  //       </th>
-  //     )
-  //   })
-
-  //   const onInputChange = this.inputChange.bind(this)
-  //   const entries = this.state.entries.map((entry, index) => {
-  //     const checks = this.members.map(member => {
-  //       return (
-  //         <td key={member._id}>
-  //           <input type="checkbox" onChange={onInputChange}
-  //             data-type="paidCheck"
-  //             data-userid={member._id}
-  //             data-index={index}
-  //             defaultChecked={entry.userCheckedIds[member._id]}
-  //           />
-  //         </td>
-  //       )
-  //     })
-  //     return (
-  //       <tr key={index}>
-  //         <td>
-  //           <input type="text"
-  //             onChange={onInputChange}
-  //             data-type="name"
-  //             data-index={index}
-  //             defaultValue={entry.name}
-  //           />
-  //         </td>
-  //         <td>
-  //           $<input type="text"
-  //           onChange={onInputChange}
-  //           data-type="price"
-  //           data-index={index}
-  //           defaultValue={entry.price}
-  //         />
-  //         </td>
-  //         {checks}
-  //       </tr>
-  //     )
-  //   })
-
-  //   const summary = this.state.entries.reduce((memo, entry) => {
-  //     // Filters those who have { userId: true }
-  //     const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
-  //     const pricePerUser = entry.price / usersPaid.length
-  //     memo.overall += entry.price
-  //     usersPaid.forEach(userId => {
-  //       if (!memo[userId]) {
-  //         memo[userId] = 0
-  //       }
-  //       memo[userId] += pricePerUser
-  //     })
-  //     return memo
-  //   }, { overall: 0 })
-
-  //   const membersSummary = this.members.map((member, index) => {
-  //     return (
-  //       <th key={index}>
-  //         ${summary[member._id] || "0.00"}
-  //       </th>
-  //     )
-  //   })
-
-  //   const bottomRow = (
-  //     <tr>
-  //       <td>
-  //       </td>
-  //       <td>
-  //         Total: {summary.overall}
-  //       </td>
-  //       {membersSummary}
-  //     </tr>
-  //   )
-
-  //   return (
-  //     <div>
-  //       <table>
-  //         <thead>
-  //           <tr>
-  //             <th>
-  //               Item Name
-  //             </th>
-  //             <th>
-  //               Price
-  //             </th>
-  //             {memberHeaders}
-  //           </tr>
-  //         </thead>
-  //         <tbody>
-  //           {entries}
-  //           {bottomRow}
-  //         </tbody>
-  //       </table>
-  //       <button onClick={this.addEntry.bind(this)}>+</button>
-  //     </div>
-  //   )
-  // }
   }
 }
