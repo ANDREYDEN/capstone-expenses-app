@@ -2,21 +2,20 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
 import { Link, Redirect } from "react-router-dom"
-import "../styles/payBalances.scss" 
+import "../styles/payBalances.scss"
 import { FaArrowLeft } from "react-icons/fa"
+import Avatar from "../components/avatar.jsx"
 
 export default class PayBalances extends React.Component {
   constructor(props) {
       super(props)
       this.groupId = props.match.params.id
   }
-  
+
   componentDidMount() {
   }
 
   render() {
-    const user = JSON.parse(localStorage.getItem("user"))
-    const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
     const { balance } = this.props?.location?.state || {}
     if (!balance) {
       return <Redirect to={this.groupId ? `/balances/${this.groupId}` : "/home"} />
@@ -30,15 +29,11 @@ export default class PayBalances extends React.Component {
         </Link>
         <h2>Pay Balance</h2>
         <h4>How much are you paying?</h4>
-        <div className="image-and-name"> 
-          <div className="image-container" style={{background: user.color}}> 
-            <div className="avatar">
-              <span>
-                {initials}
-              </span>
-            </div>
-           </div> 
-          <h4>{balance.name}</h4>
+        <div className="image-and-name">
+          <div className="image">
+            <Avatar user={balance.member} />
+          </div>
+          <h4>{balance.member.name}</h4>
         </div>
         <div className="user">
           <Link to={{
@@ -47,7 +42,7 @@ export default class PayBalances extends React.Component {
               balance
           }}}>
             <span className = "user-name">
-              Pay Full Balance 
+              Pay Full Balance
             </span>
             <span className = "pull-right">
               ${balance.userOwes.sum}
@@ -56,6 +51,6 @@ export default class PayBalances extends React.Component {
         </div>
       </div>
     )
-  } 
+  }
 }
 

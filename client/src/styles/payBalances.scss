@@ -22,27 +22,13 @@
     text-align: center;
     padding: 4rem;
     margin-bottom: .3rem;
-    .image-container {
+    .image {
       border: 3px dotted var(--dimmed-font-color);
       padding: .5rem;
       width: fit-content;
       margin-bottom: 1rem;
       border-radius: 50%;
       display: inline-block;
-      .avatar {
-        border-radius: 50%;
-        color: white;
-        opacity: 1; 
-        content: attr(data-initials); 
-        display: inline-block; 
-        font-weight: bold; 
-        vertical-align: middle; 
-        margin-right: 0.5em; 
-        width: 3.125rem; 
-        height: 3.125rem; 
-        line-height: 3.125rem; 
-        text-align: center;
-      }
     }
   }
   

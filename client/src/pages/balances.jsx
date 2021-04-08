@@ -4,6 +4,7 @@ import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
 import { Link, Redirect } from "react-router-dom"
 import "../styles/balance.scss"
 import { FaArrowLeft } from "react-icons/fa"
+import Avatar from "../components/avatar.jsx"
 
 export default class Balances extends React.Component {
   constructor(props) {
@@ -57,8 +58,7 @@ export default class Balances extends React.Component {
         return memo
       }, { sheetsToPay: [], sum: 0 })
       return {
-        _id: member._id,
-        name: member.name,
+        member: member,
         userOwes: userOwes
       }
     }).filter(memberBalance => memberBalance._id !== user._id)
@@ -66,10 +66,6 @@ export default class Balances extends React.Component {
 
   render() {
     const user = JSON.parse(localStorage.getItem("user"))
-    const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
-    if (!this.groupId) {
-      return <Redirect to="/home" />
-    }
     if (this.state.members.length) {
       if (this.state.sheets.length) {
         const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
@@ -80,13 +76,9 @@ export default class Balances extends React.Component {
                 balance
               }
             }}>
-            <div className="avatar" style={{background: user.color}}>
-              <span>
-                {initials}
-              </span>
-            </div>
+            <Avatar user={balance.member} />
             <span className="user-name">
-              {balance.name}
+              {balance.member.name}
             </span>
             <span className="pull-right">
               ${balance.userOwes.sum}

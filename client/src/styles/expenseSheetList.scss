@@ -16,20 +16,6 @@
       & > * {
         margin: 0 .2rem
       }
-      .avatar {
-        border-radius: 50%;
-        color: white;
-        opacity: 1; 
-        content: attr(data-initials); 
-        display: inline-block; 
-        font-weight: bold; 
-        vertical-align: middle; 
-        margin-right: 0.5em; 
-        width: 3.125rem; 
-        height: 3.125rem; 
-        line-height: 3.125rem; 
-        text-align: center; 
-      }
       .sheet-info {
         display: flex;
         flex-direction: column;

@@ -64,15 +64,9 @@ export default class ExpenseSheetList extends React.Component {
       const date = new Date(sheet.createdAt)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       const niceDate = `${months[date.getMonth()]} ${date.getDate()}`
-      const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
       return (
         <li className="expense-sheet-item" key={index}>
           <Link to={`/sheets/${sheet._id}`}>
-            <div className="avatar" style={{background: user.color}}>
-            <span>
-              {initials}
-            </span>
-            </div>
             <div className="sheet-info">
               <span className="sheet-name">{sheet.name}</span>
               <span className="details">

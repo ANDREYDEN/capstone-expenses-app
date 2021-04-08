@@ -5,6 +5,7 @@ import AddMember from "./addMember.jsx"
 import GroupDropDown from "./groupDropDown.jsx"
 import "../styles/groupManager.scss"
 import { getGroups } from "../api/index.js"
+import Avatar from  "./avatar.jsx"
 
 export default class GroupManager extends React.Component {
   constructor(props) {
@@ -71,11 +72,7 @@ export default class GroupManager extends React.Component {
         </div>
         <div className="header">
           {groupDropDown}
-          <div className="avatar" style={{background: user.color}}>
-            <span>
-              {initials}
-            </span>
-          </div>
+          <Avatar user={user} />
         </div>
       </div>
     )
