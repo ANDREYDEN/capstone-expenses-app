@@ -5,10 +5,8 @@
   .header {
     display: flex;
     align-items: center;
-    img {
+    .avatar {
       margin-left: auto;
-      height: 2.5rem;
-      border-radius: 50%;
     }
     .group-dropdown {
       select {

@@ -4,6 +4,7 @@ import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
 import { Link, Redirect } from "react-router-dom"
 import "../styles/balance.scss"
 import { FaArrowLeft } from "react-icons/fa"
+import Avatar from "../components/avatar.jsx"
 
 export default class Balances extends React.Component {
   constructor(props) {
@@ -57,17 +58,14 @@ export default class Balances extends React.Component {
         return memo
       }, { sheetsToPay: [], sum: 0 })
       return {
-        _id: member._id,
-        name: member.name,
+        member: member,
         userOwes: userOwes
       }
     }).filter(memberBalance => memberBalance._id !== user._id)
   }
 
   render() {
-    if (!this.groupId) {
-      return <Redirect to="/home" />
-    }
+    const user = JSON.parse(localStorage.getItem("user"))
     if (this.state.members.length) {
       if (this.state.sheets.length) {
         const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
@@ -78,13 +76,13 @@ export default class Balances extends React.Component {
                 balance
               }
             }}>
-              <img src="https://s3.amazonaws.com/pixpa.com/com/articles/1525891879-76924-tanja-heffner-584866-unsplashjpg.png" alt="Logo" />
-              <span className="user-name">
-                {balance.name}
-              </span>
-              <span className="pull-right">
-                ${balance.userOwes.sum}
-              </span>
+            <Avatar user={balance.member} />
+            <span className="user-name">
+              {balance.member.name}
+            </span>
+            <span className="pull-right">
+              ${balance.userOwes.sum}
+            </span>
             </Link>
           </li>
         );
