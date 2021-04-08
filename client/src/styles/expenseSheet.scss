@@ -4,6 +4,7 @@
       width: 100%;
       display: flex;
       list-style: none;
+      margin-bottom: 1rem;
       .tab-header {
         flex-grow: 1;
         flex-basis: 0;
@@ -25,24 +26,88 @@
         &.active {
           display: block;
         }
+
+        .expense-entry-card {
+          width: 100%;
+          background: var(--card-color);
+          border-radius: .5rem;
+          margin: 0.1rem 0;
+          padding: .7rem;
+          .expense-entry-card-line {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin: .1rem 0;
+            .item-name {
+              font-weight: 600;
+              color: var(--font-color);
+              font-size: 1rem;
+            }
+            .price-per-user {
+              font-weight: 600;
+              color: var(--font-color);
+              margin-left: auto;
+              display: flex;
+              .dollars {
+                font-size: 1.4rem;
+              }
+              .cents {
+                font-size: .6rem;
+              }
+            }
+            .members {
+              list-style: none;
+              display: flex;
+              li {
+                height: 0.5rem;
+                width: .5rem;
+                margin: .1rem;
+                border-radius: 50%;
+                &.green {
+                  background: var(--green-text)
+                }
+                &.red {
+                  background: var(--red-text);
+                }
+                &.grey {
+                  background: var(--grey-text);
+                }
+              }
+            }
+            .total-price {
+              font-size: 0.8rem;
+              color: var(--dimmed-font-color);
+              margin-left: auto;
+            }
+          }
+        }
       }
     }
   }
 
-
-
-
-
   // Card styles
-  .entry {
-    padding: 1rem;
-  }
   .check-item {
-    padding: 1rem;
-    background: green;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    width: 100%;
+    height: 100%;
+    color: var(--card-color);
+    background: var(--check-item-color);
   }
   .dismiss-item {
-    padding: 1rem;
-    background: red;
+    width: 100%;
+    height: 100%;
+    color: var(--card-color);
+    background: var(--dismiss-item-color);
+
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
   }
 }
