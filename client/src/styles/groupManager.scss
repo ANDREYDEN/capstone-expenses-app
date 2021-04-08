@@ -5,10 +5,20 @@
   .header {
     display: flex;
     align-items: center;
-    img {
+    
+    .avatar {
       margin-left: auto;
-      height: 2.5rem;
       border-radius: 50%;
+      color: white;
+      opacity: 1; 
+      content: attr(data-initials); 
+      display: inline-block; 
+      font-weight: bold; 
+      vertical-align: middle; 
+      width: 3.125rem; 
+      height: 3.125rem; 
+      line-height: 3.125rem; 
+      text-align: center; 
     }
     .group-dropdown {
       select {

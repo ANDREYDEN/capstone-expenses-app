@@ -61,14 +61,19 @@ export default class ExpenseSheetList extends React.Component {
       return memo
     }, { total: 0 })
 
-    const items = this.state.sheets.map((sheet, index) => {
+      const items = this.state.sheets.map((sheet, index) => {
       const date = new Date(sheet.createdAt)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       const niceDate = `${months[date.getMonth()]} ${date.getDate()}`
+      const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
       return (
         <li className="expense-sheet-item" key={index}>
           <Link to={`/sheets/${sheet._id}`}>
-            <img src="https://i2.wp.com/www.technig.com/wp-content/uploads/2016/04/LinuxLogoLux.jpg" alt="" className="sheet-logo" />
+            <div className="avatar" style={{background: user.color}}>
+            <span>
+              {initials}
+            </span>
+            </div>
             <div className="sheet-info">
               <span className="sheet-name">{sheet.name}</span>
               <span className="details">
