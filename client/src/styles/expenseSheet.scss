@@ -5,12 +5,17 @@
       display: flex;
       list-style: none;
       .tab-header {
-        outline: 1px solid red;
         flex-grow: 1;
         flex-basis: 0;
         text-align: center;
+        padding: .5rem 0;
+        color: var(---dimmed-font-color);
+        border-bottom: 2px solid  var(--underline-color);
+        font-size: .8rem;
+        font-weight: 600;
         &.active {
-          background: green;
+          color: var(--font-color);
+          border-bottom-color: var(--font-color);
         }  
       }
     }
