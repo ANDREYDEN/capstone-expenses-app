@@ -7,7 +7,7 @@ export default class GroupDropDown extends React.Component {
   constructor(props) {
     super(props)
   }
-  
+
   onGroupChange(e) {
     const groupId = e.target.value
     // FUCK redirect and router it does not work here
