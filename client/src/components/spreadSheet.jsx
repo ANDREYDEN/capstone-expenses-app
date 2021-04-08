@@ -14,32 +14,32 @@ import ExpenseCard from "./expenseEntryCard.jsx"
 export default class SpreadSheet extends React.Component {
   constructor(props) {
     super(props)
+    this.userId = window.userId()
     const entries = (props.entries || []).map(e => {
       e["id"] = Math.random()
       return e
     })
     this.state = { entries }
-    // this.members = props.members
     // this.state = { entries: props.entries || [] }
     // // HACK: this stores a duplicate of an object instead of link to it
     // // This might need rethinking
-    // this.initEntryList = JSON.parse(JSON.stringify(props.entries || []))
+    this.initEntryList = JSON.parse(JSON.stringify(props.entries || []))
 
-    // this.updateEntries = debounce(() => {
-    //   const entriesAffected = differ(this.initEntryList, this.state.entries)
-    //   const update = Object.keys(entriesAffected).map(index => {
-    //     return {
-    //       index,
-    //       entry: differ(this.initEntryList[index], this.state.entries[index])
-    //     }
-    //   }).forEach(({ index, entry }) => {
-    //     // TODO: implement a methond of updating multiple queries at once
-    //     updateEntry(this.props.sheetId, index, entry).then(res => {
-    //       this.setState({ entries: this.state.entries })
-    //       this.initEntryList = JSON.parse(JSON.stringify(this.state.entries))
-    //     }).catch(console.log)
-    //   })
-    // }, 500)
+    this.updateEntries = debounce(() => {
+      const entriesAffected = differ(this.initEntryList, this.state.entries)
+      const update = Object.keys(entriesAffected).map(index => {
+        return {
+          index,
+          entry: differ(this.initEntryList[index], this.state.entries[index])
+        }
+      }).forEach(({ index, entry }) => {
+        // TODO: implement a methond of updating multiple queries at once
+        updateEntry(this.props.sheetId, index, entry).then(res => {
+          this.setState({ entries: this.state.entries })
+          this.initEntryList = JSON.parse(JSON.stringify(this.state.entries))
+        }).catch(console.log)
+      })
+    }, 500)
   }
 
   componentDidMount() {
@@ -68,9 +68,21 @@ export default class SpreadSheet extends React.Component {
   //   }).catch(console.log)
   // }
 
+  checkItem(id) {
+    const entry = this.state.entries.find(entry => entry.id === id)
+    entry.userCheckedIds[this.userId] = true
+    this.updateEntries()
+  }
+
+  dismissItem(id) {
+    const entry = this.state.entries.find(entry => entry.id === id)
+    entry.userCheckedIds[this.userId] = false
+    this.updateEntries()
+  }
+
   render() {
-    const deleteItem = (id) => {
-      this.setState({ entries: this.state.entries.filter(entry => entry.id !== id) })
+    if (!this.state.entries.length) {
+      return <h3 align="center">No Items Here</h3>
     }
     const members = this.props.members
     const items = this.state.entries.map((entry, index) => {
@@ -79,14 +91,12 @@ export default class SpreadSheet extends React.Component {
           key={entry.id}
           swipeLeft={{
             content: <div className="check-item"><FaCheck /></div>,
-            action: () => console.info("swipe action triggered")
+            action: () => this.checkItem(entry.id)
           }}
           swipeRight={{
             content: <div className="dismiss-item"><FaTimes /></div>,
-            actionAnimation: ActionAnimations.REMOVE,
-            action: () => {
-              deleteItem(entry.id)
-            }//console.info("swipe action triggered")
+            actionAnimation: ActionAnimations.RETURN,
+            action: () => this.dismissItem(entry.id)
           }}
           onSwipeProgress={progress => console.info(`Swipe progress: ${progress}%`)}
         >

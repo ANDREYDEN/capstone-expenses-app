@@ -31,7 +31,7 @@ const allTab = {
 }
 const loggedTab = {
   filterFn: function(entry) {
-    return entry.userCheckedIds[this.userId] === undefined
+    return entry.userCheckedIds[this.userId] !== undefined
   },
   sortFn: alphabeticalComparator,
   name: "Logged",
@@ -39,7 +39,7 @@ const loggedTab = {
 }
 const unloggedTab = {
   filterFn: function(entry) {
-    return entry.userCheckedIds[this.userId] !== undefined
+    return entry.userCheckedIds[this.userId] === undefined
   },
   sortFn: alphabeticalComparator,
   name: "Unlogged",
