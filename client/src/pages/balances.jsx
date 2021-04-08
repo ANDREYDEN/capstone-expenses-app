@@ -65,7 +65,6 @@ export default class Balances extends React.Component {
   }
 
   render() {
-    const user = JSON.parse(localStorage.getItem("user"))
     if (this.state.members.length) {
       if (this.state.sheets.length) {
         const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>
