@@ -11,11 +11,18 @@ exports.postExpenseSheet = {
     try {
       const data = await retrieveDataFrom(req)
       const email = req.email
+      const user = await global.db.collection("users").findOne({ email })
+      if (!user) {
+        res.status(403)
+        res.send({ error: "Forbidden" })
+        res.end()
+        return
+      }
       const newExpenseSheetDoc = {
         name: "",
         store: "",
         createdAt: new Date(),
-        createdBy: email,
+        createdBy: user._id,
         entries: [],
         taxIncluded: false,
         usersPaidIds: {},
