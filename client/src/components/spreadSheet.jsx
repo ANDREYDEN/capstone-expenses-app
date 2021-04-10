@@ -102,6 +102,7 @@ export default class SpreadSheet extends React.Component {
           <ExpenseCard
             entry={entry}
             members={members}
+            userId={this.userId}
           />
         </SwipeableListItem>
       )
