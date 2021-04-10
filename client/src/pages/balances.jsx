@@ -27,8 +27,11 @@ export default class Balances extends React.Component {
     }).catch(console.error)
   }
 
+  // accepts sheets and members
+  // returns an objcet { memeber, userOwes: accumulated amount of what user owes to that user
   calculateBalance(sheets, members) {
     const calculatedSheets = sheets.map(sheet => {
+      // calculated total amount of what people owe to the creator
       const calculatedSheet = sheet.entries.reduce((memo, entry) => {
         // Filters those who have { userId: true }
         const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
