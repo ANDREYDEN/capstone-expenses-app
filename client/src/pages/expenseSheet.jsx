@@ -68,7 +68,7 @@ export default class ExpenseSheetList extends React.Component {
 
   componentDidUpdate() {
     const sheet = this.state.sheet
-    if (sheet.groupId !== this.groupId) {
+    if (sheet.groupId && sheet.groupId !== this.groupId) {
       this.groupId = sheet.groupId
       getGroupMembers(sheet.groupId).then(res => {
         this.setState({
