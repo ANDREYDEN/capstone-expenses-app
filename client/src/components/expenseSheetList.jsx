@@ -10,16 +10,15 @@ export default class ExpenseSheetList extends React.Component {
     this.state = {
       sheets: []
     }
-    this.groupId = null
+    this.groupId = this.props.groupId
   }
 
   componentDidMount() {
   }
 
   componentDidUpdate() {
-    const newGroup = this.globalState.get("selectedGroupId") || this.props.groupId
-    if (this.groupId !== newGroup) {
-      this.groupId = newGroup
+    if (this.groupId !== this.props.groupId) {
+      this.groupId = this.props.groupId
       retrieveExpenseSheets(this.groupId).then((res) => {
         this.setState({ sheets: res.data.expenseSheets })
       }).catch(err => console.error(err))

@@ -51,7 +51,7 @@ export default class GroupManager extends React.Component {
   render() {
     const user = JSON.parse(localStorage.getItem("user"))
     const groups = this.globalState.get("groups") || []
-    const selectedGroupId = this.props.groupId || this.globalState.get("selectedGroupId")
+    const selectedGroupId = this.props.groupId
     const groupDropDown = groups.length ? <GroupDropDown onGroupChange={this.props.onGroupChange} groups={groups} selectedGroupId={selectedGroupId}/> : null
     const addGroup = this.state.showGroupCreation ? <AddGroup onSuccess={this.hideGroupCreation.bind(this)} /> : null
     const addMembers = this.state.showAddMembers ? <AddMember groupId={selectedGroupId} onSuccess={this.hideAddMembers.bind(this)} /> : null
