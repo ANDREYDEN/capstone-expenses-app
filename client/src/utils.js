@@ -43,7 +43,7 @@ export function differDeep(obj1, obj2) {
     if (obj instanceof Object) {
       // NOTE: this will recursively compare each field in each child object
       const diff = differDeep(obj1[key], obj2[key])
-      return [key, diff]
+      return Object.keys(diff).length ? [key, diff] : []
     }
     if (obj1[key] !== obj2[key]) {
       return [key, obj2[key]]
