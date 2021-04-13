@@ -47,7 +47,7 @@ export default class Balances extends React.Component {
     const user = JSON.parse(window.localStorage.getItem("user"))
     return members.map(member => {
       const userOwes = calculatedSheets.reduce((memo, sheet) => {
-        if (sheet.createdBy === member.email) {
+        if (sheet.createdBy === member._id) {
           if (! sheet.sheet.usersPaidIds?.[user._id]) {
             memo.sum += sheet[user._id] || 0
             if (sheet[user._id] > 0) {
