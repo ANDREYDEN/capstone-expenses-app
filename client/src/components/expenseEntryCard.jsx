@@ -24,7 +24,8 @@ export default class ExpenseEntryCard extends React.Component {
       }
     })
     const usersNotChecked = members.map(m => m._id).filter(id => !(usersChecked.includes(id) || usersDismissed.includes(id)))
-    const pricePerUser = (entry.price / usersChecked.length).toFixed(2)
+    const peoplePaid = (usersChecked.length || 0) + (entry.userCheckedIds[myId] ? 1 : 0)
+    const pricePerUser = (peoplePaid > 0 ? (entry.price / peoplePaid) : 0).toFixed(2)
     const memberDots = [
       ...usersChecked.map(userId => <li
         key={userId}
