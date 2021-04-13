@@ -26,7 +26,8 @@ export default class ExpenseSheetList extends React.Component {
         usersPaidIds: []
       },
       receivedGroupMembers: false,
-      receivedExpenses: true
+      receivedExpenses: true,
+      addEntry: false
     }
     this.groupId = null
     this.sheetId = props.match.params.id
@@ -81,6 +82,13 @@ export default class ExpenseSheetList extends React.Component {
     }
   }
 
+  updateEntryCallback(entry) {
+    console.log(entry)
+    if (!entry) {
+      this.setState({ addEntry: false })
+    }
+  }
+
   render() {
     let spreadSheetTabs = <Spinner />
     if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
@@ -91,6 +99,8 @@ export default class ExpenseSheetList extends React.Component {
           entry["id"] = index
           return entry
         })}
+        addEntry={this.state.addEntry}
+        updateEntryCallback={this.updateEntryCallback.bind(this)}
       />
     }
 
@@ -112,6 +122,9 @@ export default class ExpenseSheetList extends React.Component {
             <br/>
             <span>Created By: {sheet.createdBy}</span>
             {spreadSheetTabs}
+            <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
+              <span>+</span>
+            </button>
           </div>
         )
       }
@@ -122,6 +135,5 @@ export default class ExpenseSheetList extends React.Component {
       )
     }
     return <Spinner />
-
   }
 }
