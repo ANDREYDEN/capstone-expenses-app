@@ -148,4 +148,56 @@
     bottom: .5rem;
     transform: translateX(-50%);
   }
+
+  .overlay {
+    background: rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .expense-entry-card {
+      width: calc(100% - 2rem);
+      background: var(--card-color);
+      border-radius: .5rem;
+      margin: 0.1rem 1rem;
+      padding: .7rem .7rem 2rem .7rem;
+      display: flex;
+      align-items: center;
+      margin-top: 40%;
+      .item-info {
+        width: calc(100%);
+        margin-left: 0.5rem;
+        .expense-entry-card-line {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          margin: .1rem 0;
+          .item-name-container, .item-price-container {
+            font-weight: 600;
+            color: var(--font-color);
+            font-size: 1rem;
+            .item-name, .item-price {
+              font-size: inherit;
+              outline: none;
+              border: none;
+              background: inherit;
+              font-weight: 600;
+              font-size: 1rem;
+              &::placeholder {
+                color: var(--grey-text);
+              }
+            }
+            .item-price {
+              width: 3rem;
+            }
+          }
+          .item-price-container {
+            margin-left: auto;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
 }

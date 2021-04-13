@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 
 import Spinner from "../components/spinner.jsx"
 import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
+import ExpenseEntryCardEditable from "../components/expenseEntryCardEditable.jsx"
 
 import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
@@ -27,7 +28,8 @@ export default class ExpenseSheetList extends React.Component {
       },
       receivedGroupMembers: false,
       receivedExpenses: true,
-      addEntry: false
+      addEntry: false,
+      editEntry: null
     }
     this.groupId = null
     this.sheetId = props.match.params.id
@@ -83,10 +85,13 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   updateEntryCallback(entry) {
-    console.log(entry)
     if (!entry) {
       this.setState({ addEntry: false })
     }
+  }
+
+  editEntry(entry) {
+    this.setState({ editEntry: entry })
   }
 
   render() {
@@ -99,10 +104,10 @@ export default class ExpenseSheetList extends React.Component {
           entry["id"] = index
           return entry
         })}
-        addEntry={this.state.addEntry}
-        updateEntryCallback={this.updateEntryCallback.bind(this)}
       />
     }
+
+
 
     if (this.state.serverConfirmed) {
       if (this.state.sheet) {
@@ -125,6 +130,7 @@ export default class ExpenseSheetList extends React.Component {
             <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
               <span>+</span>
             </button>
+            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} />
           </div>
         )
       }
