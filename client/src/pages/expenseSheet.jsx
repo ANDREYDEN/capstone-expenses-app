@@ -82,12 +82,15 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   render() {
-    let spreadSheeTabs = <Spinner />
+    let spreadSheetTabs = <Spinner />
     if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
-      spreadSheeTabs = <SpreadSheetTabs
+      spreadSheetTabs = <SpreadSheetTabs
         members={this.state.members}
         sheetId={this.sheetId}
-        entries={this.state.sheet.entries}
+        entries={this.state.sheet.entries.map((entry, index) => {
+          entry["id"] = index
+          return entry
+        })}
       />
     }
 
@@ -108,7 +111,7 @@ export default class ExpenseSheetList extends React.Component {
             <span>Date: {sheet.createdAt}</span>
             <br/>
             <span>Created By: {sheet.createdBy}</span>
-            {spreadSheeTabs}
+            {spreadSheetTabs}
           </div>
         )
       }

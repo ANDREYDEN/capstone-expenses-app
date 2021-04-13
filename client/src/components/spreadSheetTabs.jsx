@@ -49,7 +49,6 @@ const unloggedTab = {
 export default class SpreadSheetTabs extends React.Component {
   constructor(props) {
     super(props)
-    console.log(props)
     this.userId = window.userId()
     this.state = {
       activeTab: allTab.id
