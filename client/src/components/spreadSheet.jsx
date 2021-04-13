@@ -79,6 +79,7 @@ export default class SpreadSheet extends React.Component {
             entry={entry}
             members={members}
             userId={this.userId}
+            editEntry={this.props.editEntry}
           />
         </SwipeableListItem>
       )

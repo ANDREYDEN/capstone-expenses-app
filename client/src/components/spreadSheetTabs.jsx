@@ -86,6 +86,7 @@ export default class SpreadSheetTabs extends React.Component {
             members={this.props.members}
             sheetId={this.props.sheetId}
             entries={entries}
+            editEntry={this.props.editEntry}
           />
         </div>
       )

@@ -150,6 +150,10 @@
   }
 
   .overlay {
+    &.active {
+      display: block;
+    }
+    display: none;
     background: rgba(0, 0, 0, .6);
     position: absolute;
     top: 0;

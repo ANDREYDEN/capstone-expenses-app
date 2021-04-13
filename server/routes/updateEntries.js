@@ -38,7 +38,7 @@ exports.updateEntries = {
 
       const update = {}
       entries.forEach(({ index, entry })=> {
-        if (index > sheet.entries.length) {
+        if (!index || index > sheet.entries.length) {
           return
         }
         // TODO: add validation for name, price

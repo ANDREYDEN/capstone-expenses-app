@@ -7,7 +7,7 @@ import Spinner from "../components/spinner.jsx"
 import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
 import ExpenseEntryCardEditable from "../components/expenseEntryCardEditable.jsx"
 
-import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
+import { getSheetById, updateSheet, getGroupMembers, updateEntries } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
 
 import "../styles/expenseSheet.scss"
@@ -43,7 +43,6 @@ export default class ExpenseSheetList extends React.Component {
       const update = differ(currentDoc, {
         name: this.sheetName.current.value,
         store: this.storeName.current.value,
-        entries: [],
         taxIncluded: this.taxIncluded.current.checked,
       })
       if (Object.keys(update).length) {
@@ -84,14 +83,38 @@ export default class ExpenseSheetList extends React.Component {
     }
   }
 
-  updateEntryCallback(entry) {
-    if (!entry) {
-      this.setState({ addEntry: false })
-    }
+  editEntry(entry) {
+    console.log(entry)
+    this.setState({ entry })
   }
 
-  editEntry(entry) {
-    this.setState({ editEntry: entry })
+  updateEntry(entry) {
+    // this.setState({ addEntry: false, editEntry: null })
+    if (this.state.addEntry) {
+
+    }
+    else if (this.state.entry) {
+      if (!entry.name) {
+        console.error("item needs a name")
+        return
+      }
+      const diff = differ(this.state.entry, entry)
+      if (Object.keys(diff).length) {
+        updateEntries(this.sheetId, [{ index: entry.id, entry: diff }]).then(res => {
+          if ("id" in entry) {
+            if ("name" in diff) {
+              this.state.sheet.entries[entry.id].name = diff.name
+            }
+            if ("price" in diff) {
+              this.state.sheet.entries[entry.id].price = diff.price
+            }
+            this.setState({ sheet: this.state.sheet, entry: null })
+          }
+        }).catch(console.log)
+      }
+    }
+
+    // TODO: update entry
   }
 
   render() {
@@ -104,6 +127,7 @@ export default class ExpenseSheetList extends React.Component {
           entry["id"] = index
           return entry
         })}
+        editEntry={this.editEntry.bind(this)}
       />
     }
 
@@ -130,7 +154,7 @@ export default class ExpenseSheetList extends React.Component {
             <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
               <span>+</span>
             </button>
-            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} />
+            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} onSave={this.updateEntry.bind(this)}/>
           </div>
         )
       }

@@ -41,7 +41,7 @@ export default class ExpenseEntryCard extends React.Component {
       )
     ]
     return (
-      <div className="expense-entry-card">
+      <div className="expense-entry-card" onClick={() => this.props.editEntry(entry)}>
         <div className={`my-dot ${entry.userCheckedIds[myId] === undefined ? "grey" : (entry.userCheckedIds[myId] && "green") || "red"}`}>
         </div>
         <div className="item-info">
