@@ -31,8 +31,8 @@ export const getSheetById = (id) => {
 export const updateSheet = (id, update) => {
   return api.post(`/sheets/update/${id}`, JSON.stringify(update))
 }
-export const addNewEntry = (sheetId) => {
-  return api.post(`/sheets/addEntry/${sheetId}`)
+export const addNewEntry = (sheetId, entry) => {
+  return api.post(`/sheets/addEntry/${sheetId}`, JSON.stringify(entry))
 }
 // NOTE: Depricated. Use updateEntries instead
 export const updateEntry = (sheetId, index, entry) => {

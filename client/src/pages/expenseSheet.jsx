@@ -7,7 +7,7 @@ import Spinner from "../components/spinner.jsx"
 import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
 import ExpenseEntryCardEditable from "../components/expenseEntryCardEditable.jsx"
 
-import { getSheetById, updateSheet, getGroupMembers, updateEntries } from "../api/index.js"
+import { getSheetById, updateSheet, getGroupMembers, updateEntries, addNewEntry } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
 
 import "../styles/expenseSheet.scss"
@@ -91,7 +91,15 @@ export default class ExpenseSheetList extends React.Component {
   updateEntry(entry) {
     // this.setState({ addEntry: false, editEntry: null })
     if (this.state.addEntry) {
-
+      if (! entry.name) {
+        this.setState({ addEntry: false })
+        return
+      }
+      addNewEntry(this.sheetId, entry).then(res => {
+        const newEntry = res.data.entry
+        this.state.sheet.entries.push(newEntry)
+        this.setState({ sheet: this.state.sheet, addEntry: false })
+      }).catch(console.error)
     }
     else if (this.state.entry) {
       if (!entry.name) {
@@ -110,11 +118,9 @@ export default class ExpenseSheetList extends React.Component {
             }
             this.setState({ sheet: this.state.sheet, entry: null })
           }
-        }).catch(console.log)
+        }).catch(console.error)
       }
     }
-
-    // TODO: update entry
   }
 
   render() {

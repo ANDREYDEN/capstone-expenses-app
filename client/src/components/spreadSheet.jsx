@@ -36,6 +36,13 @@ export default class SpreadSheet extends React.Component {
 
   }
 
+  componentDidUpdate() {
+    // HACK: probably neeeds to be figured. The items do not refresh whn you add new ones
+    if (this.state.entries.length !== (this.props.entries || []).length) {
+      this.setState({ entries: this.props.entries })
+    }
+  }
+
   // addEntry(e) {
   //   addNewEntry(this.props.sheetId).then(res => {
   //     this.setState({ entries: this.state.entries.concat([res.data.entry]) })
