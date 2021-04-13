@@ -1,6 +1,5 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { FaChevronDown } from "react-icons/fa"
 
 import "../styles/userSummary.scss"
 
@@ -17,8 +16,7 @@ export default class UserSummary extends React.Component {
     const selectedGroupId = this.globalState.get("selectedGroupId")
     const group = groups.find(group => group._id === selectedGroupId)
 
-    console.log(group)
-    if (!group) {
+    if (!group || !sheets.length) {
       return (
         <div className="user-summary">
           <Spinner />
@@ -26,13 +24,11 @@ export default class UserSummary extends React.Component {
       )
     }
 
-    console.log(sheets)
     const userId = JSON.parse(window.localStorage.getItem("user"))._id
 
     const summary = sheets.reduce((total, sheet) => {
       if (sheet.createdBy === userId) {
         const accumulateAmount = sheet.entries.reduce((memo, entry) => {
-          console.log(entry)
           const usersChecked = Object.keys(entry.userCheckedIds).filter(id => entry.userCheckedIds[id])
           const pricePerUser = entry.price / (usersChecked.length || 1)
           if (entry.userCheckedIds[userId]) {
@@ -58,7 +54,6 @@ export default class UserSummary extends React.Component {
       total.owe += accumulateAmount
       return total
     }, { owe: 0, own: 0 })
-    console.log(summary)
 
     // NOTE: we do not want them to be more than 16% appart
     // WHY 16 ? just the golden ration * 10 and add a percent sign

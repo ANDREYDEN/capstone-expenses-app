@@ -17,7 +17,6 @@ export default class ExpenseSheetList extends React.Component {
     if (this.groupId !== this.props.groupId) {
       this.groupId = this.props.groupId
       retrieveExpenseSheets(this.props.groupId).then((res) => {
-        console.log(res.data.expenseSheets)
         this.globalState.set({ sheets: res.data.expenseSheets })
       }).catch(err => console.error(err))
     }
@@ -69,7 +68,6 @@ export default class ExpenseSheetList extends React.Component {
         <h2>Sheets</h2>
         <ul className="expense-sheet-list">
           {items}
-          {/*<li>Total: {summary.total > 0 ? "you own" : "you owe"} $ {Math.abs(summary.total)}</li>*/}
         </ul>
         <button onClick={this.addNewExpenseSheet.bind(this)}>Add New One</button>
       </div>
