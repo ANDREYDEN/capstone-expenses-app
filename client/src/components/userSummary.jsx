@@ -2,6 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { FaChevronDown } from "react-icons/fa"
 
+import "../styles/userSummary.scss"
+
 import Spinner from "./spinner.jsx"
 
 export default class UserSummary extends React.Component {
@@ -11,23 +13,75 @@ export default class UserSummary extends React.Component {
 
   render() {
     const sheets = this.globalState.get("sheets") || []
+    const groups = this.globalState.get("groups") || []
+    const selectedGroupId = this.globalState.get("selectedGroupId")
+    const group = groups.find(group => group._id === selectedGroupId)
+
+    console.log(group)
+    if (!group) {
+      return (
+        <div className="user-summary">
+          <Spinner />
+        </div>
+      )
+    }
+
     console.log(sheets)
     const userId = JSON.parse(window.localStorage.getItem("user"))._id
-    const memeberSummary = sheets.reduce((memo, sheet) => {
-      //TODO: filter only sheets that all users marked as completed
-      const userOwes = sheet.usersPaidIds[userId] ? 0 : sheet.entries.reduce((sum, entry) => {
+
+    const summary = sheets.reduce((total, sheet) => {
+      if (sheet.createdBy === userId) {
+        const accumulateAmount = sheet.entries.reduce((memo, entry) => {
+          console.log(entry)
+          const usersChecked = Object.keys(entry.userCheckedIds).filter(id => entry.userCheckedIds[id])
+          const pricePerUser = entry.price / (usersChecked.length || 1)
+          if (entry.userCheckedIds[userId]) {
+            memo -= pricePerUser
+          }
+          // NOTE: if no-one has checked technically no-one owes you
+          memo += pricePerUser * usersChecked.length
+          return memo
+        }, 0)
+        total.own += accumulateAmount
+        return total
+      }
+
+      const accumulateAmount = sheet.entries.reduce((memo, entry) => {
+        const usersChecked = Object.keys(entry.userCheckedIds).filter(id => entry.userCheckedIds[id])
+        const pricePerUser = entry.price / (usersChecked.length || 1)
         if (entry.userCheckedIds[userId]) {
-          sum += (entry.price || 0) / Object.keys(entry.userCheckedIds).filter(key => entry.userCheckedIds[key]).length
+          memo += pricePerUser
         }
-        return sum
+        return memo
       }, 0)
-      memo[sheet.createdBy] = userOwes
-      return memo
-    }, { })
-    console.log(memeberSummary)
+
+      total.owe += accumulateAmount
+      return total
+    }, { owe: 0, own: 0 })
+    console.log(summary)
+
+    // NOTE: we do not want them to be more than 16% appart
+    // WHY 16 ? just the golden ration * 10 and add a percent sign
+    const ownTranslate = ((summary.own / 100) > 1 ? 1 : (summary.own / 100)) * 16
+    const oweTranslate = ((summary.owe / 100) > 1 ? 1 : (summary.owe / 100)) * 16
+
     return (
       <div className="user-summary">
-        <Spinner />
+        <div className="visualization">
+          <div className="circle owe" style={{ transform: `translateX(-${50 - oweTranslate}%)`}}></div>
+          <div className="circle own" style={{ transform: `translateX(-${50 + ownTranslate}%)`}}></div>
+          <div className="circle balance"></div>
+        </div>
+        <div className="summary">
+          <div className="summary-section">
+            <span className="sum">${summary.own.toFixed(0)}</span>
+            <span className="title">I'm owed</span>
+          </div>
+          <div className="summary-section pull-right">
+            <span className="sum">${summary.owe.toFixed(0)}</span>
+            <span className="title">I owe</span>
+          </div>
+        </div>
       </div>
     )
   }
