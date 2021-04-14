@@ -43,13 +43,6 @@ export default class SpreadSheet extends React.Component {
     }
   }
 
-  // addEntry(e) {
-  //   addNewEntry(this.props.sheetId).then(res => {
-  //     this.setState({ entries: this.state.entries.concat([res.data.entry]) })
-  //     this.initEntryList.push(JSON.parse(JSON.stringify(res.data.entry)))
-  //   }).catch(console.log)
-  // }
-
   checkItem(id) {
     const entry = this.state.entries.find(entry => entry.id === id)
     entry.userCheckedIds[this.userId] = true

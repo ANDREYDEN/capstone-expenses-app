@@ -29,13 +29,6 @@ export default class ExpenseEntryCardEditable extends React.Component {
   render() {
     const { entry, addEntry } = this.props
 
-    if (entry) {
-      // TODO: edit existing one
-    }
-    else {
-      // TODO: adding a new one
-    }
-
     return (
       <div className={`overlay ${entry || addEntry ? "active" : ""}`} onClick={this.doneEditing.bind(this)}>
         <div className="expense-entry-card">

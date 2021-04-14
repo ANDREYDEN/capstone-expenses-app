@@ -84,12 +84,10 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   editEntry(entry) {
-    console.log(entry)
     this.setState({ entry })
   }
 
   updateEntry(entry) {
-    // this.setState({ addEntry: false, editEntry: null })
     if (this.state.addEntry) {
       if (! entry.name) {
         this.setState({ addEntry: false })

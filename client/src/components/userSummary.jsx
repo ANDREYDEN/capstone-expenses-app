@@ -16,7 +16,6 @@ export default class UserSummary extends React.Component {
     const selectedGroupId = this.globalState.get("selectedGroupId") || this.props.groupId
     const group = groups.find(group => group._id === selectedGroupId)
 
-    console.log(group)
     if (!group || !sheets.length) {
       return (
         <div className="user-summary">
