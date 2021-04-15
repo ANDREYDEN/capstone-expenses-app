@@ -13,7 +13,7 @@ export default class UserSummary extends React.Component {
   render() {
     const sheets = this.globalState.get("sheets") || []
     const groups = this.globalState.get("groups") || []
-    const selectedGroupId = this.globalState.get("selectedGroupId")
+    const selectedGroupId = this.globalState.get("selectedGroupId") || this.props.groupId
     const group = groups.find(group => group._id === selectedGroupId)
 
     if (!group || !sheets.length) {
@@ -24,8 +24,7 @@ export default class UserSummary extends React.Component {
       )
     }
 
-    const userId = JSON.parse(window.localStorage.getItem("user"))._id
-
+    const userId = window.userId()
     const summary = sheets.reduce((total, sheet) => {
       if (sheet.createdBy === userId) {
         const accumulateAmount = sheet.entries.reduce((memo, entry) => {

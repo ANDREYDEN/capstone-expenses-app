@@ -17,7 +17,7 @@ export default class SignUpModule extends React.Component {
     const password = document.getElementById("login-password").value
     
     login(email, password).then(res => {
-      localStorage.setItem("user", JSON.stringify(res.data.user))
+      window.setUser(res.data.user)
       this.props.loginCallback()
     }).catch(err => {
       console.log(err)
@@ -27,7 +27,7 @@ export default class SignUpModule extends React.Component {
   googleSignInHandler(response) {
     console.log(response)
     oauth(response.tokenId, "google").then(res => {
-      localStorage.setItem("user", JSON.stringify(res.data.user))
+      window.setUser(res.data.user)
       this.props.loginCallback()
     }).catch(console.error)
   }

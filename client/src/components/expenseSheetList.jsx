@@ -28,12 +28,12 @@ export default class ExpenseSheetList extends React.Component {
     createNewExpenseSheet(this.props.groupId).then(result => {
       const sheets = this.globalState.get("sheets")
       sheets.push(result.data.newSheet)
-      this.setState({ sheets })
+      this.globalState.set({ sheets })
     }).catch(err => console.error(err))
   }
 
   render() {
-    const user = JSON.parse(localStorage.getItem("user"))
+    const user = window.user()
     const items = (this.globalState.get("sheets") || []).map((sheet, index) => {
       const date = new Date(sheet.createdAt)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]

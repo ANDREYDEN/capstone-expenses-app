@@ -31,11 +31,16 @@ export const getSheetById = (id) => {
 export const updateSheet = (id, update) => {
   return api.post(`/sheets/update/${id}`, JSON.stringify(update))
 }
-export const addNewEntry = (sheetId) => {
-  return api.post(`/sheets/addEntry/${sheetId}`)
+export const addNewEntry = (sheetId, entry) => {
+  return api.post(`/sheets/addEntry/${sheetId}`, JSON.stringify(entry))
 }
+// NOTE: Depricated. Use updateEntries instead
 export const updateEntry = (sheetId, index, entry) => {
   return api.post(`/sheets/updateEntry/${sheetId}`, JSON.stringify({ index, entry }))
+}
+// NOTE: entries: Array<{ index, update }>
+export const updateEntries = (sheetId, entries) => {
+  return api.post(`/sheets/updateEntries/${sheetId}`, JSON.stringify({ entries: entries }))
 }
 // GROUPS
 export const getGroupMembers = (id) => {
@@ -74,7 +79,8 @@ const apis = {
   getGroups,
   payExpenseSheets,
   addMember,
-  joinGroup
+  joinGroup,
+  updateEntries
 }
 
 export default apis

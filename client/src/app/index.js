@@ -22,6 +22,15 @@ export default class App extends React.Component {
         this.setState(state)
       }
     }
+    window.user = () => {
+      return JSON.parse(window.localStorage.getItem("user"))
+    }
+    window.setUser = (user) => {
+      return window.localStorage.setItem("user", JSON.stringify(user))
+    }
+    window.userId = () => {
+      return window.user()?._id
+    }
   }
 
   onSuccessfulLogin() {

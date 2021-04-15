@@ -15,7 +15,7 @@ export default class JoinGroup extends React.Component {
   componentDidMount() {
     joinGroup(this.props.match.params.id).then(res => {
       const newUser = res.data.user
-      localStorage.setItem("user", JSON.stringify(newUser))
+      window.setUser(newUser)
       this.setState({ redirect: `/home/${this.props.match.params.id}` })
     }).catch((err) => {
       this.setState({ error: err })

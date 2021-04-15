@@ -3,12 +3,13 @@ const {
   idFromString
 } = require("../src/utils.js")
 
-exports.updateExpenseSheet = {
+exports.addEntry = {
   type: "post",
   path: "/sheets/addEntry/:id",
   authNeeded: true,
-  callback: async function updateExpenseSheet(req, res) {
+  callback: async function addEntry(req, res) {
     try {
+      const entry = await retrieveDataFrom(req)
       if (!req?.params?.id) {
         res.status(400)
         res.send({ error: "Bad request" })
@@ -23,8 +24,8 @@ exports.updateExpenseSheet = {
         return
       }
       const newEntry =  {
-        name: "", 
-        price: 0,
+        name: entry.name || "",
+        price: entry.price || 0,
         userCheckedIds: {}
       }
       await global.db.collection("sheets").updateOne({ _id: doc._id }, { $push: { entries: newEntry } })

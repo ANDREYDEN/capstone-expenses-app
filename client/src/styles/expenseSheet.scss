@@ -1,0 +1,207 @@
+.expense-sheet-container {
+  #spreadSheetTabs {
+    .headers {
+      width: 100%;
+      display: flex;
+      list-style: none;
+      margin-bottom: 1rem;
+      .tab-header {
+        flex-grow: 1;
+        flex-basis: 0;
+        text-align: center;
+        padding: .5rem 0;
+        color: var(---dimmed-font-color);
+        border-bottom: 2px solid  var(--underline-color);
+        font-size: .8rem;
+        font-weight: 600;
+        &.active {
+          color: var(--font-color);
+          border-bottom-color: var(--font-color);
+        }  
+      }
+    }
+    .tabs {
+      .tab-content {
+        display: none;
+        &.active {
+          display: block;
+        }
+
+        .expense-entry-card {
+          width: 100%;
+          background: var(--card-color);
+          border-radius: .5rem;
+          margin: 0.1rem 0;
+          padding: .7rem;
+          display: flex;
+          align-items: center;
+          .my-dot {
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            &.green {
+              background: var(--green-text)
+            }
+            &.red {
+              background: var(--red-text);
+            }
+            &.grey {
+              background: var(--grey-text);
+            }
+          }
+          .item-info {
+            width: calc(100% - 2rem);
+            margin-left: 0.5rem;
+            .expense-entry-card-line {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              margin: .1rem 0;
+              .item-name {
+                font-weight: 600;
+                color: var(--font-color);
+                font-size: 1rem;
+              }
+              .price-per-user {
+                font-weight: 600;
+                color: var(--font-color);
+                margin-left: auto;
+                display: flex;
+                .dollars {
+                  font-size: 1.4rem;
+                }
+                .cents {
+                  font-size: .6rem;
+                }
+              }
+              .members {
+                list-style: none;
+                display: flex;
+                li {
+                  height: 0.5rem;
+                  width: .5rem;
+                  margin: .1rem;
+                  border-radius: 50%;
+                  &.green {
+                    background: var(--green-text)
+                  }
+                  &.red {
+                    background: var(--red-text);
+                  }
+                  &.grey {
+                    background: var(--grey-text);
+                  }
+                }
+              }
+              .total-price {
+                font-size: 0.8rem;
+                color: var(--dimmed-font-color);
+                margin-left: auto;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Card styles
+  .check-item {
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    width: 100%;
+    height: 100%;
+    color: var(--card-color);
+    background: var(--check-item-color);
+  }
+  .dismiss-item {
+    width: 100%;
+    height: 100%;
+    color: var(--card-color);
+    background: var(--dismiss-item-color);
+
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+  }
+
+  .add-item-btn {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.25rem;
+    border-radius: 50%;
+    background: var(--font-color);
+    color: var(--base-bright-color);
+
+    position: fixed;
+    left: 50%;
+    bottom: .5rem;
+    transform: translateX(-50%);
+  }
+
+  .overlay {
+    &.active {
+      display: block;
+    }
+    display: none;
+    background: rgba(0, 0, 0, .6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    .expense-entry-card {
+      width: calc(100% - 2rem);
+      background: var(--card-color);
+      border-radius: .5rem;
+      margin: 0.1rem 1rem;
+      padding: .7rem .7rem 2rem .7rem;
+      display: flex;
+      align-items: center;
+      margin-top: 40%;
+      .item-info {
+        width: calc(100%);
+        margin-left: 0.5rem;
+        .expense-entry-card-line {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          margin: .1rem 0;
+          .item-name-container, .item-price-container {
+            font-weight: 600;
+            color: var(--font-color);
+            font-size: 1rem;
+            .item-name, .item-price {
+              font-size: inherit;
+              outline: none;
+              border: none;
+              background: inherit;
+              font-weight: 600;
+              font-size: 1rem;
+              &::placeholder {
+                color: var(--grey-text);
+              }
+            }
+            .item-price {
+              width: 3rem;
+            }
+          }
+          .item-price-container {
+            margin-left: auto;
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+  }
+}

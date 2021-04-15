@@ -27,8 +27,11 @@ export default class Balances extends React.Component {
     }).catch(console.error)
   }
 
+  // accepts sheets and members
+  // returns an objcet { memeber, userOwes: accumulated amount of what user owes to that user
   calculateBalance(sheets, members) {
     const calculatedSheets = sheets.map(sheet => {
+      // calculated total amount of what people owe to the creator
       const calculatedSheet = sheet.entries.reduce((memo, entry) => {
         // Filters those who have { userId: true }
         const usersPaid = Object.keys(entry.userCheckedIds).filter(userId => entry.userCheckedIds[userId])
@@ -44,13 +47,13 @@ export default class Balances extends React.Component {
       calculatedSheet.createdBy = sheet.createdBy
       return calculatedSheet
     })
-    const user = JSON.parse(window.localStorage.getItem("user"))
+    const userId = window.userId()
     return members.map(member => {
       const userOwes = calculatedSheets.reduce((memo, sheet) => {
         if (sheet.createdBy === member._id) {
-          if (! sheet.sheet.usersPaidIds?.[user._id]) {
-            memo.sum += sheet[user._id] || 0
-            if (sheet[user._id] > 0) {
+          if (! sheet.sheet.usersPaidIds?.[userId]) {
+            memo.sum += sheet[userId] || 0
+            if (sheet[userId] > 0) {
               memo.sheetsToPay.push(sheet.sheet._id)
             }
           }
@@ -61,11 +64,10 @@ export default class Balances extends React.Component {
         member: member,
         userOwes: userOwes
       }
-    }).filter(memberBalance => memberBalance._id !== user._id)
+    }).filter(memberBalance => memberBalance._id !== userId)
   }
 
   render() {
-    const user = JSON.parse(localStorage.getItem("user"))
     if (this.state.members.length) {
       if (this.state.sheets.length) {
         const balances =  this.calculateBalance(this.state.sheets, this.state.members).map((balance, index) =>

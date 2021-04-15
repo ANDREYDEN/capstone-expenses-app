@@ -1,24 +1,6 @@
-
-html {
-  background: var(--base-color);
-  color: var(--font-color);
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-  Roboto, Oxygen-Sans, Ubuntu, Cantarell,
-  "Helvetica Neue", sans-serif;
-  padding: .8rem;
-;
-  font-size: 16px;
-  margin: 0;
-  * {
-    box-sizing: border-box; 
-  }
-}
-// TODO: add light/dark whatever mode we want palette
-
 :root {
+  font-size: 16px;
+
   &.dark {
     // TODO: variables
   }
@@ -31,11 +13,34 @@ body {
   --base-color: #fafafa;
   --base-bright-color: #fff;
   --base-dimmed: #eee;
+  --underline-color: #e5e5e5;
   --border-color: #333;
   --card-color: #F6F6F7;
-  --green-text: green;
+  --green-text: #219653;
+  --red-text: #EB5757;
+  --grey-text: #BDBDBD;
 
+  --check-item-color: #357E31;
+  --dismiss-item-color: #E03333;
 }
+
+html {
+  background: var(--base-color);
+  color: var(--font-color);
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+  Roboto, Oxygen-Sans, Ubuntu, Cantarell,
+  "Helvetica Neue", sans-serif;
+  padding: .8rem;
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+}
+// TODO: add light/dark whatever mode we want palette
 
 .pull-right {
   margin-left: auto;

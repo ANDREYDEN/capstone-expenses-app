@@ -4,10 +4,13 @@ import axios from "axios"
 import { useParams } from "react-router-dom"
 
 import Spinner from "../components/spinner.jsx"
-import SpreadSheet from "../components/spreadSheet.jsx"
+import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
+import ExpenseEntryCardEditable from "../components/expenseEntryCardEditable.jsx"
 
-import { getSheetById, updateSheet, getGroupMembers } from "../api/index.js"
+import { getSheetById, updateSheet, getGroupMembers, updateEntries, addNewEntry } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
+
+import "../styles/expenseSheet.scss"
 
 export default class ExpenseSheetList extends React.Component {
   constructor(props) {
@@ -24,7 +27,9 @@ export default class ExpenseSheetList extends React.Component {
         usersPaidIds: []
       },
       receivedGroupMembers: false,
-      receivedExpenses: true
+      receivedExpenses: true,
+      addEntry: false,
+      editEntry: null
     }
     this.groupId = null
     this.sheetId = props.match.params.id
@@ -38,7 +43,6 @@ export default class ExpenseSheetList extends React.Component {
       const update = differ(currentDoc, {
         name: this.sheetName.current.value,
         store: this.storeName.current.value,
-        entries: [],
         taxIncluded: this.taxIncluded.current.checked,
       })
       if (Object.keys(update).length) {
@@ -79,15 +83,59 @@ export default class ExpenseSheetList extends React.Component {
     }
   }
 
+  editEntry(entry) {
+    this.setState({ entry })
+  }
+
+  updateEntry(entry) {
+    if (this.state.addEntry) {
+      if (! entry.name) {
+        this.setState({ addEntry: false })
+        return
+      }
+      addNewEntry(this.sheetId, entry).then(res => {
+        const newEntry = res.data.entry
+        this.state.sheet.entries.push(newEntry)
+        this.setState({ sheet: this.state.sheet, addEntry: false })
+      }).catch(console.error)
+    }
+    else if (this.state.entry) {
+      if (!entry.name) {
+        console.error("item needs a name")
+        return
+      }
+      const diff = differ(this.state.entry, entry)
+      if (Object.keys(diff).length) {
+        updateEntries(this.sheetId, [{ index: entry.id, entry: diff }]).then(res => {
+          if ("id" in entry) {
+            if ("name" in diff) {
+              this.state.sheet.entries[entry.id].name = diff.name
+            }
+            if ("price" in diff) {
+              this.state.sheet.entries[entry.id].price = diff.price
+            }
+            this.setState({ sheet: this.state.sheet, entry: null })
+          }
+        }).catch(console.error)
+      }
+    }
+  }
+
   render() {
-    let spreadSheet = null
+    let spreadSheetTabs = <Spinner />
     if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
-      spreadSheet = <SpreadSheet
+      spreadSheetTabs = <SpreadSheetTabs
         members={this.state.members}
         sheetId={this.sheetId}
-        entries={this.state.sheet.entries}
+        entries={this.state.sheet.entries.map((entry, index) => {
+          entry["id"] = index
+          return entry
+        })}
+        editEntry={this.editEntry.bind(this)}
       />
     }
+
+
 
     if (this.state.serverConfirmed) {
       if (this.state.sheet) {
@@ -106,7 +154,11 @@ export default class ExpenseSheetList extends React.Component {
             <span>Date: {sheet.createdAt}</span>
             <br/>
             <span>Created By: {sheet.createdBy}</span>
-            {spreadSheet}
+            {spreadSheetTabs}
+            <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
+              <span>+</span>
+            </button>
+            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} onSave={this.updateEntry.bind(this)}/>
           </div>
         )
       }
@@ -117,6 +169,5 @@ export default class ExpenseSheetList extends React.Component {
       )
     }
     return <Spinner />
-
   }
 }

@@ -10,7 +10,8 @@ export default class GroupDropDown extends React.Component {
 
   onGroupChange(e) {
     const groupId = e.target.value
-    // FUCK redirect and router it does not work here
+    // TODO: figure out the redicrect problem
+    // // FUCK redirect and router it does not work here
     window.location.pathname = `/home/${groupId}`
   }
 
