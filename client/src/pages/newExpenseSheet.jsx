@@ -35,18 +35,15 @@ export default class Balances extends React.Component {
         </h3>
         <div className="store-details">
         <label className="store-info">Store Name</label>
-        <input className="store-info" type="text" name=""/>
-        <br/>
+        <input className="store-input" type="text" name=""/>
         <label className="store-info">Purchase Date</label>
-        <input className="store-info" type="text" name=""/>
-        <br/>
+        <input className="store-input" type="text" name=""/>
         <label className="store-info">Tax (Optional)</label>
-        <input className="store-info" type="text" name=""/>
-        <br/>
+        <input className="store-input" type="text" name=""/>
         </div>
         <div className="create-btn">
           <button className="create-expense-btn">Create Expense</button>
-        </div>
+        </div>  
       </div>
     )
   }
