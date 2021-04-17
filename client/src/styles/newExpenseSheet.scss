@@ -1,0 +1,35 @@
+.new-expense-container{
+  max-width: 30rem;
+  margin: auto;
+
+  .store-details {
+    width: 100%;
+    height: 100%;
+    padding: .9rem .2rem;
+    display: flex;
+    flex-direction: column;
+    background: var(--card-color);
+    margin: .2rem;
+
+    .store-info {
+        margin-left: 1rem;
+    }
+  }
+
+  .create-btn {
+    width: 100%;
+    height: 100%;
+    padding: 20rem .2rem;
+    display: flex;
+    flex-direction: column;
+    margin: .2rem;
+  }
+
+  .create-expense-btn{
+    padding:.6rem 5.25rem;
+    display: inline-block;
+    background: black;
+    font-size:1rem;
+    color: white;
+  }
+}

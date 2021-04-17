@@ -8,6 +8,7 @@ import Balances from "../pages/balances.jsx"
 import PayBalances from "../pages/payBalances.jsx"
 import PayBalanceFull from "../pages/payBalanceFull.jsx"
 import JoinGroup from "../components/joinGroup.jsx"
+import NewExpenseSheet from "../pages/newExpenseSheet.jsx"
 
 export default class Main extends React.Component {
   componentDidMount() {
@@ -31,6 +32,7 @@ export default class Main extends React.Component {
         <Route exact path="/logout">
           {logoutButton}
         </Route>
+        <Route exact path="/newExpenseSheet/:id?" component={NewExpenseSheet} />
       </Router>
     )
   }
