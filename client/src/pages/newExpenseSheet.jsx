@@ -41,9 +41,8 @@ export default class Balances extends React.Component {
         <label className="store-info">Tax (Optional)</label>
         <input className="store-input" type="text" name=""/>
         </div>
-        <div className="create-btn">
-          <button className="create-expense-btn">Create Expense</button>
-        </div>  
+        
+        <button className="create-expense-btn">Create Expense</button>
       </div>
     )
   }

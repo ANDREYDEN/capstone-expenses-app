@@ -57,12 +57,24 @@
   }
 
   a.add-item-btn {
-    display: block;
-    text-decoration: none;
-    text-align: center;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.25rem;
+    border-radius: 3rem;
     padding: 1rem;
-    margin: auto;
-    text-align: center;
+    outline: none;
+    text-decoration: none;
+    background: var(--font-color);
+    color: var(--base-bright-color);
+
+    position: fixed;
+    left: 50%;
+    bottom: .5rem;
+    transform: translateX(-50%);
+
+
   }
 }
 

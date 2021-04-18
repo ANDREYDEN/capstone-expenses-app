@@ -1,10 +1,9 @@
 .new-expense-container{
-  max-width: 30rem;
-  margin: auto;
-
+  padding: 0.8rem;
+  position: relative;
+  height: 100%;
   .store-details {
     width: 100%;
-    height: 100%;
     padding: .10rem .2rem;
     display: flex;
     flex-direction: column;
@@ -23,20 +22,18 @@
     }
   }
 
-  .create-btn {
-    width: 100%;
-    height: 100%;
-    padding: 20rem .2rem;
-    display: flex;
-    flex-direction: column;
-    margin: .2rem;
-  }
-
   .create-expense-btn{
-    padding:.6rem 5.25rem;
-    display: inline-block;
-    background: black;
-    font-size:1rem;
-    color: white;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    width: 90%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 1rem;
+    display: block;
+    background: var(--font-color);
+    color: var(--base-bright-color);
   }
 }

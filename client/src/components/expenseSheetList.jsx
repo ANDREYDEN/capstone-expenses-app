@@ -71,7 +71,7 @@ export default class ExpenseSheetList extends React.Component {
         </ul>
         <Link
           className="add-item-btn"
-          to={{ pathname: '/newExpenseSheet'}}>
+          to={{ pathname: '/new/sheets'}}>
           + New Expense
         </Link>
         {/* <button onClick={this.addNewExpenseSheet.bind(this)}>Add New One</button> */}
