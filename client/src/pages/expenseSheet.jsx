@@ -1,11 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import axios from "axios"
-import { useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import Spinner from "../components/spinner.jsx"
 import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
 import ExpenseEntryCardEditable from "../components/expenseEntryCardEditable.jsx"
+
+import { FaArrowLeft } from "react-icons/fa"
 
 import { getSheetById, updateSheet, getGroupMembers, updateEntries, addNewEntry } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
@@ -122,6 +124,7 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   render() {
+    const userId = window.userId()
     let spreadSheetTabs = <Spinner />
     if (this.state.receivedGroupMembers && this.state.receivedExpenses && this.state.sheet) {
       spreadSheetTabs = <SpreadSheetTabs
@@ -135,25 +138,54 @@ export default class ExpenseSheetList extends React.Component {
       />
     }
 
-
-
     if (this.state.serverConfirmed) {
       if (this.state.sheet) {
         const sheet = this.state.sheet
+        const summary = this.state.sheet.entries.reduce((memo, item) => {
+          if (this.state.sheet.createdBy !== userId) {
+            if (item.userCheckedIds[userId]) {
+              memo.owe += item.price / (Object.keys(item.userCheckedIds).filter(key => item.userCheckedIds[key]).length || 1)
+            }
+          }
+          memo.total += item.price
+          return memo
+        }, { total: 0, owe: 0 })
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        const createdAt = new Date(sheet.createdAt)
+        const date = `${createdAt.getDate()} ${months[createdAt.getMonth()]}`
+
+        const payer = (this.state.members || []).find(m => m._id === sheet.createdBy)
         return (
           <div className="expense-sheet-container">
-            <label htmlFor="">Expense Sheet Name:</label>
-            <input type="text" name="" ref={this.sheetName} defaultValue={sheet.name} onChange={this.updateDocs}/>
-            <br/>
-            <label htmlFor="">Store Name:</label>
-            <input type="text" name="" ref={this.storeName} defaultValue={sheet.store} onChange={this.updateDocs}/>
-            <br/>
-            <label htmlFor="">Tax Included:</label>
-            <input type="checkbox" name="" ref={this.taxIncluded} defaultChecked={this.state.sheet.taxIncluded} onChange={this.updateDocs}/>
-            <br/>
-            <span>Date: {sheet.createdAt}</span>
-            <br/>
-            <span>Created By: {sheet.createdBy}</span>
+            <div className="expense-sheet-header">
+              <div className="row arrow-back">
+                <Link to={{
+                  pathname: `/home`,
+                }}>
+                  <FaArrowLeft />
+                </Link>
+              </div>
+              <div className="row store">
+                <span>{sheet.store}</span>
+              </div>
+              <div className="row date">
+                <span>{date}</span>
+              </div>
+              <div className="row payer">
+                <span>Payer</span>
+                <span className="pull-right">{payer?.name || "N/A"}</span>
+              </div>
+              <div className="row total">
+                <span>Total</span>
+                <span className="pull-right">{summary.total.toFixed(2)}</span>
+              </div>
+              {this.state.sheet.createdBy !== userId ? (
+                <div className="row owe">
+                  <span>You owe</span>
+                  <span className="pull-right">{summary.owe.toFixed(2)}</span>
+                </div>
+              ) : null }
+            </div>
             {spreadSheetTabs}
             <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
               <span>+</span>
