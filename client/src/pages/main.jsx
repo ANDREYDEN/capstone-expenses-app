@@ -24,7 +24,7 @@ export default class Main extends React.Component {
     return (
       <Router>
         <Route path="/home/:id?" component={Home}/>
-        <Route exact path="/new/sheets" component={NewExpenseSheet} />
+        <Route exact path="/new/sheets/:id" component={NewExpenseSheet} />
         <Route exact path="/sheets/:id" component={ExpenseSheet} />
         <Route exact path="/balances/:id?" component={Balances} />
         <Route exact path="/payBalances/:id?" component={PayBalances} />
