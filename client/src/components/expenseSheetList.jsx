@@ -58,7 +58,7 @@ export default class ExpenseSheetList extends React.Component {
     });
 
     return (
-      <div className="expense-sheet-container">
+      <div className="expense-sheet-list-container">
         <Link
           className="pay-balance-btn"
           to={{

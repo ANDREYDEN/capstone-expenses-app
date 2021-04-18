@@ -1,5 +1,39 @@
 .expense-sheet-container {
+  .expense-sheet-header {
+    padding: .8rem;
+    background: #ECF1F7;
+    .row {
+      display: flex;
+      width: 100%;
+      &.payer, &.total, &.owe {
+        font-family: Roboto Mono;
+        margin-bottom: 0.2rem;
+      }
+      &.arrow-back {
+        font-size: 1.4rem;
+        margin: 0.5rem 0;
+      }
+      &.store {
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0.2rem 0;
+      }
+      &.date {
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+      &.payer {
+        margin-top: 1rem;
+      }
+
+      .pull-right {
+        margin-left: auto;
+      }
+    }
+  }
+
   #spreadSheetTabs {
+    padding: .8rem;
     .headers {
       width: 100%;
       display: flex;

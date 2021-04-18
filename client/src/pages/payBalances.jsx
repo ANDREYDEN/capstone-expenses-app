@@ -8,8 +8,8 @@ import Avatar from "../components/avatar.jsx"
 
 export default class PayBalances extends React.Component {
   constructor(props) {
-      super(props)
-      this.groupId = props.match.params.id
+    super(props)
+    this.groupId = props.match.params.id
   }
 
   componentDidMount() {
