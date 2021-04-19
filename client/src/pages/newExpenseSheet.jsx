@@ -23,15 +23,18 @@ export default class Balances extends React.Component {
   }
 
   createButtonClick(e) {
-    // TODO: some validation
     const store = this.store.current.value
     const date = this.date.current.value
     const tax = this.tax.current.value
-    const name = this.name.current.value
+    
+    if (!(store && date)) {
+      console.error("need store and date")
+      return
+    }
 
-    createNewExpenseSheet(this.groupId, { name, store, date, tax }).then(res => {
+    createNewExpenseSheet(this.groupId, { store, date, tax }).then(res => {
       this.setState({ redirect: `/sheets/${res.data.newSheet._id}` })
-    }).catch(console.error)
+    }).catch(console.error)    
   }
 
   render() {
@@ -48,13 +51,9 @@ export default class Balances extends React.Component {
         <h1>
           New Expense
         </h1>
-        <h3>
+        <h2>
           Purchase Details
-        </h3>
-        <label className="input-container" htmlFor="sheetName">
-          <span className="store-info">Name</span>
-          <input ref={this.name} id="sheetName" className="store-input" type="text" name=""/>
-        </label>
+        </h2>
         <label className="input-container" htmlFor="storeName">
           <span className="store-info">Store Name</span>
           <input ref={this.store} id="storeName" className="store-input" type="text" name=""/>
@@ -67,7 +66,6 @@ export default class Balances extends React.Component {
           <span className="store-info">Tax (Optional) %</span>
           <input ref={this.tax}  id="tax" className="store-input" type="number" max="100" min="1" name="" defaultValue="0"/>
         </label>
-        
         <button className="create-expense-btn" onClick={this.createButtonClick.bind(this)}>Create Expense</button>
       </div>
     )
