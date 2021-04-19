@@ -43,9 +43,9 @@ export default class Balances extends React.Component {
     return(
       <div className="new-expense-container">
         <Link to={{ pathname: '/home'}}>
-          <h2>
+          <h3>
             <FaArrowLeft/>
-          </h2>
+          </h3>
         </Link>
         <h1>
           New Expense
