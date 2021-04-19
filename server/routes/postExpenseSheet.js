@@ -20,7 +20,6 @@ exports.postExpenseSheet = {
       }
       // TODO: validating if user belongs to group
       const newExpenseSheetDoc = {
-        name: sheet.name,
         store: sheet.store,
         createdAt: new Date(),
         purchaseDate: sheet.date,
