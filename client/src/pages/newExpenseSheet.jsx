@@ -13,7 +13,6 @@ export default class Balances extends React.Component {
       redirect: null
     }
     this.groupId = props.match.params.id
-    this.name = React.createRef()
     this.store = React.createRef()
     this.date = React.createRef()
     this.tax = React.createRef()
