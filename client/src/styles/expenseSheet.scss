@@ -237,5 +237,41 @@
         }
       }
     }
+
+    .delete-duplicate-controlls {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      justify-content: space-around;
+      align-items: center;
+      display: flex;
+      bottom: 2rem;
+      font-size: 1rem;
+      padding: .5rem;
+      background: var(--base-bright-color);
+      border-radius: 1rem;
+
+      button {
+        border: none;
+        font-size: inherit;
+        background: inherit;
+        font-weight: bold;
+        white-space: nowrap;
+        &.delete {
+          text-align: right;
+          padding: 0.5rem .5rem 0.5rem 1.5rem;
+        }
+        &.duplicate {
+          padding: 0.5rem 1.5rem 0.5rem .5rem;
+        }
+      }
+
+      .bar {
+        border-left: 1px solid var(--border-color);
+        height: 1.5rem;
+        margin: 0 .3rem;
+        display: block;
+      }
+    }
   }
 }
