@@ -13,7 +13,7 @@ exports.getGroups = {
         res.send({ message: "Forbidden" })
         res.end()
       }
-      const cursor = global.db.collection("groups").findOne({ _id: { $in: user.groupIds } });
+      const cursor = global.db.collection("groups").find({ _id: { $in: user.groupIds } });
       const groups = await cursor.toArray();
 
       res.status(200)
