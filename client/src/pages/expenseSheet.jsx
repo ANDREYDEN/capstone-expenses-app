@@ -93,7 +93,16 @@ export default class ExpenseSheetList extends React.Component {
     const entry = this.state.entry
     if (entry) {
       deleteEntry(this.sheetId, entry).then((res) => {
-        console.log(res)
+        const sheet = this.state.sheet
+        sheet.entries.splice(entry.id, 1) // removes current entry from the sheet
+        // NOTE: decrease all of the indexes following the entry
+        sheet.entries = sheet.entries.map(e => {
+          if (e.id > entry.id) {
+            e.id--
+          }
+          return e
+        })
+        this.setState({ sheet, entry: null })
       }).catch(console.error)
     }
   }
