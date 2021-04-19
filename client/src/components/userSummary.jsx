@@ -58,11 +58,12 @@ export default class UserSummary extends React.Component {
     // WHY 16 ? just the golden ration * 10 and add a percent sign
     const ownTranslate = ((summary.own / 100) > 1 ? 1 : (summary.own / 100)) * 16
     const oweTranslate = ((summary.owe / 100) > 1 ? 1 : (summary.owe / 100)) * 16
-
     return (
       <div className="user-summary">
         <div className="visualization">
+          <div className="circle owe blured" style={{ transform: `translateX(-${50 - oweTranslate}%)`}}></div>
           <div className="circle owe" style={{ transform: `translateX(-${50 - oweTranslate}%)`}}></div>
+          <div className="circle own blured" style={{ transform: `translateX(-${50 + ownTranslate}%)`}}></div>
           <div className="circle own" style={{ transform: `translateX(-${50 + ownTranslate}%)`}}></div>
           <div className="circle balance"></div>
         </div>

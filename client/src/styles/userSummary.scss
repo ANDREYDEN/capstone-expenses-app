@@ -22,6 +22,10 @@
       &.own {
         background: linear-gradient(163.11deg, #AEDBAA 12.2%, #A6C5E2 90.39%);
       }
+      &.blured {
+        filter: blur(1.5rem);
+        opacity: .4;
+      }
     }
   }  
   .summary {
