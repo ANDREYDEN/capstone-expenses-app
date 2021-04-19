@@ -4,11 +4,11 @@ const {
   stringFromId
 } = require("../src/utils.js")
 
-exports.addGroup = {
+exports.addGroupMembers = {
   type: "post",
   path: "/groups/:id/add",
   authNeeded: true,
-  callback: async function addGroup(req, res) {
+  callback: async function addGroupMembers(req, res) {
     try {
       const email = req.email
       const { emails } = await retrieveDataFrom(req)

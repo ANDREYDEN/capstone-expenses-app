@@ -9,7 +9,7 @@ import ExpenseEntryCardEditable from "../components/expenseEntryCardEditable.jsx
 
 import { FaArrowLeft } from "react-icons/fa"
 
-import { getSheetById, updateSheet, getGroupMembers, updateEntries, addNewEntry } from "../api/index.js"
+import { getSheetById, updateSheet, getGroupMembers, updateEntries, addNewEntry, deleteEntry } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
 
 import "../styles/expenseSheet.scss"
@@ -87,6 +87,15 @@ export default class ExpenseSheetList extends React.Component {
 
   editEntry(entry) {
     this.setState({ entry })
+  }
+
+  deleteCurrentEntry() {
+    const entry = this.state.entry
+    if (entry) {
+      deleteEntry(this.sheetId, entry).then((res) => {
+        console.log(res)
+      }).catch(console.error)
+    }
   }
 
   updateEntry(entry) {
@@ -193,7 +202,7 @@ export default class ExpenseSheetList extends React.Component {
             <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
               <span>+</span>
             </button>
-            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} onSave={this.updateEntry.bind(this)}/>
+            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} onSave={this.updateEntry.bind(this)} onDelete={this.deleteCurrentEntry.bind(this)}/>
           </div>
         )
       }

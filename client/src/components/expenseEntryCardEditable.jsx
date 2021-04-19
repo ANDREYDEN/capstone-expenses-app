@@ -45,7 +45,7 @@ export default class ExpenseEntryCardEditable extends React.Component {
         </div>
 
         <div className="delete-duplicate-controlls">
-          <button className="delete">X Delete</button>
+          <button className="delete" onClick={this.props.onDelete}>X Delete</button>
           <div className="bar"></div>
           <button className="duplicate">X Duplicate</button>
         </div>

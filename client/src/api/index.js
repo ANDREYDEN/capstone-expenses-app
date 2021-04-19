@@ -40,7 +40,10 @@ export const updateEntry = (sheetId, index, entry) => {
 }
 // NOTE: entries: Array<{ index, update }>
 export const updateEntries = (sheetId, entries) => {
-  return api.post(`/sheets/updateEntries/${sheetId}`, JSON.stringify({ entries: entries }))
+  return api.post(`/sheets/updateEntries/${sheetId}`, JSON.stringify({ entries }))
+}
+export const deleteEntry = (sheetId, entry) => {
+  return api.delete(`/sheets/deleteEntry/${sheetId}/${entry.id}`)
 }
 // GROUPS
 export const getGroupMembers = (id) => {
@@ -80,7 +83,8 @@ const apis = {
   payExpenseSheets,
   addMember,
   joinGroup,
-  updateEntries
+  updateEntries,
+  deleteEntry
 }
 
 export default apis
