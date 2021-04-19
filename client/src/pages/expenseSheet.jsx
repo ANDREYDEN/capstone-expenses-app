@@ -107,6 +107,17 @@ export default class ExpenseSheetList extends React.Component {
     }
   }
 
+  duplicateCurrentEntry() {
+    const entry = this.state.entry
+    if (entry) {
+      addNewEntry(this.sheetId, entry).then(res => {
+        const newEntry = res.data.entry
+        this.state.sheet.entries.push(newEntry)
+        this.setState({ sheet: this.state.sheet, entry: null })
+      }).catch(console.error)
+    }
+  }
+
   updateEntry(entry) {
     if (this.state.addEntry) {
       if (! entry.name) {
@@ -211,7 +222,13 @@ export default class ExpenseSheetList extends React.Component {
             <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
               <span>+</span>
             </button>
-            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} onSave={this.updateEntry.bind(this)} onDelete={this.deleteCurrentEntry.bind(this)}/>
+            <ExpenseEntryCardEditable
+              entry={this.state.entry}
+              addEntry={this.state.addEntry}
+              onSave={this.updateEntry.bind(this)}
+              onDelete={this.deleteCurrentEntry.bind(this)}
+              onDuplicate={this.duplicateCurrentEntry.bind(this)}
+            />
           </div>
         )
       }
