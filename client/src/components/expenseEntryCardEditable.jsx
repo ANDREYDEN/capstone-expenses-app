@@ -28,7 +28,6 @@ export default class ExpenseEntryCardEditable extends React.Component {
 
   render() {
     const { entry, addEntry } = this.props
-
     return (
       <div className={`overlay ${entry || addEntry ? "active" : ""}`} onClick={this.doneEditing.bind(this)}>
         <div className="expense-entry-card">
@@ -43,12 +42,13 @@ export default class ExpenseEntryCardEditable extends React.Component {
             </div>
           </div>
         </div>
-
-        <div className="delete-duplicate-controlls">
-          <button className="delete" onClick={this.props.onDelete}>X Delete</button>
-          <div className="bar"></div>
-          <button className="duplicate">X Duplicate</button>
-        </div>
+        {entry && !addEntry ? (
+          <div className="delete-duplicate-controlls">
+            <button className="delete" onClick={this.props.onDelete}>X Delete</button>
+            <div className="bar"></div>
+            <button className="duplicate">X Duplicate</button>
+          </div>
+        ): null }
       </div>
     )
   }
