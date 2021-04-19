@@ -120,6 +120,9 @@ export default class ExpenseSheetList extends React.Component {
           }
         }).catch(console.error)
       }
+      else {
+        this.setState({ entry: null })
+      }
     }
   }
 
