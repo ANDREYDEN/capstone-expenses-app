@@ -9,7 +9,7 @@ import ExpenseEntryCardEditable from "../components/expenseEntryCardEditable.jsx
 
 import { FaArrowLeft } from "react-icons/fa"
 
-import { getSheetById, updateSheet, getGroupMembers, updateEntries, addNewEntry } from "../api/index.js"
+import { getSheetById, updateSheet, getGroupMembers, updateEntries, addNewEntry, deleteEntry } from "../api/index.js"
 import { differ, debounce } from  "../utils.js"
 
 import "../styles/expenseSheet.scss"
@@ -89,6 +89,35 @@ export default class ExpenseSheetList extends React.Component {
     this.setState({ entry })
   }
 
+  deleteCurrentEntry() {
+    const entry = this.state.entry
+    if (entry) {
+      deleteEntry(this.sheetId, entry).then((res) => {
+        const sheet = this.state.sheet
+        sheet.entries.splice(entry.id, 1) // removes current entry from the sheet
+        // NOTE: decrease all of the indexes following the entry
+        sheet.entries = sheet.entries.map(e => {
+          if (e.id > entry.id) {
+            e.id--
+          }
+          return e
+        })
+        this.setState({ sheet, entry: null })
+      }).catch(console.error)
+    }
+  }
+
+  duplicateCurrentEntry() {
+    const entry = this.state.entry
+    if (entry) {
+      addNewEntry(this.sheetId, entry).then(res => {
+        const newEntry = res.data.entry
+        this.state.sheet.entries.push(newEntry)
+        this.setState({ sheet: this.state.sheet, entry: null })
+      }).catch(console.error)
+    }
+  }
+
   updateEntry(entry) {
     if (this.state.addEntry) {
       if (! entry.name) {
@@ -119,6 +148,9 @@ export default class ExpenseSheetList extends React.Component {
             this.setState({ sheet: this.state.sheet, entry: null })
           }
         }).catch(console.error)
+      }
+      else {
+        this.setState({ entry: null })
       }
     }
   }
@@ -190,7 +222,13 @@ export default class ExpenseSheetList extends React.Component {
             <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
               <span>+</span>
             </button>
-            <ExpenseEntryCardEditable entry={this.state.entry} addEntry={this.state.addEntry} onSave={this.updateEntry.bind(this)}/>
+            <ExpenseEntryCardEditable
+              entry={this.state.entry}
+              addEntry={this.state.addEntry}
+              onSave={this.updateEntry.bind(this)}
+              onDelete={this.deleteCurrentEntry.bind(this)}
+              onDuplicate={this.duplicateCurrentEntry.bind(this)}
+            />
           </div>
         )
       }
