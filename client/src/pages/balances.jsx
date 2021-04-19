@@ -91,11 +91,11 @@ export default class Balances extends React.Component {
         return (
           <div className="balance-container">
             <Link to={{ pathname: '/home'}}>
-              <h3>
+              <h2>
                 <FaArrowLeft/>
-              </h3>
+              </h2>
             </Link>
-            <h2>Pay Balance</h2>
+            <h3>Pay Balance</h3>
             <h4>Who are your paying to?</h4>
             <ul className="users">
               {balances}
