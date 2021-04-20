@@ -27,7 +27,7 @@ export default class PayBalances extends React.Component {
             <FaArrowLeft/>
           </h2>
         </Link>
-        <h2>Pay Balance</h2>
+        <h3>Pay Balance</h3>
         <h4>How much are you paying?</h4>
         <div className="image-and-name">
           <div className="image">

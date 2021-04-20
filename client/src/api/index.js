@@ -19,8 +19,8 @@ export const authentificate = () => {
   return api.get("/authentificate")
 }
 // EXPENSE SHEETS
-export const createNewExpenseSheet = (groupId) => {
-  return api.post("/sheets/new", JSON.stringify({ groupId })) 
+export const createNewExpenseSheet = (groupId, sheet) => {
+  return api.post("/sheets/new", JSON.stringify({ groupId, sheet })) 
 }
 export const retrieveExpenseSheets = (groupId) => {
   return api.get(`/sheets?groupId=${groupId}`)
@@ -65,6 +65,7 @@ export const joinGroup = (groupId) => {
 export const payExpenseSheets = (sheetsToPay) =>{
   return api.post(`/pay/sheets`, JSON.stringify(sheetsToPay))
 }
+
 
 const apis = {
   login,
