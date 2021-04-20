@@ -9,6 +9,7 @@ import PayBalances from "../pages/payBalances.jsx"
 import PayBalanceFull from "../pages/payBalanceFull.jsx"
 import JoinGroup from "../components/joinGroup.jsx"
 import NewExpenseSheet from "../pages/newExpenseSheet.jsx"
+import GroupManager from "../components/groupManager.jsx"
 
 export default class Main extends React.Component {
   componentDidMount() {
@@ -26,6 +27,7 @@ export default class Main extends React.Component {
         <Route path="/home/:id?" component={Home}/>
         <Route exact path="/new/sheets/:id" component={NewExpenseSheet} />
         <Route exact path="/sheets/:id" component={ExpenseSheet} />
+        <Route exact path="/groups/:id?" component={GroupManager} />
         <Route exact path="/balances/:id?" component={Balances} />
         <Route exact path="/payBalances/:id?" component={PayBalances} />
         <Route exact path="/payBalanceFull/:id?" component={PayBalanceFull} />

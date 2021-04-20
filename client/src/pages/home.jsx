@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import ExpenseSheetList from "../components/expenseSheetList.jsx"
-import GroupManager from "../components/groupManager.jsx"
+import HomeHeader from "../components/homeHeader.jsx"
 import UserSummary from "../components/userSummary.jsx"
 
 export default class Home extends React.Component {
@@ -12,7 +12,7 @@ export default class Home extends React.Component {
     const groupId = this.props.match.params.id || this.globalState.get("selectedGroupId")
     return (
       <main>
-        <GroupManager groupId={groupId}/>
+        <HomeHeader groupId={groupId}/>
         <UserSummary groupId={groupId}/>
         <ExpenseSheetList groupId={groupId}/>
       </main>

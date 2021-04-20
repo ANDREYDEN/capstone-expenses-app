@@ -47,7 +47,7 @@ exports.deleteEntry = {
       // Downside would be that there's a race condition possible that someone queries the data after it's been $unset and before $pull
       // 
       // I am not 100% sure, but another solution might be use of transactions
-      await global.db.collection("sheets").updateOne({ _id: doc._id }, { $unset: { [`entries.${req.params.index}`]: true } }),
+      await global.db.collection("sheets").updateOne({ _id: doc._id }, { $unset: { [`entries.${req.params.index}`]: true } })
       await global.db.collection("sheets").updateOne({ _id: doc._id }, { $pull: { entries: null } })
       res.status(200)
       res.send({ message: "Deleted Entry Successfully!" })
