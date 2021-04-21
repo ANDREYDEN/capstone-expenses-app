@@ -1,0 +1,53 @@
+.expense-sheets-page {
+  .expense-sheets-tabs {
+    padding: .8rem;
+    .headers {
+      width: 100%;
+      display: flex;
+      list-style: none;
+      margin-bottom: 1rem;
+      .tab-header {
+        flex-grow: 1;
+        flex-basis: 0;
+        text-align: center;
+        padding: .5rem 0;
+        color: var(---dimmed-font-color);
+        border-bottom: 2px solid  var(--underline-color);
+        font-size: .8rem;
+        font-weight: 600;
+        &.active {
+          color: var(--font-color);
+          border-bottom-color: var(--font-color);
+        }  
+      }
+    }
+    .tabs {
+      .tab-content {
+        display: none;
+        &.active {
+          display: block;
+        }
+      }
+    }
+  }
+  a.add-item-btn {
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    line-height: 1rem;
+    white-space: nowrap;
+    border-radius: 3rem;
+    padding: 1rem 1.5rem;
+    outline: none;
+    text-decoration: none;
+    background: var(--font-color);
+    color: var(--base-bright-color);
+
+    position: fixed;
+    left: 50%;
+    bottom: .5rem;
+    transform: translateX(-50%);
+  }
+}
