@@ -84,7 +84,7 @@ export default class ExpenseSheets extends React.Component {
       )
     })
     return (
-      <main className="expense-sheets-page">
+      <main className="expense-sheets-page has-footer">
         <h1>Expenses</h1>
         <div className="expense-sheets-tabs">
           <ul className="headers">

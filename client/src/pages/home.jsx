@@ -13,16 +13,18 @@ export default class Home extends React.Component {
   render() {
     const groupId = this.props.match.params.id || this.globalState.get("selectedGroupId")
     return (
-      <main>
+      <main className="has-footer">
         <GroupManager groupId={groupId}/>
         <UserSummary groupId={groupId}/>
-        <Link
-          className="pay-balance-btn"
-          to={{
-            pathname: `/balances/${groupId}`,
-          }}
-        >Pay Balance</Link>
-        <h2>Sheets</h2>
+        <div className="home-section">
+          <Link
+            className="pay-balance-btn"
+            to={{
+              pathname: `/balances/${groupId}`,
+            }}
+          >Pay Balance</Link>
+          <h2 className="home-headline">Activity</h2>
+        </div>
         <ExpenseSheetList groupId={groupId}/>
         <HomeFooter active="home" groupId={groupId}/>
       </main>

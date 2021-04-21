@@ -24,7 +24,7 @@ export default class HomeFooter extends React.Component {
       return <Redirect to={this.state.redirect} />
     }
     return (
-      <footer className="home-fotter">
+      <footer className="home-footer">
         {this.props.active === "home" ? <span className="active"> O Home </span> : <Link to={{ pathname: `/home/${this.props.groupId}` }}>
           <span>O Home</span>
         </Link>}
