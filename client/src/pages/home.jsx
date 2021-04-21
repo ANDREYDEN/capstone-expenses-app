@@ -24,7 +24,7 @@ export default class Home extends React.Component {
         >Pay Balance</Link>
         <h2>Sheets</h2>
         <ExpenseSheetList groupId={groupId}/>
-        <HomeFooter active="home"/>
+        <HomeFooter active="home" groupId={groupId}/>
       </main>
     )
   }

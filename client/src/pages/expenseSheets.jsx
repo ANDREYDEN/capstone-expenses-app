@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { retrieveExpenseSheets, getGroup } from "../api/index.js"
 
 import ExpenseSheetList from "../components/expenseSheetList.jsx"
+import HomeFooter from "../components/homeFooter.jsx"
 
 import "../styles/expenseSheets.scss"
 
@@ -99,6 +100,8 @@ export default class ExpenseSheets extends React.Component {
           to={{ pathname: `/new/sheets/${this.groupId}`}}>
           + New Expense
         </Link>
+
+        <HomeFooter active="expenses" groupId={this.groupId}/>
       </main>
     )
   }
