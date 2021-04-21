@@ -19,8 +19,8 @@ export default class GroupManager extends React.Component {
     const groups = this.globalState.get("groups") || []
 
     return (
-      <main>
-        <HomeHeader groupId={this.props.match.params.id} />
+      <main class="group-manager">
+        <HomeHeader groupId={this.props.match.params.id} tab="groups"/>
         <div className="button-container">
           <button>
             Members
