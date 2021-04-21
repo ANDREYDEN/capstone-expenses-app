@@ -1,0 +1,42 @@
+.container {
+  max-width: 30rem;
+  margin: auto;
+  padding: 0.8rem;
+
+
+  .signup, .login {
+    .row {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      padding: .2rem;
+      &>input {
+        width: 14rem;
+        height: 2rem;
+        padding: .2rem;
+
+        font-size: 1rem;
+        font-family: inherit;
+
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+      }
+    }
+    &>button {
+      display: block;
+      width: 6rem;
+      height: 2rem;
+      margin: .5rem auto;
+
+      border-radius: 6px;
+      color: var(--font-color);
+      background: var(--base-color);
+      border: 1px solid var(--border-color);
+
+      cursor: pointer;
+      &:hover, &:focus, &:active {
+        background: var(--base-dimmed);
+      }
+    }
+  }
+}
