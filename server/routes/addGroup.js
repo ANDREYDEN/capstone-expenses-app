@@ -23,7 +23,6 @@ exports.addGroup = {
       const groupDoc = {
         name,
         createdBy: user._id,
-        userEmails: [user.email], // this used only for invitation purpuse
         userIds: [user._id]
       }
       const inserted = await global.db.collection("groups").insertOne(groupDoc)

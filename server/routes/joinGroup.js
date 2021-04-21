@@ -1,18 +1,26 @@
 
 const {
-  retrieveDataFrom,
+  validateInviteToken,
   idFromString,
   stringFromId
 } = require("../src/utils.js")
 
 exports.joinGroup = {
   type: "post",
-  path: "/groups/:id/join",
+  path: "/groups/:token/join",
   authNeeded: true,
   callback: async function joinGroup(req, res) {
     try {
       const email = req.email
-      const groupId = req?.params?.id
+      const token = req?.params?.token
+      if (! token) {
+        res.status(403)
+        res.send("Forbidden")
+        res.end()
+        return
+      }
+      const { groupId } = await validateInviteToken(token)
+
       const group = await global.db.collection("groups").findOne({ _id: idFromString(groupId) })
       if (! group) {
         res.status(404)
@@ -27,23 +35,16 @@ exports.joinGroup = {
         res.end()
         return
       }
-      if (group.userEmails.includes(email)) {
-        // Add user to a group
-        if (! group.userIds.map(stringFromId).includes(stringFromId(user._id))) {
-          await global.db.collection("groups").updateOne({ _id: group._id }, { $push: { userIds: user._id } })
-          await global.db.collection("users").updateOne({ _id: user._id }, { $push: { groupIds: group._id } })
-          user.groupIds.push(group._id)
-        }
-        res.status(200)
-        res.send({ message: "OK", user })
-        res.end()
-        return
-      }
 
-      res.status(403)
-      res.send("Forbidden")
+      // Add user to a group
+      if (! group.userIds.map(stringFromId).includes(stringFromId(user._id))) {
+        await global.db.collection("groups").updateOne({ _id: group._id }, { $push: { userIds: user._id } })
+        await global.db.collection("users").updateOne({ _id: user._id }, { $push: { groupIds: group._id } })
+        user.groupIds.push(group._id)
+      }
+      res.status(200)
+      res.send({ message: "OK", user })
       res.end()
-      return
     }
     catch (err) {
       console.error(err)
