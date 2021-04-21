@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Link } from "react-router-dom"
-import { createNewExpenseSheet, retrieveExpenseSheets } from "../api/index.js"
+import { retrieveExpenseSheets } from "../api/index.js"
 import "../styles/expenseSheetList.scss"
 
 export default class ExpenseSheetList extends React.Component {
@@ -16,25 +16,19 @@ export default class ExpenseSheetList extends React.Component {
   componentDidUpdate() {
     if (this.groupId !== this.props.groupId) {
       this.groupId = this.props.groupId
-      retrieveExpenseSheets(this.props.groupId).then((res) => {
-        this.globalState.set({ sheets: res.data.expenseSheets })
-      }).catch(err => console.error(err))
+      if (!this.props.sheets) {
+        // NOTE: might fix this behaviuor in the future. If this is on the home page we want to do this
+        //    We will have multiple ExpenseSheetList's on the expenseSheets page
+        //    We do not want to fetch the sheets more than once
+        retrieveExpenseSheets(this.props.groupId).then((res) => {
+          this.globalState.set({ sheets: res.data.expenseSheets })
+        }).catch(err => console.error(err))
+      }
     }
   }
 
-  addNewExpenseSheet() {
-    // TODO: some nitifcation if success
-    // TODO: redirect if successful
-    createNewExpenseSheet(this.props.groupId).then(result => {
-      const sheets = this.globalState.get("sheets")
-      sheets.push(result.data.newSheet)
-      this.globalState.set({ sheets })
-    }).catch(err => console.error(err))
-  }
-
   render() {
-    const user = window.user()
-    const items = (this.globalState.get("sheets") || []).map((sheet, index) => {
+    const items = (this.props.sheets || this.globalState.get("sheets") || []).map((sheet, index) => {
       const date = new Date(sheet.createdAt)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       const niceDate = `${months[date.getMonth()]} ${date.getDate()}`
@@ -59,22 +53,9 @@ export default class ExpenseSheetList extends React.Component {
 
     return (
       <div className="expense-sheet-list-container">
-        <Link
-          className="pay-balance-btn"
-          to={{
-            pathname: `/balances/${this.props.groupId}`,
-          }}
-        >Pay Balance</Link>
-        <h2>Sheets</h2>
         <ul className="expense-sheet-list">
           {items}
         </ul>
-        <Link
-          className="add-item-btn"
-          to={{ pathname: `/new/sheets/${this.groupId}`}}>
-          + New Expense
-        </Link>
-        {/* <button onClick={this.addNewExpenseSheet.bind(this)}>Add New One</button> */}
       </div>
     )
   }

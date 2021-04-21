@@ -13,6 +13,8 @@
     // TODO: variable
   }
 
+  // TODO: add light/dark whatever mode we want palette
+
   --font-color: #000;
   --dimmed-font-color: #4d4d4d;
   --base-color: #fafafa;
@@ -54,8 +56,19 @@ body {
   #root {
     height: 100%;
   }
+
+  a.pay-balance-btn {
+    display: block;
+    background: var(--font-color);
+    color: var(--base-color);
+    text-decoration: none;
+    padding: 1rem;
+    width: 100%;
+    margin: auto;
+    text-align: center;
+    border-radius: 6px;
+  }
 }
-// TODO: add light/dark whatever mode we want palette
 
 .pull-right {
   margin-left: auto;
