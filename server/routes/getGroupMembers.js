@@ -5,7 +5,7 @@ const {
 
 exports.getGroupMembers = {
   type: "get",
-  path: "/groups/:id",
+  path: "/groups/:id/members",
   authNeeded: true,
   callback: async function getGroupMembers(req, res) {
     try {
