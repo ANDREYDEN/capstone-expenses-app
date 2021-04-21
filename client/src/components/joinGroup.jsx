@@ -13,10 +13,10 @@ export default class JoinGroup extends React.Component {
     }
   }
   componentDidMount() {
-    joinGroup(this.props.match.params.id).then(res => {
+    joinGroup(this.props.match.params.token).then(res => {
       const newUser = res.data.user
       window.setUser(newUser)
-      this.setState({ redirect: `/home/${this.props.match.params.id}` })
+      this.setState({ redirect: `/home/${res.data.groupId}` })
     }).catch((err) => {
       this.setState({ error: err })
     })

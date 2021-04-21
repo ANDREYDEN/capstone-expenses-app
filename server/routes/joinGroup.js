@@ -43,7 +43,7 @@ exports.joinGroup = {
         user.groupIds.push(group._id)
       }
       res.status(200)
-      res.send({ message: "OK", user })
+      res.send({ message: "OK", user, groupId })
       res.end()
     }
     catch (err) {

@@ -31,7 +31,7 @@ export default class Main extends React.Component {
         <Route exact path="/balances/:id?" component={Balances} />
         <Route exact path="/payBalances/:id?" component={PayBalances} />
         <Route exact path="/payBalanceFull/:id?" component={PayBalanceFull} />
-        <Route exact path="/join/:id" component={JoinGroup} />
+        <Route exact path="/join/:token" component={JoinGroup} />
         <Route exact path="/logout">
           {logoutButton}
         </Route>

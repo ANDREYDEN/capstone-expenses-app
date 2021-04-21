@@ -2,7 +2,6 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Redirect, Link } from "react-router-dom"
 import AddGroup from "./addGroup.jsx"
-import AddMember from "./addMember.jsx"
 import "../styles/homeHeader.scss"
 import { getGroups } from "../api/index.js"
 import Avatar from  "./avatar.jsx"
@@ -12,8 +11,6 @@ export default class homeHeader extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showGroupCreation: false,
-      showAddMembers: false,
       selectedGroupId: props.groupId || null
     }
   }
