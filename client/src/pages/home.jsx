@@ -19,7 +19,7 @@ export default class Home extends React.Component {
         <Link
           className="pay-balance-btn"
           to={{
-            pathname: `/balances/${this.props.groupId}`,
+            pathname: `/balances/${groupId}`,
           }}
         >Pay Balance</Link>
         <h2>Sheets</h2>
