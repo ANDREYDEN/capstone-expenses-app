@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Link } from "react-router-dom"
 
-import { retrieveExpenseSheets, getGroup } from "../api/index.js"
+import { retrieveExpenseSheets, getGroup, getGroupMembers } from "../api/index.js"
 
 import ExpenseSheetList from "../components/expenseSheetList.jsx"
 import HomeFooter from "../components/homeFooter.jsx"
@@ -49,6 +49,11 @@ export default class ExpenseSheets extends React.Component {
     getGroup(this.groupId).then(res => {
       this.setState({
         group: res.data.group
+      })
+    }).catch(console.error)
+    getGroupMembers(this.groupId).then(res => {
+      this.globalState.set({
+        members: res.data.members
       })
     }).catch(console.error)
   }

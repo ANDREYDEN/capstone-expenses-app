@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Link } from "react-router-dom"
-import { retrieveExpenseSheets } from "../api/index.js"
+import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
 import "../styles/expenseSheetList.scss"
 
 export default class ExpenseSheetList extends React.Component {
@@ -28,10 +28,12 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   render() {
+    const members = this.globalState.get("members") || []
     const items = (this.props.sheets || this.globalState.get("sheets") || []).map((sheet, index) => {
       const date = new Date(sheet.createdAt)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       const niceDate = `${months[date.getMonth()]} ${date.getDate()}`
+      const createdBy = members.find(m => m._id === sheet.createdBy)?.name || "Unknown"
       return (
         <li className="expense-sheet-item" key={index}>
           <Link to={`/sheets/${sheet._id}`}>
@@ -40,7 +42,7 @@ export default class ExpenseSheetList extends React.Component {
               <span className="details">
                 <span>{niceDate}</span>
                 <span className="dot">・</span>
-                <span>{sheet.createdBy}</span>
+                <span>{createdBy}</span>
               </span>
             </div>
             <div className="sheet-state-badge">

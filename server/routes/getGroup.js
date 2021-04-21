@@ -16,9 +16,7 @@ exports.getGroup = {
         res.send({ message: "Forbidden" })
         res.end()
       }
-      console.log(req.params.id)
       const group = await global.db.collection("groups").findOne({ _id: idFromString(req.params.id) });
-      console.log(group)
       res.status(200)
       res.send({ message: "OK", group })
       res.end()
