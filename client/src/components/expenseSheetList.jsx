@@ -28,12 +28,30 @@ export default class ExpenseSheetList extends React.Component {
   }
 
   render() {
+    const userId = window.userId()
     const members = this.globalState.get("members") || []
     const items = (this.props.sheets || this.globalState.get("sheets") || []).map((sheet, index) => {
       const date = new Date(sheet.createdAt)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       const niceDate = `${months[date.getMonth()]} ${date.getDate()}`
       const createdBy = members.find(m => m._id === sheet.createdBy)?.name || "Unknown"
+      // TODO: state need a discussion. What is exact criteria for it?
+      let state = "logged"
+      for (let entry of sheet.entries) {
+        if (!(userId in entry.userCheckedIds)) {
+          state = "created"
+        }
+      }
+      if (!sheet.entries.length) {
+        state = "created"
+      }
+      if (sheet.usersPaidIds[userId]) {
+        state = "paid"
+      }
+      if (Object.keys(sheet.usersPaidIds).length >= members.length) {
+        state = "finalized"
+      }
+
       return (
         <li className="expense-sheet-item" key={index}>
           <Link to={`/sheets/${sheet._id}`}>
@@ -46,7 +64,7 @@ export default class ExpenseSheetList extends React.Component {
               </span>
             </div>
             <div className="sheet-state-badge">
-              <span className="state">state</span>
+              <span className={`state ${state}`}>{state}</span>
             </div>
           </Link>
         </li>

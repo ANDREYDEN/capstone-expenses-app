@@ -39,6 +39,16 @@
           padding: .2rem .4rem;
           border-radius: .6rem;
           font-size: 0.6rem;
+
+          &.paid {
+            background: rebeccapurple;
+          }
+          &.finalized {
+            background: green;
+          }
+          &.logged {
+            background: cyan;
+          }
         }
       }
     }
