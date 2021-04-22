@@ -3,8 +3,11 @@ import ReactDOM from "react-dom"
 import HomeHeader from "./homeHeader.jsx"
 import GroupList from "./groupList.jsx"
 import GroupMembers from "./groupMembers.jsx"
+import Spinner from "./spinner.jsx"
 import { Redirect, Link } from "react-router-dom"
-import { getGroupInviteLink, getGroups } from "../api/index.js"
+import { getGroups, getGroupMembers } from "../api/index.js"
+
+import "../styles/groupManager.scss"
 
 export default class GroupManager extends React.Component {
   constructor(props) {
@@ -16,11 +19,6 @@ export default class GroupManager extends React.Component {
 
   componentDidMount() {
     if (this.props.match.params.id) {
-      getGroupInviteLink(this.props.match.params.id).then(res => {
-        this.setState({ inviteLink: `http://localhost:8000/join/${res.data.token}` })
-      }).catch(err => {
-        console.log(err)
-      })
       getGroups().then(res => {
         const stateUpdate = {}
         if (!this.state.selectedGroupId && res.data.groups[0]?._id) {
@@ -29,6 +27,12 @@ export default class GroupManager extends React.Component {
         stateUpdate.groups = res.data.groups
         this.globalState.set(stateUpdate)
       }).catch(console.log)
+
+      getGroupMembers(this.props.match.params.id).then(res => {
+        this.globalState.set({
+          members: res.data.members
+        })
+      }).catch(console.error)
     }
   }
 
@@ -37,7 +41,9 @@ export default class GroupManager extends React.Component {
       return <Redirect to={"/home"} />
     }
     const groups = this.globalState.get("groups") || []
-    console.log(groups)
+    if (!groups.length) {
+      return <Spinner />
+    }
     if (this.props.match.params.view === "members") {
       return <GroupMembers group={groups.find(g => g._id === this.props.match.params.id)} />
     }
@@ -46,7 +52,7 @@ export default class GroupManager extends React.Component {
         <HomeHeader groupId={this.props.match.params.id} tab="groups"/>
         <div className="button-container">
           <Link
-            to={{pathname: "members"}}>
+            to={{pathname: `/groups/${this.props.match.params.id}/members`}}>
             PP Members
           </Link>
           <button>

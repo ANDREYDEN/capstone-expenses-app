@@ -26,7 +26,7 @@ export default class Home extends React.Component {
       this.groupId = groupId
       getGroupMembers(this.groupId).then(res => {
         this.globalState.set({
-          members: res.data.members
+          members: { [this.groupId]: res.data.members }
         })
       }).catch(console.error)
     }
