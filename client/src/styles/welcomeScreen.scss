@@ -25,19 +25,18 @@
     font-weight: 400;
   }
 
-    &>button {
-      margin-top: 1.5rem;
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      border: none;
-      width: 90%;
-      padding: 1rem;
-      font-size: 1.2rem;
-      border-radius: 1rem;
-      display: block;
-      background: var(--font-color);
-      color: var(--base-bright-color);
-      
-    }
+  .login-btn {
+    margin-top: 1.5rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    width: 90%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 1.5rem;
+    display: block;
+    background: var(--font-color);
+    color: var(--base-bright-color);
+  }
 }

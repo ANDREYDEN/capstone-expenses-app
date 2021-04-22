@@ -1,0 +1,68 @@
+.login-container {
+  max-width: 30rem;
+  margin: auto;
+  padding: 0.8rem;
+
+  h1{
+    font-size: 2.125rem;
+    margin-top: 0rem;
+    font-weight: 800;
+    padding-left: 1rem;
+  }
+  h2{
+    padding-left: 1rem;
+    margin-top: 4rem;
+  }
+  h3{
+    padding-left: 1rem;
+    font-size: 1.375rem;
+    font-weight: 600;
+    margin-top: 0rem;
+  }
+  h4{
+    margin-top: 2.5rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+  }
+
+  .username-password{
+    width: 100%;
+    background: var(--card-color);
+    padding: 1rem;
+    display: block;
+    margin: 0.5rem 0;
+    border-radius: .5rem;
+
+    input {
+      border: none;
+      background: inherit;
+      font-size: 1.1rem;
+      padding: .1rem 0rem;
+      width: 100%;
+      outline: none;
+      font-weight: bold;
+    }
+  }
+
+  .login-btn {
+    margin-top: 1.5rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    border: none;
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: .5rem;
+    display: block;
+    background: var(--font-color);
+    color: var(--base-bright-color);
+  }
+
+  .google{
+    text-align: center;
+  }
+}

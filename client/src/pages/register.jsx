@@ -1,8 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-
+import "../styles/register.scss"
 import { login, signup, oauth } from "../api/index.js"
 import GoogleSignIn from "../components/googleSignIn.jsx"
+import { FaArrowLeft } from "react-icons/fa"
+import { Link, Redirect } from "react-router-dom"
 
 export default class RegisterModule extends React.Component {
   signUpHandler() {
@@ -34,32 +36,37 @@ export default class RegisterModule extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="signup">
-          <div className="row">
-            <span>Name: </span> <input type="text" id="signup-name" />
-          </div>
-          <div className="row">
-            <span>Email: </span> <input type="text" id="signup-email" />
-          </div>
-          <div className="row">
-            <span>Password: </span> <input type="password" id="signup-password" />
-          </div>
-          <button id="signup-button" onClick={this.signUpHandler}>Sign Up</button>
-        </div>
+      <div className="register-container">
+        <Link to={{
+          pathname: `/welcomeScreen/`,
+          state: {
+          }
+        }}>
+        <h2>
+          <FaArrowLeft/>
+        </h2>
+        </Link>
+        <h1>
+          Register
+        </h1>
+        <h3>
+          Account Details
+        </h3>
         <div className="login">
-          <div className="row">
-            <span>Email </span> <input type="text" id="login-email" />
+          <div className = "username-password">
+            <input type="text" id="signup-name" placeholder="Name"/>
           </div>
-          <div className="row">
-            <span>Password: </span> <input type="password" id="login-password" />
+          <div className = "username-password">
+            <input type="text" id="signup-email" placeholder="Email"/>
           </div>
-          <button id="login-button" onClick={this.loginHandler.bind(this)}>Log In</button>
+          <div className = "username-password">
+            <input type="password" id="signup-password" placeholder="Password"/>
+          </div>
         </div>
-        <div className="google">
-          <GoogleSignIn onSuccess={this.googleSignInHandler.bind(this)}/>
-        </div>
-      </div>
+        <button className = "register-btn" id="signup-button" onClick={this.signUpHandler}>
+          Sign Up
+        </button>
+       </div>
     )
   }
 }

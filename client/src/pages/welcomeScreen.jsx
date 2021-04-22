@@ -4,6 +4,8 @@ import "../styles/welcomeScreen.scss"
 import { login, signup, oauth } from "../api/index.js"
 import GoogleSignIn from "../components/googleSignIn.jsx"
 import People from "../img/People.svg"
+import { FaRegPlayCircle } from "react-icons/fa"
+import { Link, Redirect } from "react-router-dom"
 
 export default class WelcomeScreen extends React.Component {
   signUpHandler() {
@@ -43,11 +45,22 @@ export default class WelcomeScreen extends React.Component {
         <h2>
           Share your expenses
         </h2>
-        <button>
-          Login
-        </button>
+        <Link to={{
+            pathname: `/login/`,
+            state: {
+          }}}>
+            <button className= "login-btn">
+              Log In
+            </button>
+          </Link>
         <h3>
-          Dont have an account? Register
+          Dont have an account?
+          <Link to={{
+            pathname: `/register/`,
+            state: {
+          }}}>
+            Register
+          </Link>
         </h3>
       </div>
     )
