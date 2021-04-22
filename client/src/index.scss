@@ -13,6 +13,8 @@
     // TODO: variable
   }
 
+  // TODO: add light/dark whatever mode we want palette
+
   --font-color: #000;
   --dimmed-font-color: #4d4d4d;
   --base-color: #fafafa;
@@ -24,6 +26,8 @@
   --green-text: #219653;
   --red-text: #EB5757;
   --grey-text: #BDBDBD;
+
+  --inactive-font-color: #666;
 
   --check-item-color: #357E31;
   --dismiss-item-color: #E03333;
@@ -54,8 +58,25 @@ body {
   #root {
     height: 100%;
   }
+
+  .home-section {
+    padding: .8rem;
+    a.pay-balance-btn {
+      display: block;
+      background: var(--font-color);
+      color: var(--base-color);
+      text-decoration: none;
+      padding: 1rem;
+      width: 100%;
+      margin: auto;
+      text-align: center;
+      border-radius: 6px;
+    }
+    h2.home-headline {
+      margin-top: 1rem;
+    }
+  }
 }
-// TODO: add light/dark whatever mode we want palette
 
 .pull-right {
   margin-left: auto;
@@ -64,6 +85,9 @@ body {
 main {
   display: flex;
   flex-direction: column;
+  &.has-footer {
+    padding-bottom: 4rem;
+  }
 }
 
 a {

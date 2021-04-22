@@ -47,6 +47,9 @@ export const deleteEntry = (sheetId, entry) => {
 }
 // GROUPS
 export const getGroupMembers = (id) => {
+  return api.get(`/groups/${id}/members`)
+}
+export const getGroup = (id) => {
   return api.get(`/groups/${id}`)
 }
 export const createGroup = (groupName) => {
@@ -78,6 +81,7 @@ const apis = {
   updateSheet,
   addNewEntry,
   updateEntry,
+  getGroup,
   getGroupMembers,
   createGroup,
   getGroups,

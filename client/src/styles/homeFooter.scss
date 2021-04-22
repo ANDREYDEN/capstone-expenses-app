@@ -1,0 +1,30 @@
+.home-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: var(--card-color);
+  display: flex;
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-decoration: none;
+    height: 4rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--inactive-font-color);
+  }
+  span.active {
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+
+    height: 4rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--font-color);
+  }
+}
