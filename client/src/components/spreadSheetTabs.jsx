@@ -78,7 +78,8 @@ export default class SpreadSheetTabs extends React.Component {
       const entries = this.props.entries
         .filter(tab.filterFn.bind(this))
         .sort(tab.sortFn.bind(this))
-      return (<div
+      return (
+        <div
           className={`tab-content ${this.state.activeTab === tab.id ? "active" : ""}`}
           key={tab.id}
         >

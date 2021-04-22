@@ -10,20 +10,9 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa"
 export default class homeHeader extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      selectedGroupId: props.groupId || null
-    }
   }
 
   componentDidMount() {
-    getGroups().then(res => {
-      const stateUpdate = {}
-      if (!this.state.selectedGroupId && res.data.groups[0]?._id) {
-        stateUpdate.selectedGroupId = res.data.groups[0]?._id
-      }
-      stateUpdate.groups = res.data.groups
-      this.globalState.set(stateUpdate)
-    }).catch(console.log)
   }
 
   render() {
@@ -32,7 +21,6 @@ export default class homeHeader extends React.Component {
     const selectedGroupId = this.props.groupId
     const seletedGroup = groups.find(g => g._id === selectedGroupId)
     const arrow = this.props.tab === "groups" ? <FaChevronUp /> : <FaChevronDown />
-    console.log(arrow)
     return (
       <div className="home-header">
         <div className="header">

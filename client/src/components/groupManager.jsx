@@ -2,8 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import HomeHeader from "./homeHeader.jsx"
 import GroupList from "./groupList.jsx"
-import { Redirect } from "react-router-dom"
-import { getGroupInviteLink } from "../api/index.js"
+import GroupMembers from "./groupMembers.jsx"
+import { Redirect, Link } from "react-router-dom"
+import { getGroupInviteLink, getGroups } from "../api/index.js"
 
 export default class GroupManager extends React.Component {
   constructor(props) {
@@ -20,6 +21,14 @@ export default class GroupManager extends React.Component {
       }).catch(err => {
         console.log(err)
       })
+      getGroups().then(res => {
+        const stateUpdate = {}
+        if (!this.state.selectedGroupId && res.data.groups[0]?._id) {
+          stateUpdate.selectedGroupId = res.data.groups[0]?._id
+        }
+        stateUpdate.groups = res.data.groups
+        this.globalState.set(stateUpdate)
+      }).catch(console.log)
     }
   }
 
@@ -28,16 +37,20 @@ export default class GroupManager extends React.Component {
       return <Redirect to={"/home"} />
     }
     const groups = this.globalState.get("groups") || []
-
+    console.log(groups)
+    if (this.props.match.params.view === "members") {
+      return <GroupMembers group={groups.find(g => g._id === this.props.match.params.id)} />
+    }
     return (
       <main className="group-manager">
         <HomeHeader groupId={this.props.match.params.id} tab="groups"/>
         <div className="button-container">
+          <Link
+            to={{pathname: "members"}}>
+            PP Members
+          </Link>
           <button>
-            Members
-          </button>
-          <button>
-            Group Settings
+            OO Group Settings
           </button>
         </div>
         <div className="groups">

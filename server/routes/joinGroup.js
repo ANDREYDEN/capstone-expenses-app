@@ -19,7 +19,14 @@ exports.joinGroup = {
         res.end()
         return
       }
-      const { groupId } = await validateInviteToken(token)
+      const { groupId } = await validateInviteToken(token).catch(err => {
+        res.status(403)
+        res.send("Your Invite Link has expired or is not valid")
+        res.end()
+      })
+      if (!groupId) {
+        return
+      }
 
       const group = await global.db.collection("groups").findOne({ _id: idFromString(groupId) })
       if (! group) {
