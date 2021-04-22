@@ -1,4 +1,7 @@
 .expense-sheet-container {
+  .swipeable-list-item__content {
+    background: unset;
+  }
   .expense-sheet-header {
     padding: .8rem;
     background: #ECF1F7;
@@ -148,6 +151,7 @@
     padding-left: 1.6rem;
     padding-right: 1.6rem;
     width: 100%;
+    border-radius: 0.5rem;
     height: 100%;
     color: var(--card-color);
     background: var(--check-item-color);
@@ -157,7 +161,7 @@
     height: 100%;
     color: var(--card-color);
     background: var(--dismiss-item-color);
-
+    border-radius: 0.5rem;
     font-size: 1.5rem;
     display: flex;
     align-items: center;
