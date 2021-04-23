@@ -3,7 +3,8 @@ const {
   retrieveDataFrom,
   makeHashOf,
   SALT_ROUNDS,
-  randomColor
+  randomColor,
+  generateAccessTokenFor
 } = require("../src/utils.js")
 
 exports.signUp = {
@@ -32,9 +33,16 @@ exports.signUp = {
         groupIds: [],
         color: randomColor()
       })
-      if (inserted) {
+
+      const user = inserted.ops[0]
+
+      const token = generateAccessTokenFor({ email, name: user.name })
+
+      if (token && user) {
+        const userObj = { _id: user._id, name: user.name, email, color: user.color }
+        res.cookie('jwt', token, { expires: new Date(Date.now() + 60 * 60 * 1000) })
         res.status(200)
-        res.send({ message: "User was created successfully!" })
+        res.send({ message: "User was created successfully!", jwt: token, user: userObj })
         res.end()
       }
     }
