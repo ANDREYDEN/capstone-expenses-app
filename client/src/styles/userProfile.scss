@@ -1,0 +1,41 @@
+.profile {
+  .header-section {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    padding: 0.8rem;
+
+    .arrow {
+      display: block;
+      font-size: 1.5rem;
+    }
+
+    .logout-button {
+      border: none;
+      background: none;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+  }
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .avatar {
+      width: 8rem;
+      height: 8rem;
+      font-size: 4rem;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+    }
+    .user-name {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    .user-email {
+      color: var(--dimmed-font-color);
+      font-size: 0.8rem;
+    }
+  }
+}
