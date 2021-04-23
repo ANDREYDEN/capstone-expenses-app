@@ -2,7 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
 import { authentificate } from "../api/index.js"
-import SignUpModule from "../pages/signup.jsx"
+import WelcomeScreen from "../pages/welcomeScreen.jsx"
+import LoginModule from "../pages/login.jsx"
+import RegisterModule from "../pages/register"
 import MainPage from "../pages/main.jsx"
 import SpinnerPreload from "../components/spinner.jsx"
 import { deleteCookie } from "../utils.js"
@@ -72,12 +74,18 @@ export default class App extends React.Component {
     if (verifiedLogin) {
       return (
         <Router>
-          <Route path="/signin">
-            {loggedIn ? <Redirect to="/home" /> : <SignUpModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
+          <Route path="/welcomeScreen">
+            {loggedIn ? <Redirect to="/home" /> : <WelcomeScreen />}
+          </Route>
+          <Route path="/login">
+            {loggedIn ? <Redirect to="/home" /> : <LoginModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
+          </Route>
+          <Route path="/register">
+            {loggedIn ? <Redirect to="/home" /> : <RegisterModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
           </Route>
           {["/home", "/sheets", "/balances", "/payBalances", "/payBalanceFull", "/join", "/logout", "/new/sheets", "/groups", "/expenses"].map((path, index) =>
             <Route path={path} key={index}>
-              {loggedIn ? <MainPage logout={this.onSuccessfulLogout.bind(this)}/> : <Redirect to="/signin" />}
+              {loggedIn ? <MainPage logout={this.onSuccessfulLogout.bind(this)}/> : <Redirect to="/welcomeScreen" />}
             </Route>
           )}
           <Route exact path="/">
