@@ -25,7 +25,19 @@ export default class GroupManager extends React.Component {
 
   copyGroupInvite() {
     if (this.inviteLink) {
-      navigator.clipboard.writeText(this.inviteLink)
+      navigator.clipboard.writeText(this.inviteLink).then(() => {
+        // TODO: successful copy notification
+      }).catch(console.error)
+    }
+  }
+
+  shareLink() {
+    if (navigator.share) {
+      navigator.share({
+        title: this.props.group.name,
+        text: "Share this link with your friends to join the group",
+        url: this.inviteLink
+      }).catch(console.error)
     }
   }
 
@@ -62,7 +74,7 @@ export default class GroupManager extends React.Component {
               <FaRegCopy />
             </button>
           </div>
-          <button className="share-button">Share Invite Link</button>
+          {navigator.share ? <button className="share-button" onClick={this.shareLink.bind(this)}>Share Invite Link</button> : null}
         </div>
         <ul className="member-list">
           {members}

@@ -72,10 +72,10 @@ export default class GroupManager extends React.Component {
             to={{pathname: `/groups/${this.props.match.params.id}/members`}}>
             PP Members
           </Link>
-          <Link
+          {group.createdBy === window.userId() ? <Link
             to={{pathname: `/groups/${this.props.match.params.id}/edit`}}>
             PP Group Settings
-          </Link>
+          </Link> : null}
         </div>
         <div className="groups">
           <div className="groups-header">
