@@ -31,12 +31,12 @@ exports.updateGroup = {
         return
       }
       const user = await global.db.collection("users").findOne({ email })
-      // if (! user && stringFromId(group.createdBy) !== user._id) {
-      //   res.status(403)
-      //   res.send("Forbidden")
-      //   res.end()
-      //   return
-      // }
+      if (! user && stringFromId(group.createdBy) !== stringFromId(user._id)) {
+        res.status(403)
+        res.send("Forbidden")
+        res.end()
+        return
+      }
 
       await global.db.collection("groups").updateOne({ _id: group._id }, { $set: { name } })
       group.name = name

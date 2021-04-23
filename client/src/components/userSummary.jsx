@@ -16,7 +16,7 @@ export default class UserSummary extends React.Component {
     const selectedGroupId = this.globalState.get("selectedGroupId") || this.props.groupId
     const group = groups.find(group => group._id === selectedGroupId)
 
-    if (!group || !sheets.length) {
+    if (!group) {
       return (
         <div className="user-summary">
           <Spinner />

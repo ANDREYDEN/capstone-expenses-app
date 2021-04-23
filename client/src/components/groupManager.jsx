@@ -3,6 +3,7 @@ import ReactDOM from "react-dom"
 import HomeHeader from "./homeHeader.jsx"
 import GroupList from "./groupList.jsx"
 import GroupMembers from "./groupMembers.jsx"
+import CreateGroup from "./createGroup.jsx"
 import EditGroup from "./editGroup.jsx"
 import Spinner from "./spinner.jsx"
 import { Redirect, Link } from "react-router-dom"
@@ -27,7 +28,7 @@ export default class GroupManager extends React.Component {
         }
         stateUpdate.groups = res.data.groups
         this.globalState.set(stateUpdate)
-      }).catch(console.log)
+      }).catch(console.error)
 
       getGroupMembers(this.props.match.params.id).then(res => {
         this.globalState.set({
@@ -47,13 +48,20 @@ export default class GroupManager extends React.Component {
     }
     const group = groups.find(g => g._id === this.props.match.params.id)
     if (this.props.match.params.view === "members") {
-      return <GroupMembers group={group} />
+      return <GroupMembers group={group} showFinish={this.props.location?.state?.showFinish}/>
     }
     if (this.props.match.params.view === "edit") {
       return <EditGroup group={group} onGroupUpdate={(newGroup) => {
         const index = groups.findIndex(g => g._id === newGroup._id)
         groups[index] = newGroup
         this.globalState.set({ groups })
+      }}/>
+    }
+    if (this.props.match.params.view === "new") {
+      return <CreateGroup group={group} onGroupCreate={(newGroup) => {
+        groups.push(newGroup)
+        this.globalState.set({ groups })
+        // this.setState({ finishLink: `groups/${newGroup._id}/members` })
       }}/>
     }
     return (
@@ -72,7 +80,7 @@ export default class GroupManager extends React.Component {
         <div className="groups">
           <div className="groups-header">
             <span>Groups</span>
-            <Link to={{pathname: `/new/groups/`}}>+</Link>
+            <Link to={{pathname: `/groups/${this.props.match.params.id}/new`}}>+</Link>
           </div>
           <GroupList groups={groups} currentGroupId={this.props.match.params.id} />
           <span>{this.state.inviteLink}</span>

@@ -109,7 +109,7 @@
       }
     }
 
-    .save-button {
+    .save-button, .finish-button {
       display: none;
       &.visible {
         display: flex;
@@ -129,6 +129,7 @@
       bottom: 2rem;
       transform: translateX(-50%);
       width: 90%;
+      text-decoration: none;
     }
   }
 
@@ -156,9 +157,11 @@
         a {
           width: 1.6rem;
           height: 1.6rem;
-          font-size: 1rem;
+          font-size: 1.25rem;
+          line-height: 1.125rem;
           border-radius: 50%;
-          border: 2px solid red;
+          color: var(--blue-text);
+          border: 2px solid var(--blue-text);
           text-decoration: none;
           text-align: center;
         }

@@ -67,6 +67,7 @@ export default class GroupManager extends React.Component {
         <ul className="member-list">
           {members}
         </ul>
+        {this.props.showFinish ? <Link className="finish-button visible" to={{pathname: `/home/${this.props.group._id}`}}> Finish </Link> : null}
       </main>
     )
   }

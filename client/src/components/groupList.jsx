@@ -25,7 +25,6 @@ export default class GroupList extends React.Component {
       }
       </li>
     ))
-    console.log(this.props.groups)
     return (
       <ul className="group-list">
         {groups}

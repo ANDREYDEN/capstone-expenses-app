@@ -19,7 +19,7 @@ export default class EditGroup extends React.Component {
   }
 
   componentDidMount() {
-    
+    this.groupName.current.focus()
   }
 
   nameChange(e) {
@@ -27,7 +27,6 @@ export default class EditGroup extends React.Component {
     this.setState({ showSaveButton: newName !== this.props.group.name })
   }
   saveGroup(e) {
-    console.log(this.groupName.current.value)
     updateGroup(this.props.group._id, this.groupName.current.value.trim()).then(res => {
       this.setState({ showSaveButton: false })
       this.props.onGroupUpdate(res.data.group)
