@@ -33,6 +33,7 @@ export default class App extends React.Component {
     window.userId = () => {
       return window.user()?._id
     }
+    window.logout = this.onSuccessfulLogout.bind(this)
   }
 
   onSuccessfulLogin() {
@@ -83,9 +84,9 @@ export default class App extends React.Component {
           <Route path="/register">
             {loggedIn ? <Redirect to="/home" /> : <RegisterModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
           </Route>
-          {["/home", "/sheets", "/balances", "/payBalances", "/payBalanceFull", "/join", "/logout", "/new/sheets", "/groups", "/expenses"].map((path, index) =>
+          {["/home", "/sheets", "/balances", "/payBalances", "/payBalanceFull", "/join", "/new/sheets", "/groups", "/expenses", "/profile"].map((path, index) =>
             <Route path={path} key={index}>
-              {loggedIn ? <MainPage logout={this.onSuccessfulLogout.bind(this)}/> : <Redirect to="/welcomeScreen" />}
+              {loggedIn ? <MainPage /> : <Redirect to="/welcomeScreen" />}
             </Route>
           )}
           <Route exact path="/">

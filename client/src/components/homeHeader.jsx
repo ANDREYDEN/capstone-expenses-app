@@ -31,7 +31,9 @@ export default class homeHeader extends React.Component {
           <span className="arrow">
             {arrow}
           </span>
-          <Avatar user={user} />
+          <Link className="avatar-link" to={{ pathname: "/profile" }}>
+            <Avatar user={user} />
+          </Link>
         </div>
       </div>
     )

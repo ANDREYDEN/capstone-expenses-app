@@ -6,9 +6,12 @@
   .header {
     display: flex;
     align-items: center;
-    .avatar {
+    .avatar-link {
       margin-left: auto;
       border-radius: 50%;
+      .avatar {
+        border-radius: 50%;
+      }
     }
     a {
       font-size: 1.2rem;
