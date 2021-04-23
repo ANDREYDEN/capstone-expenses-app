@@ -21,10 +21,11 @@ export default class homeHeader extends React.Component {
     const selectedGroupId = this.props.groupId
     const seletedGroup = groups.find(g => g._id === selectedGroupId)
     const arrow = this.props.tab === "groups" ? <FaChevronUp /> : <FaChevronDown />
+    const link = this.props.tab === "groups" ? `/home/${selectedGroupId}` : `/groups/${selectedGroupId}`
     return (
       <div className="home-header">
         <div className="header">
-          <Link to={{pathname: `/groups/${selectedGroupId}`}}>
+          <Link to={{pathname: link}}>
             {seletedGroup?.name}
           </Link>
           <span className="arrow">

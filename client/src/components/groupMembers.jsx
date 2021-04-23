@@ -10,15 +10,22 @@ import { FaArrowLeft, FaRegCopy } from "react-icons/fa"
 export default class GroupManager extends React.Component {
   constructor(props) {
     super(props)
+    this.inviteLink = null
   }
 
   componentDidMount() {
     if (this.props.group) {
       getGroupInviteLink(this.props.group._id).then(res => {
-        this.setState({ inviteLink: `http://localhost:8000/join/${res.data.token}` })
+        this.inviteLink =`${window.origin}/join/${res.data.token}`
       }).catch(err => {
         console.log(err)
       })
+    }
+  }
+
+  copyGroupInvite() {
+    if (this.inviteLink) {
+      navigator.clipboard.writeText(this.inviteLink)
     }
   }
 
@@ -51,7 +58,7 @@ export default class GroupManager extends React.Component {
               <span className="bold">Invite Members</span>
               <span className="dimmed">Publish and share link with anyone</span>
             </div>
-            <button className="copy-button">
+            <button className="copy-button" onClick={this.copyGroupInvite.bind(this)}>
               <FaRegCopy />
             </button>
           </div>

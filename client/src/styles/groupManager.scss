@@ -1,6 +1,6 @@
 .group-manager {
-  padding: 0.8rem;
-  &.members {
+  &.members, &.edit-group {
+    padding: 0.8rem;
     .header-section {
       margin: 3.2rem 0 1rem 0;
       .arrow {
@@ -78,6 +78,106 @@
             &.email {
               color: var(--dimmed-font-color);
               font-size: 0.8rem;
+            }
+          }
+        }
+      }
+    }
+
+    .input-container {
+      width: 100%;
+      background: var(--card-color);
+      padding: 1rem;
+      display: block;
+      margin: 0.5rem 0;
+      border-radius: .5rem;
+      span {
+        font-size: 0.9rem;
+        color: var(--dimmed-font-color);
+        display: block;
+        margin: 0.2rem 0;
+      }
+
+      input {
+        border: none;
+        background: inherit;
+        font-size: 1.1rem;
+        padding: .1rem 0rem;
+        width: 100%;
+        outline: none;
+        font-weight: bold;
+      }
+    }
+
+    .save-button {
+      display: none;
+      &.visible {
+        display: flex;
+      }
+      border: none;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+      line-height: 1rem;
+      white-space: nowrap;
+      border-radius: .5rem;
+      padding: 1rem 1.5rem;
+      background: var(--font-color);
+      color: var(--base-bright-color);
+      position: fixed;
+      left: 50%;
+      bottom: 2rem;
+      transform: translateX(-50%);
+      width: 90%;
+    }
+  }
+
+  &.groups {
+    .button-container {
+      a {
+        display: block;
+        background: var(--card-color);
+        margin: 1rem;
+        padding: 1rem;
+        text-decoration: none;
+        font-weight: 600;
+        border-radius: .5rem;
+      }
+    }
+
+    .groups {
+      padding: 0.8rem;
+      .groups-header {
+        display: flex;
+        justify-content: space-between;
+        span {
+          font-weight: bold;
+        }
+        a {
+          width: 1.6rem;
+          height: 1.6rem;
+          font-size: 1rem;
+          border-radius: 50%;
+          border: 2px solid red;
+          text-decoration: none;
+          text-align: center;
+        }
+      }
+      .group-list {
+        list-style: none;
+        .group {
+          background: var(--card-color);
+          padding: 1rem;
+          margin: 0.5rem 0;
+          .group-link {
+            text-decoration: none;
+            span {
+              display: block;
+              
+              &.members {
+                font-size: 0.8rem;
+                color: var(--dimmed-font-color);
+              }
             }
           }
         }

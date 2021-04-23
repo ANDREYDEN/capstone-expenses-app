@@ -55,6 +55,9 @@ export const getGroup = (id) => {
 export const createGroup = (groupName) => {
   return api.post(`/groups/new/`, JSON.stringify({ name: groupName }))
 }
+export const updateGroup = (groupId, groupName) => {
+  return api.post(`/groups/update/${groupId}`, JSON.stringify({ name: groupName }))
+}
 export const getGroups = () => {
   return api.get(`/groups/`)
 }
