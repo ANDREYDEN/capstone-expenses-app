@@ -75,7 +75,7 @@ export default class App extends React.Component {
       return (
         <Router>
           <Route path="/welcomeScreen">
-            {loggedIn ? <Redirect to="/home" /> : <WelcomeScreen loginCallback={this.onSuccessfulLogin.bind(this)}/>}
+            {loggedIn ? <Redirect to="/home" /> : <WelcomeScreen />}
           </Route>
           <Route path="/login">
             {loggedIn ? <Redirect to="/home" /> : <LoginModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}

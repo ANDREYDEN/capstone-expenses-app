@@ -8,33 +8,6 @@ import { FaRegPlayCircle } from "react-icons/fa"
 import { Link, Redirect } from "react-router-dom"
 
 export default class WelcomeScreen extends React.Component {
-  signUpHandler() {
-    const name = document.getElementById("signup-name").value
-    const password = document.getElementById("signup-password").value
-    const email = document.getElementById("signup-email").value
-    signup(email, name, password).then(res => console.log(res)).catch(err => console.log(err))
-  }
-
-  loginHandler() {
-    const email = document.getElementById("login-email").value
-    const password = document.getElementById("login-password").value
-    
-    login(email, password).then(res => {
-      window.setUser(res.data.user)
-      this.props.loginCallback()
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
-  googleSignInHandler(response) {
-    console.log(response)
-    oauth(response.tokenId, "google").then(res => {
-      window.setUser(res.data.user)
-      this.props.loginCallback()
-    }).catch(console.error)
-  }
-
   render() {
     return (
       <div className="container">

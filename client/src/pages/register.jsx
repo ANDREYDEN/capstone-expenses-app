@@ -11,27 +11,11 @@ export default class RegisterModule extends React.Component {
     const name = document.getElementById("signup-name").value
     const password = document.getElementById("signup-password").value
     const email = document.getElementById("signup-email").value
-    signup(email, name, password).then(res => console.log(res)).catch(err => console.log(err))
-  }
-
-  loginHandler() {
-    const email = document.getElementById("login-email").value
-    const password = document.getElementById("login-password").value
-    
-    login(email, password).then(res => {
+    // TODO: some email password and name validation
+    signup(email, name, password).then(res => {
       window.setUser(res.data.user)
       this.props.loginCallback()
-    }).catch(err => {
-      console.log(err)
-    })
-  }
-
-  googleSignInHandler(response) {
-    console.log(response)
-    oauth(response.tokenId, "google").then(res => {
-      window.setUser(res.data.user)
-      this.props.loginCallback()
-    }).catch(console.error)
+    }).catch(err => console.log(err))
   }
 
   render() {
@@ -63,7 +47,7 @@ export default class RegisterModule extends React.Component {
             <input type="password" id="signup-password" placeholder="Password"/>
           </div>
         </div>
-        <button className = "register-btn" id="signup-button" onClick={this.signUpHandler}>
+        <button className = "register-btn" id="signup-button" onClick={this.signUpHandler.bind(this)}>
           Sign Up
         </button>
        </div>
