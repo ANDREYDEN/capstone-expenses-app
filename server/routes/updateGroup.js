@@ -1,18 +1,28 @@
+
 const {
   retrieveDataFrom,
   idFromString,
   stringFromId
 } = require("../src/utils.js")
 
-exports.addGroupMembers = {
+exports.updateGroup = {
   type: "post",
-  path: "/groups/:id/add",
+  path: "/groups/update/:id",
   authNeeded: true,
-  callback: async function addGroupMembers(req, res) {
+  callback: async function updateGroup(req, res) {
     try {
+      // TODO: name validation
+      const { name } = await retrieveDataFrom(req)
       const email = req.email
-      const { emails } = await retrieveDataFrom(req)
-      const groupId = req?.params?.id
+      const groupId = req.params.id
+
+      if (!groupId) {
+        res.status(400)
+        res.send("Bad request")
+        res.end()
+        return
+      }
+     
       const group = await global.db.collection("groups").findOne({ _id: idFromString(groupId) })
       if (! group) {
         res.status(404)
@@ -21,22 +31,17 @@ exports.addGroupMembers = {
         return
       }
       const user = await global.db.collection("users").findOne({ email })
-      if (! user) {
-        res.status(403)
-        res.send("Forbidden")
-        res.end()
-        return
-      }
-      if (! group.userIds.map(stringFromId).includes(stringFromId(user._id))) {
+      if (! user && stringFromId(group.createdBy) !== stringFromId(user._id)) {
         res.status(403)
         res.send("Forbidden")
         res.end()
         return
       }
 
-      await global.db.collection("groups").updateOne({ _id: group._id }, { $push: { userEmails: { $each: emails } } })
+      await global.db.collection("groups").updateOne({ _id: group._id }, { $set: { name } })
+      group.name = name
       res.status(200)
-      res.send({ message: "Added a new member to a group successfully" })
+      res.send({ message: "OK", group })
       res.end()
     }
     catch (err) {

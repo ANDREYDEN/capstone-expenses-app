@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { Link } from "react-router-dom"
-import { retrieveExpenseSheets, getGroupMembers } from "../api/index.js"
+import { retrieveExpenseSheets } from "../api/index.js"
 import "../styles/expenseSheetList.scss"
 
 export default class ExpenseSheetList extends React.Component {
@@ -29,7 +29,7 @@ export default class ExpenseSheetList extends React.Component {
 
   render() {
     const userId = window.userId()
-    const members = this.globalState.get("members") || []
+    const members = this.globalState.get("members")?.[this.props.groupId] || []
     const items = (this.props.sheets || this.globalState.get("sheets") || []).map((sheet, index) => {
       const date = new Date(sheet.createdAt)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]

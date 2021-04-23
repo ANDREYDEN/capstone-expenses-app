@@ -55,11 +55,14 @@ export const getGroup = (id) => {
 export const createGroup = (groupName) => {
   return api.post(`/groups/new/`, JSON.stringify({ name: groupName }))
 }
+export const updateGroup = (groupId, groupName) => {
+  return api.post(`/groups/update/${groupId}`, JSON.stringify({ name: groupName }))
+}
 export const getGroups = () => {
   return api.get(`/groups/`)
 }
-export const addMember = ({ groupId, emails }) => {
-  return api.post(`/groups/${groupId}/add/`, JSON.stringify({ emails }))
+export const getGroupInviteLink = (groupId) => {
+  return api.get(`/groups/${groupId}/invite`)
 }
 export const joinGroup = (groupId) => {
   return api.post(`/groups/${groupId}/join/`)
@@ -86,10 +89,10 @@ const apis = {
   createGroup,
   getGroups,
   payExpenseSheets,
-  addMember,
   joinGroup,
   updateEntries,
-  deleteEntry
+  deleteEntry,
+  getGroupInviteLink
 }
 
 export default apis

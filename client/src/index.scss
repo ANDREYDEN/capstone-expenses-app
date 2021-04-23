@@ -32,6 +32,7 @@
   --check-item-color: #357E31;
   --dismiss-item-color: #E03333;
 
+  --blue-text: #4181FD;
   --grey-blue: #ECF1F7;
 }
 
@@ -71,6 +72,7 @@ body {
       margin: auto;
       text-align: center;
       border-radius: 6px;
+      border: none;
     }
     h2.home-headline {
       margin-top: 1rem;

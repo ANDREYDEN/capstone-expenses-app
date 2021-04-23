@@ -120,6 +120,21 @@ function generateAccessTokenFor({ email, username }) {
   return jwt.sign({ email, username }, process.env.JWT_SECRET, { expiresIn: 60 * 60 })
 }
 
+function generateInviteToken(groupId, expiresIn = (60*60*48)) {
+  return jwt.sign({ groupId }, process.env.JWT_SECRET, { expiresIn })
+}
+function validateInviteToken(token) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        reject(err)
+        return
+      }
+      resolve(decoded)
+    })
+  })
+}
+
 // adds listener to any exit events to execute some cleanup function if we need any
 function exitHandler(cleanUpFn) {
   process.stdin.resume() // so the program will not close instantly
@@ -201,3 +216,5 @@ exports.idFromString = idFromString
 exports.stringFromId = stringFromId
 exports.verifyGoogleToken = verifyGoogleToken
 exports.randomColor = randomColor
+exports.generateInviteToken = generateInviteToken
+exports.validateInviteToken = validateInviteToken

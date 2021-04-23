@@ -35,9 +35,16 @@ exports.signUp = {
       })
 
       const user = inserted.ops[0]
+      const groupDoc = {
+        name: `${user.name}'s Group`,
+        createdBy: user._id,
+        userIds: [user._id]
+      }
+      const groupInserted = await global.db.collection("groups").insertOne(groupDoc)
+      const initialGroup = groupInserted.ops[0]
+      await global.db.collection("users").updateOne({ _id: user._id }, { $push: { groupIds: initialGroup._id } })
 
       const token = generateAccessTokenFor({ email, name: user.name })
-
       if (token && user) {
         const userObj = { _id: user._id, name: user.name, email, color: user.color }
         res.cookie('jwt', token, { expires: new Date(Date.now() + 60 * 60 * 1000) })

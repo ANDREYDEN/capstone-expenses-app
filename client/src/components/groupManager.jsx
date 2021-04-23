@@ -1,80 +1,91 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import AddGroup from "./addGroup.jsx"
-import AddMember from "./addMember.jsx"
-import GroupDropDown from "./groupDropDown.jsx"
+import HomeHeader from "./homeHeader.jsx"
+import GroupList from "./groupList.jsx"
+import GroupMembers from "./groupMembers.jsx"
+import CreateGroup from "./createGroup.jsx"
+import EditGroup from "./editGroup.jsx"
+import Spinner from "./spinner.jsx"
+import { Redirect, Link } from "react-router-dom"
+import { getGroups, getGroupMembers } from "../api/index.js"
+
 import "../styles/groupManager.scss"
-import { getGroups } from "../api/index.js"
-import Avatar from  "./avatar.jsx"
 
 export default class GroupManager extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      showGroupCreation: false,
-      showAddMembers: false,
-      selectedGroupId: props.groupId || null
+      inviteLink: ""
     }
   }
 
   componentDidMount() {
-    getGroups().then(res => {
-      const stateUpdate = {}
-      if (!this.state.selectedGroupId && res.data.groups[0]?._id) {
-        stateUpdate.selectedGroupId = res.data.groups[0]?._id
-      }
-      stateUpdate.groups = res.data.groups
-      this.globalState.set(stateUpdate)
-    }).catch(console.log)
+    if (this.props.match.params.id) {
+      getGroups().then(res => {
+        const stateUpdate = {}
+        if (!this.state.selectedGroupId && res.data.groups[0]?._id) {
+          stateUpdate.selectedGroupId = res.data.groups[0]?._id
+        }
+        stateUpdate.groups = res.data.groups
+        this.globalState.set(stateUpdate)
+      }).catch(console.error)
+
+      getGroupMembers(this.props.match.params.id).then(res => {
+        this.globalState.set({
+          members: res.data.members
+        })
+      }).catch(console.error)
+    }
   }
 
-  showGroupCreation() {
-    this.setState({
-      showGroupCreation: true
-    })
-  }
-  hideGroupCreation() {
-    this.setState({
-      showGroupCreation: false
-    })
-  }
-  showAddMembers() {
-    this.setState({
-      showAddMembers: true
-    })
-  }
-  hideAddMembers() {
-    this.setState({
-      showAddMembers: false
-    })
-  }
   render() {
-    const user = window.user()
+    if (!this.props.match.params.id) {
+      return <Redirect to={"/home"} />
+    }
     const groups = this.globalState.get("groups") || []
-    const selectedGroupId = this.props.groupId
-    const groupDropDown = groups.length ? <GroupDropDown onGroupChange={this.props.onGroupChange} groups={groups} selectedGroupId={selectedGroupId}/> : null
-    const addGroup = this.state.showGroupCreation ? <AddGroup onSuccess={this.hideGroupCreation.bind(this)} /> : null
-    const addMembers = this.state.showAddMembers ? <AddMember groupId={selectedGroupId} onSuccess={this.hideAddMembers.bind(this)} /> : null
-    const groupDict = (groups || []).reduce((memo, group) => {
-      memo[group._id] = group
-      return memo
-    }, {})
-    const initials = user.name.split(" ").map((name, index) => <span key={index}>{name[0].toUpperCase()}</span>)
+    if (!groups.length) {
+      return <Spinner />
+    }
+    const group = groups.find(g => g._id === this.props.match.params.id)
+    if (this.props.match.params.view === "members") {
+      return <GroupMembers group={group} showFinish={this.props.location?.state?.showFinish}/>
+    }
+    if (this.props.match.params.view === "edit") {
+      return <EditGroup group={group} onGroupUpdate={(newGroup) => {
+        const index = groups.findIndex(g => g._id === newGroup._id)
+        groups[index] = newGroup
+        this.globalState.set({ groups })
+      }}/>
+    }
+    if (this.props.match.params.view === "new") {
+      return <CreateGroup group={group} onGroupCreate={(newGroup) => {
+        groups.push(newGroup)
+        this.globalState.set({ groups })
+        // this.setState({ finishLink: `groups/${newGroup._id}/members` })
+      }}/>
+    }
     return (
-      <div className="group-manager">
-        <div className="group-creation">
-          // NOTE: this is temporary. To be changed
-          <button onClick={this.showGroupCreation.bind(this)}>New Group</button>
-          {addGroup}
-          // NOTE: this is temporary. To be changed
-          <button onClick={this.showAddMembers.bind(this)}>Add Member</button>
-          {addMembers}
+      <main className="group-manager groups">
+        <HomeHeader groupId={this.props.match.params.id} tab="groups"/>
+        <div className="button-container">
+          <Link
+            to={{pathname: `/groups/${this.props.match.params.id}/members`}}>
+            PP Members
+          </Link>
+          {group.createdBy === window.userId() ? <Link
+            to={{pathname: `/groups/${this.props.match.params.id}/edit`}}>
+            PP Group Settings
+          </Link> : null}
         </div>
-        <div className="header">
-          {groupDropDown}
-          <Avatar user={user} />
+        <div className="groups">
+          <div className="groups-header">
+            <span>Groups</span>
+            <Link to={{pathname: `/groups/${this.props.match.params.id}/new`}}>+</Link>
+          </div>
+          <GroupList groups={groups} currentGroupId={this.props.match.params.id} />
+          <span>{this.state.inviteLink}</span>
         </div>
-      </div>
+      </main>
     )
   }
 }
