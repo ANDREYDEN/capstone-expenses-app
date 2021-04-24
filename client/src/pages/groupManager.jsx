@@ -8,6 +8,7 @@ import EditGroup from "../components/editGroup.jsx"
 import Spinner from "../components/spinner.jsx"
 import { Redirect, Link } from "react-router-dom"
 import { getGroups, getGroupMembers } from "../api/index.js"
+import { FiUsers, FiSettings } from "react-icons/fi"
 
 import "../styles/groupManager.scss"
 
@@ -70,11 +71,11 @@ export default class GroupManager extends React.Component {
         <div className="button-container">
           <Link
             to={{pathname: `/groups/${this.props.match.params.id}/members`}}>
-            PP Members
+            <FiUsers /> Members
           </Link>
           {group.createdBy === window.userId() ? <Link
             to={{pathname: `/groups/${this.props.match.params.id}/edit`}}>
-            PP Group Settings
+            <FiSettings /> Group Settings
           </Link> : null}
         </div>
         <div className="groups">
