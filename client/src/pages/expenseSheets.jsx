@@ -53,7 +53,7 @@ export default class ExpenseSheets extends React.Component {
     }).catch(console.error)
     getGroupMembers(this.groupId).then(res => {
       this.globalState.set({
-        members: res.data.members
+        members: { [this.groupId]: res.data.members }
       })
     }).catch(console.error)
   }
