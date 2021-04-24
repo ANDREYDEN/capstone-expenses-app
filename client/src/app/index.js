@@ -7,6 +7,7 @@ import LoginModule from "../pages/login.jsx"
 import RegisterModule from "../pages/register"
 import MainPage from "../pages/main.jsx"
 import SpinnerPreload from "../components/spinner.jsx"
+import NotificationModule from "../components/notifications.jsx"
 import { deleteCookie } from "../utils.js"
 
 export default class App extends React.Component {
@@ -75,6 +76,7 @@ export default class App extends React.Component {
     if (verifiedLogin) {
       return (
         <Router>
+          <NotificationModule />
           <Route path="/welcomeScreen">
             {loggedIn ? <Redirect to="/home" /> : <WelcomeScreen />}
           </Route>

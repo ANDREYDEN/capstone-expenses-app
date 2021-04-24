@@ -15,7 +15,10 @@ export default class RegisterModule extends React.Component {
     signup(email, name, password).then(res => {
       window.setUser(res.data.user)
       this.props.loginCallback()
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      console.error(err)
+      window.Notifications.error("Error", "Failed to create account. Try different name!", 8000)
+    })
   }
 
   render() {

@@ -22,16 +22,19 @@ export default class LoginModule extends React.Component {
       window.setUser(res.data.user)
       this.props.loginCallback()
     }).catch(err => {
-      console.log(err)
+      console.error(err)
+      window.Notifications.error("Error", "Failed To Authentificate", 8000)
     })
   }
 
   googleSignInHandler(response) {
-    console.log(response)
     oauth(response.tokenId, "google").then(res => {
       window.setUser(res.data.user)
       this.props.loginCallback()
-    }).catch(console.error)
+    }).catch(err => {
+      console.error(err)
+      window.Notifications.error("Error", "Failed To Authentificate", 8000)
+    })
   }
 
   render() {
