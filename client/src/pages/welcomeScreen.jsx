@@ -28,10 +28,7 @@ export default class WelcomeScreen extends React.Component {
           </Link>
         <h3>
           Dont have an account?
-          <Link to={{
-            pathname: `/register/`,
-            state: {
-          }}}>
+          <Link to={{ pathname: `/register/` }} className="register-link">
             Register
           </Link>
         </h3>

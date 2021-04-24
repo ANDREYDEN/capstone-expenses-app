@@ -54,7 +54,7 @@ export default class LoginModule extends React.Component {
         </h3>
         <div className="login">
           <div className = "username-password">
-            <input type="text" id="login-email" placeholder="Email"/>
+            <input type="email" id="login-email" placeholder="Email"/>
           </div>
         <div className = "username-password">
           <input type="password" id="login-password" placeholder="Password"/>
