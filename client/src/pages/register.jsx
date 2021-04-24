@@ -41,7 +41,7 @@ export default class RegisterModule extends React.Component {
             <input type="text" id="signup-name" placeholder="Name"/>
           </div>
           <div className = "username-password">
-            <input type="text" id="signup-email" placeholder="Email"/>
+            <input type="email" id="signup-email" placeholder="Email"/>
           </div>
           <div className = "username-password">
             <input type="password" id="signup-password" placeholder="Password"/>
