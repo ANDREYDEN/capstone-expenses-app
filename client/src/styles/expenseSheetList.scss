@@ -34,20 +34,20 @@
         justify-content: center;
         align-items: center;
         .state {
-          background: var(--dimmed-font-color);
+          background: #72546b;
           color: var(--base-bright-color);
           padding: .2rem .4rem;
           border-radius: .6rem;
           font-size: 0.6rem;
 
           &.paid {
-            background: rebeccapurple;
+            background: #31427e;
           }
           &.finalized {
-            background: green;
+            background: #357e31;
           }
           &.logged {
-            background: cyan;
+            background: #317a7e;
           }
         }
       }
