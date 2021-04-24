@@ -27,4 +27,13 @@
     font-weight: bold;
     color: var(--font-color);
   }
+  .text-wrapper {
+    display: flex;
+    align-items: center;
+    .svg-icon {
+      display: flex;
+      margin-right: 0.2rem;
+      font-size: 1.2rem
+    }
+  }
 }
