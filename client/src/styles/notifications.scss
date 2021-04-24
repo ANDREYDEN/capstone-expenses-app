@@ -1,0 +1,42 @@
+.notification-banner {
+  position: fixed;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--notification-error);
+  padding: 1rem 1rem 2rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: transform .5s;
+
+  &.active {
+    transform: translateY(-100%);
+  }
+  .disclaimer {
+    span {
+      display: block;
+      &.bold {
+        font-weight: bold;
+        font-size: 1rem;
+      }
+      &.dimmed {
+        font-size: 0.8rem;
+        color: var(--dimmed-font-color);
+      }
+    }
+  }
+  .error-mark {
+    background: var(--notification-error-bright);
+    color: var(--notification-error-icon);
+    border-radius: 50%;
+
+    padding: 0.2rem;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2rem;
+  }
+}
