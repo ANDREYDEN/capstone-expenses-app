@@ -177,12 +177,12 @@ function addRoutes(routes, app) {
   routes.forEach(route => {
     const name = Object.keys(route)[0]
     const { type, path, authNeeded, callback } = route[name]
-    console.log(` + Adding ${name} route at ${path}`)
+    console.log(` + Adding ${name} route at /api${path}`)
     if (authNeeded) {
-      app[type](path, authenticateToken, callback)
+      app[type](`/api${path}`, authenticateToken, callback)
     }
     else {
-      app[type](path, callback)
+      app[type](`/api${path}`, callback)
     }
   })
 }

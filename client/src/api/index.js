@@ -1,7 +1,12 @@
 import axios from "axios"
 
+const baseURL = {
+  production: `${window.origin}/api`,
+  development: "http://localhost:3000/api"
+}
+
 const api = axios.create({
-    baseURL: "http://localhost:5000/",
+    baseURL: baseURL[process.env.NODE_ENV],
     withCredentials: true
 })
 
