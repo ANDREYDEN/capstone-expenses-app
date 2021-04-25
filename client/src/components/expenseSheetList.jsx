@@ -56,7 +56,7 @@ export default class ExpenseSheetList extends React.Component {
         <li className="expense-sheet-item" key={index}>
           <Link to={`/sheets/${sheet._id}`}>
             <div className="sheet-info">
-              <span className="sheet-name">{sheet.name}</span>
+              <span className="sheet-name">{sheet.store}</span>
               <span className="details">
                 <span>{niceDate}</span>
                 <span className="dot">・</span>
