@@ -45,7 +45,7 @@ export default class EditGroup extends React.Component {
           <h4>Group Details</h4>
         </div>
         <label className="input-container" htmlFor="groupName">
-          <span className="group-name">Store Name</span>
+          <span className="group-name">Group Name</span>
           <input ref={this.groupName} id="groupName" className="group-name-input" type="text" name="" defaultValue={group.name} onChange={this.nameChange.bind(this)}/>
         </label>
         <button className={`save-button ${this.state.showSaveButton ? "visible" : ""}`} onClick={this.saveGroup.bind(this)}>Save Changes</button>

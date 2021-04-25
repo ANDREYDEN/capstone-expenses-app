@@ -2,7 +2,7 @@ import React from "react"
 import ReactDOM from "react-dom"
 import "../styles/notifications.scss"
 
-import { FaExclamation } from "react-icons/fa"
+import { FaExclamation, FaCheck } from "react-icons/fa"
 
 export default class NotificationsModule extends React.Component {
   constructor(props) {
@@ -15,7 +15,8 @@ export default class NotificationsModule extends React.Component {
     }
 
     window.Notifications = {
-      error: this.error.bind(this)
+      error: this.error.bind(this),
+      success: this.success.bind(this)
     }
   }
 
@@ -26,10 +27,17 @@ export default class NotificationsModule extends React.Component {
     }
   }
 
+  success(title, message, timeout) {
+    this.setState({title, message, isError: false, display: true })
+    if (timeout) {
+      setTimeout(() => this.setState({ display: false }), timeout)
+    }
+  }
+
   render() {
-    const icon = this.state.isError ? (<span className="error-mark"><FaExclamation /></span>) : null
+    const icon = this.state.isError ? (<span className="error-mark"><FaExclamation /></span>) : (<span className="success-mark"><FaCheck /></span>)
     return (
-      <div className={`notification-banner ${this.state.display ? "active" : ""}`} onClick={() => this.setState({ display: false })}>
+      <div className={`notification-banner ${this.state.isError ? "error" : "success"} ${this.state.display ? "active" : ""}`} onClick={() => this.setState({ display: false })}>
         <div className="disclaimer">
           <span className="bold">{this.state.title}</span>
           <span className="dimmed">{this.state.message}</span>

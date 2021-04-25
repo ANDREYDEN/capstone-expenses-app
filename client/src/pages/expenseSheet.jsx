@@ -184,6 +184,10 @@ export default class ExpenseSheetList extends React.Component {
           memo.total += item.price
           return memo
         }, { total: 0, owe: 0 })
+        if (sheet.tax) {
+          summary.owe = summary.owe + (summary.owe * parseFloat(sheet.tax) / 100)
+          summary.total = summary.total + (summary.total * parseFloat(sheet.tax) / 100)
+        }
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
         const createdAt = new Date(sheet.createdAt)
         const date = `${createdAt.getDate()} ${months[createdAt.getMonth()]}`

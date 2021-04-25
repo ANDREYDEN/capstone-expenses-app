@@ -1,4 +1,6 @@
 .expense-sheet-container {
+  // NOTE: fixes overlay not beeing 100% height when container overflown
+  height: 100%;
   .swipeable-list-item__content {
     background: unset;
   }
@@ -231,7 +233,7 @@
               }
             }
             .item-price {
-              width: 3rem;
+              max-width: 11rem;
             }
           }
           .item-price-container {

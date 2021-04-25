@@ -1,9 +1,16 @@
 .notification-banner {
   position: fixed;
+  z-index: 1;
   top: 100%;
   left: 0;
   width: 100%;
-  background: var(--notification-error);
+  &.error {
+    background: var(--notification-error);
+  }
+  &.success {
+    color: var(--notification-success-bright);
+    background: var(--notification-success);
+  }
   padding: 1rem 1rem 2rem 1rem;
   display: flex;
   justify-content: space-between;
@@ -26,6 +33,18 @@
         color: var(--dimmed-font-color);
       }
     }
+  }
+  .success-mark {
+    background: var(--notification-success-bright);
+    color: var(--notification-success-icon);
+    border-radius: 50%;
+
+    padding: 0.2rem;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2rem;
   }
   .error-mark {
     background: var(--notification-error-bright);
