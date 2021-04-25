@@ -17,8 +17,13 @@ export default class ExpenseEntryCardEditable extends React.Component {
     }
 
     this.currentEntry = null
+    this.addEntry = false
   }
   componentDidUpdate() {
+    if (this.props.addEntry !== this.addEntry) {
+      this.addEntry = this.props.addEntry
+      this.setState({ name: "", price: "" })
+    }
     if (!this.props.entry && this.currentEntry !== null) {
       this.currentEntry = null
       this.setState({ name: "", price: "" })
