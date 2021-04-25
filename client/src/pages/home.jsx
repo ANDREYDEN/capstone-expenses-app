@@ -39,20 +39,22 @@ export default class Home extends React.Component {
     const groupId = this.props.match.params.id || this.globalState.get("selectedGroupId")
     const groups = this.globalState.get("groups")
     if (!groupId && groups?.[0]) {
-      return <Redirect to={{pathname: `/home/${groups[0]._id}`}} />
+      return <Redirect to={{pathname: `/home/${group._id}`}} />
     }
+    const group = groups?.find(g => g._id === groupId) || {}
     return (
       <main className="has-footer">
         <PullToRefresh onRefresh={() => new Promise(window.location.reload())} pullingContent="" refreshingContent={<SpinnerPreload />}>
           <HomeHeader groupId={groupId}/>
           <UserSummary groupId={groupId}/>
           <div className="home-section">
-            <Link
-              className="pay-balance-btn"
-              to={{
-                pathname: `/balances/${groupId}`,
-              }}
-            >Pay Balance</Link>
+            {group.userIds?.length > 1 ? <Link
+                className="pay-balance-btn"
+                to={{
+                  pathname: `/balances/${groupId}`,
+                }}
+              >Pay Balance</Link> : null
+            }
             <h2 className="home-headline">Activity</h2>
           </div>
           <ExpenseSheetList groupId={groupId}/>

@@ -64,7 +64,7 @@ export default class Balances extends React.Component {
         member: member,
         userOwes: userOwes
       }
-    }).filter(memberBalance => memberBalance._id !== userId)
+    }).filter(memberBalance => memberBalance.member._id !== userId)
   }
 
   render() {
