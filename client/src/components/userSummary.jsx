@@ -34,7 +34,7 @@ export default class UserSummary extends React.Component {
             memo -= pricePerUser
           }
           // NOTE: if no-one has checked technically no-one owes you
-          memo += pricePerUser * usersChecked.length
+          memo += pricePerUser * usersChecked.filter(uc => !sheet.usersPaidIds[uc]).length
           return memo
         }, 0)
         total.own += accumulateAmount + (parseFloat(sheet.tax) ? (accumulateAmount * parseFloat(sheet.tax) / 100) : 0)
@@ -45,7 +45,7 @@ export default class UserSummary extends React.Component {
         const usersChecked = Object.keys(entry.userCheckedIds).filter(id => entry.userCheckedIds[id])
         const pricePerUser = entry.price / (usersChecked.length || 1)
         if (entry.userCheckedIds[userId]) {
-          memo += pricePerUser
+          memo += sheet.usersPaidIds[userId] ? 0 : pricePerUser
         }
         return memo
       }, 0)
