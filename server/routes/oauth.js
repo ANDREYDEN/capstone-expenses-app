@@ -30,16 +30,15 @@ exports.oauth = {
             groupIds: []
           })
           userObj = inserted.ops[0]
+          const groupDoc = {
+            name: `${userObj.name}'s Group`,
+            createdBy: userObj._id,
+            userIds: [userObj._id]
+          }
+          const groupInserted = await global.db.collection("groups").insertOne(groupDoc)
+          const initialGroup = groupInserted.ops[0]
+          await global.db.collection("users").updateOne({ _id: userObj._id }, { $push: { groupIds: initialGroup._id } })
         }
-
-        const groupDoc = {
-          name: `${userObj.name}'s Group`,
-          createdBy: userObj._id,
-          userIds: [userObj._id]
-        }
-        const groupInserted = await global.db.collection("groups").insertOne(groupDoc)
-        const initialGroup = groupInserted.ops[0]
-        await global.db.collection("users").updateOne({ _id: userObj._id }, { $push: { groupIds: initialGroup._id } })
 
         res.status(200)
         res.cookie("tokenId", tokenId, { expires: new Date(Date.now() + 24 * 60 * 60 * 1000) })

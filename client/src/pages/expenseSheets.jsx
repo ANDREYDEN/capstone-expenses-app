@@ -2,6 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Link } from "react-router-dom"
 
+import PullToRefresh from "react-simple-pull-to-refresh"
+import SpinnerPreload from "../components/spinner.jsx"
+
 import { retrieveExpenseSheets, getGroup, getGroupMembers } from "../api/index.js"
 
 import ExpenseSheetList from "../components/expenseSheetList.jsx"
@@ -90,15 +93,17 @@ export default class ExpenseSheets extends React.Component {
     })
     return (
       <main className="expense-sheets-page has-footer">
-        <h1>Expenses</h1>
-        <div className="expense-sheets-tabs">
-          <ul className="headers">
-            {tabHeders}
-          </ul>
-          <div className="tabs">
-            {tabs}
+        <PullToRefresh onRefresh={() => new Promise(window.location.reload())} pullingContent="" refreshingContent={<SpinnerPreload />}>
+          <h1>Expenses</h1>
+          <div className="expense-sheets-tabs">
+            <ul className="headers">
+              {tabHeders}
+            </ul>
+            <div className="tabs">
+              {tabs}
+            </div>
           </div>
-        </div>
+        </PullToRefresh>
 
         <Link
           className="add-item-btn"

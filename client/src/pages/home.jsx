@@ -2,6 +2,9 @@ import React from "react"
 import ReactDOM from "react-dom"
 import { Link, Redirect } from "react-router-dom"
 
+import PullToRefresh from "react-simple-pull-to-refresh"
+import SpinnerPreload from "../components/spinner.jsx"
+
 import { getGroupMembers, getGroups } from "../api/index.js"
 
 import ExpenseSheetList from "../components/expenseSheetList.jsx"
@@ -40,18 +43,20 @@ export default class Home extends React.Component {
     }
     return (
       <main className="has-footer">
-        <HomeHeader groupId={groupId}/>
-        <UserSummary groupId={groupId}/>
-        <div className="home-section">
-          <Link
-            className="pay-balance-btn"
-            to={{
-              pathname: `/balances/${groupId}`,
-            }}
-          >Pay Balance</Link>
-          <h2 className="home-headline">Activity</h2>
-        </div>
-        <ExpenseSheetList groupId={groupId}/>
+        <PullToRefresh onRefresh={() => new Promise(window.location.reload())} pullingContent="" refreshingContent={<SpinnerPreload />}>
+          <HomeHeader groupId={groupId}/>
+          <UserSummary groupId={groupId}/>
+          <div className="home-section">
+            <Link
+              className="pay-balance-btn"
+              to={{
+                pathname: `/balances/${groupId}`,
+              }}
+            >Pay Balance</Link>
+            <h2 className="home-headline">Activity</h2>
+          </div>
+          <ExpenseSheetList groupId={groupId}/>
+        </PullToRefresh>
         <HomeFooter active="home" groupId={groupId}/>
       </main>
     )

@@ -44,7 +44,7 @@ export default class App extends React.Component {
     })
   }
   onSuccessfulLogout(tokenName) {
-    document.cookie = `${tokenName}=`
+    document.cookie = `${tokenName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`
     this.setState({
       loggedIn: false
     })
