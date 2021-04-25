@@ -33,7 +33,7 @@ async function main() {
 
   utils.addRoutes(routes, app)
   // NOTE: investigate was useful in the past. In ideal world should do the same as line:24 app.use(express.static(...
-  // app.use("*", express.static(path.join(__dirname, "../client/build")))
+  app.use("*", express.static(path.join(__dirname, "../client/build")))
 }
 
 main().catch(console.error)
