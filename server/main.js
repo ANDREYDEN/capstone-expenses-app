@@ -21,7 +21,6 @@ async function main() {
   // creates express app
   const cors = require('cors')
   const app = express()
-  console.log(__dirname)
   app.use(express.static(path.join(__dirname, "../client/build")))
   app.use(cors({ origin: true, credentials: true }))
   app.use(cookieParser())
@@ -33,8 +32,8 @@ async function main() {
   const routes = fs.readdirSync(ROUTES_FOLDER).map(fileName => require(`${ROUTES_FOLDER}${fileName}`))
 
   utils.addRoutes(routes, app)
-  app.use("*", express.static(path.join(__dirname, "../client/build")))
-  
+  // NOTE: investigate was useful in the past. In ideal world should do the same as line:24 app.use(express.static(...
+  // app.use("*", express.static(path.join(__dirname, "../client/build")))
 }
 
 main().catch(console.error)
