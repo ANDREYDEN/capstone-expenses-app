@@ -39,7 +39,7 @@ export default class Home extends React.Component {
     const groupId = this.props.match.params.id || this.globalState.get("selectedGroupId")
     const groups = this.globalState.get("groups")
     if (!groupId && groups?.[0]) {
-      return <Redirect to={{pathname: `/home/${group._id}`}} />
+      return <Redirect to={{pathname: `/home/${groups?.[0]._id}`}} />
     }
     const group = groups?.find(g => g._id === groupId) || {}
     return (
