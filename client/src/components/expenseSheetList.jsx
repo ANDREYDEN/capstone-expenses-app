@@ -31,7 +31,7 @@ export default class ExpenseSheetList extends React.Component {
     const userId = window.userId()
     const members = this.globalState.get("members")?.[this.props.groupId] || []
     const items = (this.props.sheets || this.globalState.get("sheets") || []).map((sheet, index) => {
-      const date = new Date(sheet.createdAt)
+      const date = new Date(sheet.purchaseDate)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       const niceDate = `${months[date.getMonth()]} ${date.getDate()}`
       const createdBy = members.find(m => m._id === sheet.createdBy)?.name || "Unknown"

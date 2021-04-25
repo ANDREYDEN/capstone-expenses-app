@@ -176,10 +176,8 @@ export default class ExpenseSheetList extends React.Component {
       if (this.state.sheet) {
         const sheet = this.state.sheet
         const summary = this.state.sheet.entries.reduce((memo, item) => {
-          if (this.state.sheet.createdBy !== userId) {
-            if (item.userCheckedIds[userId]) {
-              memo.owe += item.price / (Object.keys(item.userCheckedIds).filter(key => item.userCheckedIds[key]).length || 1)
-            }
+          if (item.userCheckedIds[userId]) {
+            memo.owe += item.price / (Object.keys(item.userCheckedIds).filter(key => item.userCheckedIds[key]).length || 1)
           }
           memo.total += item.price
           return memo
@@ -199,7 +197,7 @@ export default class ExpenseSheetList extends React.Component {
               <div className="expense-sheet-header">
                 <div className="row arrow-back">
                   <Link to={{
-                    pathname: `/home`,
+                    pathname: `/home/${this.state.sheet.groupId}`,
                   }}>
                     <FaArrowLeft />
                   </Link>
@@ -215,15 +213,13 @@ export default class ExpenseSheetList extends React.Component {
                   <span className="pull-right">{payer?.name || "N/A"}</span>
                 </div>
                 <div className="row total">
-                  <span>Total</span>
+                  <span>Total {parseFloat(this.state.sheet.tax) > 0 ? "+ Tax" : null}</span>
                   <span className="pull-right">{summary.total.toFixed(2)}</span>
                 </div>
-                {this.state.sheet.createdBy !== userId ? (
-                  <div className="row owe">
-                    <span>You owe</span>
-                    <span className="pull-right">{summary.owe.toFixed(2)}</span>
-                  </div>
-                ) : null }
+                <div className="row owe">
+                  <span>Total For You</span>
+                  <span className="pull-right">{summary.owe.toFixed(2)}</span>
+                </div>
               </div>
               {spreadSheetTabs}
             </PullToRefresh>
