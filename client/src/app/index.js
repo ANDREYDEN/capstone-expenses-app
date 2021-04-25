@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
+import PullToRefresh from 'react-simple-pull-to-refresh'
 import { authentificate } from "../api/index.js"
 import WelcomeScreen from "../pages/welcomeScreen.jsx"
 import LoginModule from "../pages/login.jsx"
@@ -75,26 +76,28 @@ export default class App extends React.Component {
 
     if (verifiedLogin) {
       return (
-        <Router>
-          <NotificationModule />
-          <Route path="/welcomeScreen">
-            {loggedIn ? <Redirect to="/home" /> : <WelcomeScreen />}
-          </Route>
-          <Route path="/login">
-            {loggedIn ? <Redirect to="/home" /> : <LoginModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
-          </Route>
-          <Route path="/register">
-            {loggedIn ? <Redirect to="/home" /> : <RegisterModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
-          </Route>
-          {["/home", "/sheets", "/balances", "/payBalances", "/payBalanceFull", "/join", "/new/sheets", "/groups", "/expenses", "/profile"].map((path, index) =>
-            <Route path={path} key={index}>
-              {loggedIn ? <MainPage /> : <Redirect to="/welcomeScreen" />}
+        <PullToRefresh onRefresh={() => new Promise(window.location.reload())} pullingContent="" refreshingContent={<SpinnerPreload />}>
+          <Router>
+            <NotificationModule />
+            <Route path="/welcomeScreen">
+              {loggedIn ? <Redirect to="/home" /> : <WelcomeScreen />}
             </Route>
-          )}
-          <Route exact path="/">
-            <Redirect to="/home" />
-          </Route>
-        </Router>
+            <Route path="/login">
+              {loggedIn ? <Redirect to="/home" /> : <LoginModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
+            </Route>
+            <Route path="/register">
+              {loggedIn ? <Redirect to="/home" /> : <RegisterModule loginCallback={this.onSuccessfulLogin.bind(this)}/>}
+            </Route>
+            {["/home", "/sheets", "/balances", "/payBalances", "/payBalanceFull", "/join", "/new/sheets", "/groups", "/expenses", "/profile"].map((path, index) =>
+              <Route path={path} key={index}>
+                {loggedIn ? <MainPage /> : <Redirect to="/welcomeScreen" />}
+              </Route>
+            )}
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+          </Router>
+        </PullToRefresh>
       )
     }
     return (

@@ -25,10 +25,12 @@ If node/nmp version mismatch is found, make use of [nvm](https://github.com/nvm-
 ```
 PORT=3000
 JWT_SECRET="<whatever the secret is>"
+NODE_ENV="development"
 ```
 - do the same for `client` folder, but containing
 ```
 PORT=8000
+NODE_ENV="development"
 ```
 
 ### Runnign MongoDB
