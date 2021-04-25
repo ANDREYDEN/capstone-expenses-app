@@ -165,7 +165,7 @@ function dbConnect(url) {
         console.log(" - Closing Database Conneciton")
         client.close()
       })
-      const db = client.db("expencify")
+      const db = client.db("expensify")
       console.log(" - Connected to Database")
       resolve(db)
     })
