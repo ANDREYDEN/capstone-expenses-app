@@ -25,8 +25,8 @@ export default class GroupManager extends React.Component {
 
   copyGroupInvite() {
     if (this.inviteLink) {
-      navigator.clipboard.writeText(this.inviteLink).then(() => {
-        // TODO: successful copy notification
+      navigator?.clipboard?.writeText?.(this.inviteLink).then(() => {
+        window.Notifications.success("Copied to clipboard", "", 2000)
       }).catch(console.error)
     }
   }

@@ -39,6 +39,10 @@
   --notification-error-bright: #D59797;
   --notification-error-icon: #691515;
 
+  --notification-success: #ebf9f2;
+  --notification-success-bright: #59bf39;
+  --notification-success-icon: #ebf9f2;
+
 }
 
 html {
@@ -54,6 +58,11 @@ body {
   "Helvetica Neue", sans-serif;
   padding: 0;
   margin: 0;
+  padding:
+    env(safe-area-inset-top, 20px)
+    env(safe-area-inset-right, 20px)
+    env(safe-area-inset-bottom, 20px)
+    env(safe-area-inset-left, 20px);
   overflow: auto;
   * {
     box-sizing: border-box;
