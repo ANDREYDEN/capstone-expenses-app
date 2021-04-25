@@ -37,7 +37,7 @@ export default class UserSummary extends React.Component {
           memo += pricePerUser * usersChecked.length
           return memo
         }, 0)
-        total.own += accumulateAmount
+        total.own += accumulateAmount + (parseFloat(sheet.tax) ? (accumulateAmount * parseFloat(sheet.tax) / 100) : 0)
         return total
       }
 
@@ -50,7 +50,7 @@ export default class UserSummary extends React.Component {
         return memo
       }, 0)
 
-      total.owe += accumulateAmount
+      total.owe += accumulateAmount + (parseFloat(sheet.tax) ? (accumulateAmount * parseFloat(sheet.tax) / 100) : 0)
       return total
     }, { owe: 0, own: 0 })
 
