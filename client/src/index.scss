@@ -101,6 +101,6 @@ a {
   color: inherit;
 }
 
-.ptr__children {
-  overflow: hidden !important;
+.ptr, .ptr__children {
+  overflow: auto !important;
 }

@@ -1,7 +1,9 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import axios from "axios"
 import { Link } from "react-router-dom"
+
+import PullToRefresh from "react-simple-pull-to-refresh"
+import SpinnerPreload from "../components/spinner.jsx"
 
 import Spinner from "../components/spinner.jsx"
 import SpreadSheetTabs from "../components/spreadSheetTabs.jsx"
@@ -189,36 +191,38 @@ export default class ExpenseSheetList extends React.Component {
         const payer = (this.state.members || []).find(m => m._id === sheet.createdBy)
         return (
           <div className="expense-sheet-container">
-            <div className="expense-sheet-header">
-              <div className="row arrow-back">
-                <Link to={{
-                  pathname: `/home`,
-                }}>
-                  <FaArrowLeft />
-                </Link>
-              </div>
-              <div className="row store">
-                <span>{sheet.store}</span>
-              </div>
-              <div className="row date">
-                <span>{date}</span>
-              </div>
-              <div className="row payer">
-                <span>Payer</span>
-                <span className="pull-right">{payer?.name || "N/A"}</span>
-              </div>
-              <div className="row total">
-                <span>Total</span>
-                <span className="pull-right">{summary.total.toFixed(2)}</span>
-              </div>
-              {this.state.sheet.createdBy !== userId ? (
-                <div className="row owe">
-                  <span>You owe</span>
-                  <span className="pull-right">{summary.owe.toFixed(2)}</span>
+            <PullToRefresh onRefresh={() => new Promise(window.location.reload())} pullingContent="" refreshingContent={<SpinnerPreload />}>
+              <div className="expense-sheet-header">
+                <div className="row arrow-back">
+                  <Link to={{
+                    pathname: `/home`,
+                  }}>
+                    <FaArrowLeft />
+                  </Link>
                 </div>
-              ) : null }
-            </div>
-            {spreadSheetTabs}
+                <div className="row store">
+                  <span>{sheet.store}</span>
+                </div>
+                <div className="row date">
+                  <span>{date}</span>
+                </div>
+                <div className="row payer">
+                  <span>Payer</span>
+                  <span className="pull-right">{payer?.name || "N/A"}</span>
+                </div>
+                <div className="row total">
+                  <span>Total</span>
+                  <span className="pull-right">{summary.total.toFixed(2)}</span>
+                </div>
+                {this.state.sheet.createdBy !== userId ? (
+                  <div className="row owe">
+                    <span>You owe</span>
+                    <span className="pull-right">{summary.owe.toFixed(2)}</span>
+                  </div>
+                ) : null }
+              </div>
+              {spreadSheetTabs}
+            </PullToRefresh>
             <button className="add-item-btn" onClick={() => this.setState({ addEntry: true })}>
               <span>+</span>
             </button>
