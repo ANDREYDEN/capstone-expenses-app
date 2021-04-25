@@ -1,10 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
 
-import DeleteIcon from "../img/delete.svg"
-import DuplicateIcon from "../img/duplicate.svg"
-
-import SVGIcon from "./svgIcon.jsx"
+import { ReactComponent as DeleteIcon } from "../img/delete.svg"
+import { ReactComponent as DuplicateIcon } from "../img/duplicate.svg"
 
 export default class ExpenseEntryCardEditable extends React.Component {
   constructor(props) {
@@ -49,9 +47,9 @@ export default class ExpenseEntryCardEditable extends React.Component {
         </div>
         {entry && !addEntry ? (
           <div className="delete-duplicate-controlls">
-            <button className="delete" onClick={this.props.onDelete}><span className="text-wrapper"><SVGIcon src={DeleteIcon} alt="Checkmark" /> Delete </span></button>
+            <button className="delete" onClick={this.props.onDelete}><span className="text-wrapper"><DeleteIcon /> Delete </span></button>
             <div className="bar"></div>
-            <button className="duplicate" onClick={this.props.onDuplicate}><span className="text-wrapper"><SVGIcon src={DuplicateIcon} alt="Checkmark" /> Duplicate </span></button>
+            <button className="duplicate" onClick={this.props.onDuplicate}><span className="text-wrapper"><DuplicateIcon /> Duplicate </span></button>
           </div>
         ): null}
       </div>
