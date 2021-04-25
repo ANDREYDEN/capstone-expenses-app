@@ -61,7 +61,7 @@ export default class ExpenseEntryCardEditable extends React.Component {
                 <input className="item-name" placeholder="Item Name" ref={this.itemName} value={this.state.name} onChange={this.nameUpdate.bind(this)}/>
               </span>
               <span className="item-price-container">
-                $<input type="text" className="item-price" placeholder="0.00" type="number" step="any" ref={this.itemPrice} value={this.state.price} onChange={this.priceUpdate.bind(this)}/>
+                $<input style={{ width: `${((this.state.price.length || 0) < 3 ? 4 : this.state.price.length) * .55}rem` }}type="text" className="item-price" placeholder="0.00" type="number" step="any" ref={this.itemPrice} value={this.state.price} onChange={this.priceUpdate.bind(this)}/>
               </span>
             </div>
           </div>
