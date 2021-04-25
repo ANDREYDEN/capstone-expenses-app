@@ -10,9 +10,30 @@ export default class ExpenseEntryCardEditable extends React.Component {
 
     this.itemName = React.createRef()
     this.itemPrice= React.createRef()
+
+    this.state = {
+      name: "",
+      price: ""
+    }
+
+    this.currentEntry = null
   }
-  componentDidMount() {
-    
+  componentDidUpdate() {
+    if (!this.props.entry && this.currentEntry !== null) {
+      this.currentEntry = null
+      this.setState({ name: "", price: "" })
+    }
+    else if (this.props.entry && this.props.entry !== this.currentEntry) {
+      this.currentEntry = this.props.entry
+      this.setState({ name: this.props.entry.name, price: this.props.entry.price })
+    }
+  }
+
+  nameUpdate(e) {
+    this.setState({ name: e.currentTarget.value })
+  }
+  priceUpdate(e) {
+    this.setState({ price: e.currentTarget.value })
   }
 
   doneEditing(e) {
@@ -37,10 +58,10 @@ export default class ExpenseEntryCardEditable extends React.Component {
           <div className="item-info">
             <div className="expense-entry-card-line">
               <span className="item-name-container">
-                <input className="item-name" placeholder="Item Name" ref={this.itemName} defaultValue={entry?.name || ""}/>
+                <input className="item-name" placeholder="Item Name" ref={this.itemName} value={this.state.name} onChange={this.nameUpdate.bind(this)}/>
               </span>
               <span className="item-price-container">
-                $<input type="text" className="item-price" placeholder="0.00" type="number" step="any" ref={this.itemPrice} defaultValue={entry?.price?.toFixed(2) || ""}/>
+                $<input type="text" className="item-price" placeholder="0.00" type="number" step="any" ref={this.itemPrice} value={this.state.price} onChange={this.priceUpdate.bind(this)}/>
               </span>
             </div>
           </div>
